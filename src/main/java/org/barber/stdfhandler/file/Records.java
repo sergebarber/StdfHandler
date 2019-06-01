@@ -6,8 +6,8 @@ import java.util.function.Supplier;
 enum Records {
 
     FAR(RecordFar::new),
-    ATR(RecordAtr::new);
-//    VUR(RecordVur::new),
+    ATR(RecordAtr::new),
+    VUR(RecordVur::new);
 //    MIR(RecordMir::new),
 //    RDR(RecordRdr::new);
 

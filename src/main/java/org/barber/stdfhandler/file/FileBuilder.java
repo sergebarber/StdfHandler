@@ -65,27 +65,26 @@ public class FileBuilder {
     return this;
   }
 
-//  // VUR record
-//
-//  public StdfBuilder addVur() {
-//    image.setVur(new RecordVur());
-//    return this;
-//  }
-//
-//  public StdfBuilder addVur(String updNam) {
-//    image.setVur(new RecordVur());
-//    image.getVur().setUpdNam(updNam);
-//    return this;
-//  }
-//
-//  public StdfBuilder setVurUpdNam(String updNam) {
-//    if (image.getVur() == null) {
-//      image.setVur(new RecordVur());
-//    }
-//    image.getVur().setUpdNam(updNam);
-//    return this;
-//  }
-//
+  // VUR record
+
+  public FileBuilder addVur() {
+    image.setVur(new RecordVur());
+    return this;
+  }
+
+  public FileBuilder addVur(String updNam) {
+    image.setVur(new RecordVur());
+    image.getVur().setUpdNam(updNam);
+    return this;
+  }
+
+  public FileBuilder setVurUpdNam(String updNam) {
+    RecordVur vur = new RecordVur();
+    vur.setUpdNam(updNam);
+    image.setVur(vur);
+    return this;
+  }
+
 //  // MIR record
 //
 //  public StdfBuilder setMir() {
