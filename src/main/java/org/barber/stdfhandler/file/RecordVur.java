@@ -20,12 +20,17 @@ public class RecordVur extends Record {
         image.setVur(this);
     }
 
-    public Optional<String> getUpdNam() {
-        return Optional.ofNullable(TypeCn.TYPE.cast(fields.get(UPD_NAM).getValue()));
+    public static RecordVur newInstance() {
+        return new RecordVur();
     }
 
-    void setUpdNam(String value) {
+    public Optional<String> getUpdNam() {
+        return Optional.ofNullable(TypeString.cast(fields.get(UPD_NAM).getValue()));
+    }
+
+    public RecordVur setUpdNam(String value) {
         fields.get(UPD_NAM).setValue(value);
+        return this;
     }
 }
 

@@ -7,8 +7,8 @@ enum Records {
 
     FAR(RecordFar::new),
     ATR(RecordAtr::new),
-    VUR(RecordVur::new);
-//    MIR(RecordMir::new),
+    VUR(RecordVur::new),
+    MIR(RecordMir::new);
 //    RDR(RecordRdr::new);
 
 //    PCR(StdfRecordPcr::new),
