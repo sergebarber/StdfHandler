@@ -1,4 +1,4 @@
-package org.barber.stdfhandler.records;
+package org.barber.stdfhandler.file;
 
 import org.barber.stdfhandler.file.FileBuilder;
 import org.barber.stdfhandler.file.FileImage;

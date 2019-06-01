@@ -22,21 +22,29 @@ public class RecordFar extends Record {
         image.setFar(this);
     }
 
+    public static RecordFar newInstance() {
+        return new RecordFar();
+    }
+
     public Optional<Integer> getCpuTyp() {
         Type type = fields.get(CPU_TYP);
-        return Optional.ofNullable(TypeU1.TYPE.cast(type.getValue()));
+        return Optional.ofNullable(TypeInt.cast(type.getValue()));
     }
 
     public Optional<Integer> getStdfVer() {
         Type type = fields.get(STDF_VER);
-        return Optional.ofNullable(TypeU1.TYPE.cast(type.getValue()));
+        return Optional.ofNullable(TypeInt.cast(type.getValue()));
     }
 
-    void setCpuTyp(int cpuTyp) {
+    public RecordFar setCpuTyp(int cpuTyp) {
         fields.get(CPU_TYP).setValue(cpuTyp);
+        return this;
     }
 
-    void setStdfVer(int stdfVer) {
+    public RecordFar setStdfVer(int stdfVer) {
         fields.get(STDF_VER).setValue(stdfVer);
+        return this;
     }
+
+
 }

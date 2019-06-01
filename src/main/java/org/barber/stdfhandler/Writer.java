@@ -9,6 +9,6 @@ public class Writer {
 
         FileBuilder file = new FileBuilder();
 
-        file = new FileBuilder().setFarCpuTyp(2).setFarStdfVer(3);
+
     }
 }

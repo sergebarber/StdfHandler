@@ -2,14 +2,13 @@ package org.barber.stdfhandler.file;
 
 import java.io.ByteArrayInputStream;
 
-class TypeU1 extends TypeInt {
+class TypeU2 extends TypeInt {
 
-    private static final int MIN_VALUE = 0;
-    private static final int MAX_VALUE = 255;
-    private static final String ILLEGAL_VALUE_MESSAGE =
-            "Illegal argument size %d for type StdfU1. Should be %d <= size <= %d";
+    static final int MAX_VALUE = 65535;
+    static final int MIN_VALUE = 0;
+    static final String ILLEGAL_VALUE_MESSAGE = "Illegal argument size %d for type StdfU2. Should be %d <= size <= %d";
 
-    private static final int BYTE_LENGTH = 1;
+    static final int BYTE_LENGTH = 2;
     private static final int NULL_VALUE = 0;
 
     @Override
@@ -29,6 +28,6 @@ class TypeU1 extends TypeInt {
     @Override
     byte[] toBytes() {
         int value = this.value == null ? NULL_VALUE : this.value;
-        return toBytes(value, U1_BINARY_STRING_FORMAT);
+        return toBytes(value, U2_BINARY_STRING_FORMAT);
     }
 }

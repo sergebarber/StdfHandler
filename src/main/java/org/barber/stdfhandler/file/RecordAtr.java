@@ -23,20 +23,26 @@ public class RecordAtr extends Record {
         image.addAtr(this);
     }
 
+    public static RecordAtr newIstance() {
+        return new RecordAtr();
+    }
+
     public Optional<Instant> getModTim() {
-        return Optional.ofNullable(TypeTime.TYPE.cast(fields.get(MOD_TIM).getValue()));
+        return Optional.ofNullable(TypeTime.cast(fields.get(MOD_TIM).getValue()));
     }
 
     public Optional<String> getCmdLine() {
-        return Optional.ofNullable(TypeCn.TYPE.cast(fields.get(CMD_LINE).getValue()));
+        return Optional.ofNullable(TypeString.cast(fields.get(CMD_LINE).getValue()));
     }
 
 
-    void setModTim(Instant value) {
+    public RecordAtr setModTim(Instant value) {
         fields.get(MOD_TIM).setValue(value);
+        return this;
     }
 
-    void setCmdLine(String value) {
+    public RecordAtr setCmdLine(String value) {
         fields.get(CMD_LINE).setValue(value);
+        return this;
     }
 }

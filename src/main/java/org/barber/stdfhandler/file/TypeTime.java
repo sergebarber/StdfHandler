@@ -15,6 +15,10 @@ class TypeTime extends Type<Instant> {
 
     static final Class<Instant> TYPE = Instant.class;
 
+    static Instant cast(Object value) {
+        return TYPE.cast(value);
+    }
+
     @Override
     void setValue(ByteArrayInputStream stream) {
         this.value = Instant.ofEpochSecond(byteStreamToNumber(stream, BYTE_LENGTH));
