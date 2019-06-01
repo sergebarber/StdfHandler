@@ -24,13 +24,11 @@ public class RecordAtr extends Record {
     }
 
     public Optional<Instant> getModTim() {
-        Object value = fields.get(MOD_TIM).getValue();
-        return Optional.ofNullable(TypeTime.TYPE.cast(value));
+        return Optional.ofNullable(TypeTime.TYPE.cast(fields.get(MOD_TIM).getValue()));
     }
 
     public Optional<String> getCmdLine() {
-        Object value = fields.get(CMD_LINE).getValue();
-        return Optional.ofNullable(TypeCn.TYPE.cast(value));
+        return Optional.ofNullable(TypeCn.TYPE.cast(fields.get(CMD_LINE).getValue()));
     }
 
 

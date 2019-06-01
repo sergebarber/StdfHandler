@@ -1,4 +1,4 @@
-package org.barber.stdfhandler;
+package org.barber.stdfhandler.records;
 
 import org.barber.stdfhandler.file.FileBuilder;
 import org.junit.jupiter.api.Test;

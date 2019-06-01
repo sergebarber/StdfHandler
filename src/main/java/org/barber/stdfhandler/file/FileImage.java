@@ -10,7 +10,7 @@ public class FileImage {
 
     private RecordFar far;
     private List<RecordAtr> atrs = new ArrayList<>();
-//    private RecordVur vur;
+    private RecordVur vur;
 //    private RecordMir mir;
 //    private RecordRdr rdr;
 
@@ -32,10 +32,10 @@ public class FileImage {
         this.atrs.add(atr);
     }
 
-//    void setVur(RecordVur vur) {
-//        this.vur = vur;
-//    }
-//
+    void setVur(RecordVur vur) {
+        this.vur = vur;
+    }
+
 //    void setMir(RecordMir mir) {
 //        this.mir = mir;
 //    }
@@ -63,7 +63,7 @@ public class FileImage {
         StringBuilder builder = new StringBuilder();
         builder.append(far != null ? far : "");
         atrs.forEach(builder::append);
-//        builder.append(vur != null ? vur : "");
+        builder.append(vur != null ? vur : "");
 //        builder.append(mir != null ? mir : "");
 //        builder.append(rdr != null ? rdr : "");
 //        pcrs.forEach(builder::append);
@@ -79,7 +79,7 @@ public class FileImage {
         List<ByteArrayOutputStream> outputStreams = new LinkedList<>();
         outputStreams.add(far.toBytes());
         atrs.forEach(atr -> outputStreams.add(atr.toBytes()));
-//        if (vur != null) bytes.addAll(vur.getBytes());
+        if (vur != null) outputStreams.add(vur.toBytes());
 //        if (mir != null) bytes.addAll(mir.getBytes());
 //        if (rdr != null) bytes.addAll(rdr.getBytes());
 
@@ -98,10 +98,10 @@ public class FileImage {
         return atrs;
     }
 
-//    RecordVur getVur() {
-//        return vur;
-//    }
-//
+    public RecordVur getVur() {
+        return vur;
+    }
+
 //    RecordMir getMir() {
 //        return mir;
 //    }
