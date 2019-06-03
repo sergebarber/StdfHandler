@@ -1,12 +1,9 @@
 package org.barber.stdfhandler.file;
 
-import org.barber.stdfhandler.file.FileBuilder;
-import org.barber.stdfhandler.file.FileImage;
-import org.barber.stdfhandler.file.FileReader;
-
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
 
@@ -20,9 +17,15 @@ abstract class RecordTest {
         return fileReader.read(new ByteArrayInputStream(outputStream.toByteArray()));
     }
 
-    <T> void testField(FileBuilder builder, Function<FileImage, Optional<T>> getter, T expected) throws IOException {
+    <T> void testFieldOptional(FileBuilder builder, Function<FileImage, Optional<T>> getter, T expected) throws IOException {
         ByteArrayOutputStream outputStream = builder.toStream();
         FileImage image = readFile(outputStream);
         assertThat(getter.apply(image).orElseThrow()).isEqualTo(expected);
+    }
+
+    <T> void testFieldList(FileBuilder builder, Function<FileImage, List<T>> getter, List<T> expected) throws IOException {
+        ByteArrayOutputStream outputStream = builder.toStream();
+        FileImage image = readFile(outputStream);
+        assertThat(getter.apply(image)).isEqualTo(expected);
     }
 }

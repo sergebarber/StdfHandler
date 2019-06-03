@@ -19,9 +19,7 @@ class TypeU2 extends TypeInt {
     @Override
     void setValue(Object value) {
         int actualValue = TYPE.cast(value);
-        if (actualValue < MIN_VALUE || actualValue > MAX_VALUE) {
-            throw new IllegalArgumentException(String.format(ILLEGAL_VALUE_MESSAGE, actualValue, MIN_VALUE, MAX_VALUE));
-        }
+        checkValue(actualValue);
         this.value = actualValue;
     }
 
@@ -29,5 +27,11 @@ class TypeU2 extends TypeInt {
     byte[] toBytes() {
         int value = this.value == null ? NULL_VALUE : this.value;
         return toBytes(value, U2_BINARY_STRING_FORMAT);
+    }
+
+    static void checkValue(int value) {
+        if (value < MIN_VALUE || value > MAX_VALUE) {
+            throw new IllegalArgumentException(String.format(ILLEGAL_VALUE_MESSAGE, value, MIN_VALUE, MAX_VALUE));
+        }
     }
 }

@@ -12,7 +12,7 @@ public class FileImage {
     private List<RecordAtr> atrs = new ArrayList<>();
     private RecordVur vur;
     private RecordMir mir;
-//    private RecordRdr rdr;
+    private RecordRdr rdr;
 
 //    private List<StdfRecordPcr> pcrs = new ArrayList<>();
 //    private List<StdfRecordHbr> hbrs = new ArrayList<>();
@@ -40,9 +40,9 @@ public class FileImage {
         this.mir = mir;
     }
 
-//    void setRdr(RecordRdr rdr) {
-//        this.rdr = rdr;
-//    }
+    void setRdr(RecordRdr rdr) {
+        this.rdr = rdr;
+    }
 
     //    public void addPcr(StdfRecordPcr pcr) {
 //        this.pcrs.add(pcr);
@@ -65,7 +65,7 @@ public class FileImage {
         atrs.forEach(builder::append);
         builder.append(vur != null ? vur : "");
         builder.append(mir != null ? mir : "");
-//        builder.append(rdr != null ? rdr : "");
+        builder.append(rdr != null ? rdr : "");
 //        pcrs.forEach(builder::append);
 //        hbrs.forEach(builder::append);
 //        sbrs.forEach(builder::append);
@@ -81,7 +81,7 @@ public class FileImage {
         atrs.forEach(atr -> outputStreams.add(atr.toBytes()));
         if (vur != null) outputStreams.add(vur.toBytes());
         if (mir != null) outputStreams.add(mir.toBytes());
-//        if (rdr != null) bytes.addAll(rdr.getBytes());
+        if (rdr != null) outputStreams.add(rdr.toBytes());
 
         int length = outputStreams.stream().mapToInt(ByteArrayOutputStream::size).sum();
 
@@ -106,7 +106,7 @@ public class FileImage {
         return mir;
     }
 
-//    RecordRdr getRdr() {
-//        return rdr;
-//    }
+    public RecordRdr getRdr() {
+        return rdr;
+    }
 }

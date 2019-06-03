@@ -25,26 +25,28 @@ abstract class Record {
         this.code = code;
     }
 
-    public int getGroup() {
+    int getGroup() {
         return group;
     }
 
-    public int getCode() {
+    int getCode() {
         return code;
     }
 
     protected abstract void addToImage(FileImage image);
 
-    final void fill(ByteArrayInputStream bytes, FileImage fileImage) {
+    void fill(ByteArrayInputStream bytes, FileImage fileImage) {
         fields.values().forEach(field -> field.setValue(bytes));
         addToImage(fileImage);
     }
 
-    final ByteArrayOutputStream toBytes() {
-
+    ByteArrayOutputStream toBytes() {
         ByteArrayOutputStream fieldsBytes = new ByteArrayOutputStream();
         fields.values().forEach(field -> fieldsBytes.writeBytes(field.toBytes()));
+        return addHeader(fieldsBytes);
+    }
 
+    ByteArrayOutputStream addHeader(ByteArrayOutputStream fieldsBytes) {
         ByteArrayOutputStream recordOutputStream = new ByteArrayOutputStream();
         recordOutputStream.writeBytes(getHeaderBytes(fieldsBytes.size()));
         recordOutputStream.writeBytes(fieldsBytes.toByteArray());
