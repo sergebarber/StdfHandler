@@ -2,7 +2,9 @@ package org.barber.stdfhandler.file;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 abstract class Record {
@@ -17,7 +19,7 @@ abstract class Record {
     private final int group;
     private final int code;
 
-    Map<String, Type> fields = new LinkedHashMap<>();
+    List<Type> fields = new ArrayList<>();
 
     Record(String name, int group, int code) {
         this.name = name;
@@ -36,13 +38,13 @@ abstract class Record {
     protected abstract void addToImage(FileImage image);
 
     void fill(ByteArrayInputStream bytes, FileImage fileImage) {
-        fields.values().forEach(field -> field.setValue(bytes));
+        fields.forEach(field -> field.setValue(bytes));
         addToImage(fileImage);
     }
 
     ByteArrayOutputStream toBytes() {
         ByteArrayOutputStream fieldsBytes = new ByteArrayOutputStream();
-        fields.values().forEach(field -> fieldsBytes.writeBytes(field.toBytes()));
+        fields.forEach(field -> fieldsBytes.writeBytes(field.toBytes()));
         return addHeader(fieldsBytes);
     }
 
@@ -66,7 +68,7 @@ abstract class Record {
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder(recordAsString(name));
-        fields.forEach((k, v) -> builder.append(fieldAsString(k, v.asString())));
+        fields.forEach(t -> builder.append(fieldAsString(t.getName(), t.toString())));
         return builder.toString();
     }
 

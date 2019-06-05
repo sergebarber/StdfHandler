@@ -12,7 +12,7 @@ class RecordRdrTest extends RecordTest {
     void testRtstBin() throws IOException {
         List<Integer> expected = Arrays.asList(1, 2, 3, 4, 5);
 
-        testFieldList(new FileBuilder().addRecord(RecordRdr.newInstance().setRtstBin(expected)),
+        testListField(new FileBuilder().addRecord(RecordRdr.newInstance().setRtstBin(expected)),
                 fileImage -> fileImage.getRdr().getRtstBins(), expected);
     }
 }

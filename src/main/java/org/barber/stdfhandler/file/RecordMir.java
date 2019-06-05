@@ -9,85 +9,85 @@ public class RecordMir extends Record {
     private static final byte TYPE = 1;
     private static final byte CODE = 10;
 
-    private static final String SETUP_T = "SETUP_T";
-    private static final String START_T = "START_T";
-    private static final String STAT_NUM = "STAT_NUM";
-    private static final String MODE_COD = "MODE_COD";
-    private static final String RTST_COD = "RTST_COD";
-    private static final String PROT_COD = "PROT_COD";
-    private static final String BURN_TIM = "BURN_TIM";
-    private static final String CMOD_COD = "CMOD_COD";
-    private static final String LOT_ID = "LOT_ID";
-    private static final String PART_TYP = "PART_TYP";
-    private static final String NODE_NAM = "NODE_NAM";
-    private static final String TSTR_TYP = "TSTR_TYP";
-    private static final String JOB_NAM = "JOB_NAM";
-    private static final String JOB_REV = "JOB_REV";
-    private static final String SBLOT_ID = "SBLOT_ID";
-    private static final String OPER_NAM = "OPER_NAM";
-    private static final String EXEC_TYP = "EXEC_TYP";
-    private static final String EXEC_VER = "EXEC_VER";
-    private static final String TEST_COD = "TEST_COD";
-    private static final String TST_TEMP = "TST_TEMP";
-    private static final String USER_TXT = "USER_TXT";
-    private static final String AUX_FILE = "AUX_FILE";
-    private static final String PKG_TYP = "PKG_TYP";
-    private static final String FAMLY_ID = "FAMLY_ID";
-    private static final String DATE_COD = "DATE_COD";
-    private static final String FACIL_ID = "FACIL_ID";
-    private static final String FLOOR_ID = "FLOOR_ID";
-    private static final String PROC_ID = "PROC_ID";
-    private static final String OPER_FRQ = "OPER_FRQ";
-    private static final String SPEC_NAM = "SPEC_NAM";
-    private static final String SPEC_VER = "SPEC_VER";
-    private static final String FLOW_ID = "FLOW_ID";
-    private static final String SETUP_ID = "SETUP_ID";
-    private static final String DSGN_REV = "DSGN_REV";
-    private static final String ENG_ID = "ENG_ID";
-    private static final String ROM_COD = "ROM_COD";
-    private static final String SERL_NUM = "SERL_NUM";
-    private static final String SUPR_NAM = "SUPR_NAM";
+    private final Type<Instant> setupT = new TypeTime("SETUP_T");
+    private final Type<Instant> startT = new TypeTime("START_T");
+    private final Type<Integer> statNum = new TypeU1("STAT_NUM");
+    private final Type<String> modeCod = new TypeC1Nl("MODE_COD");
+    private final Type<String> rtstCod = new TypeC1Nl("RTST_COD");
+    private final Type<String> protCod = new TypeC1Nl("PROT_COD");
+    private final Type<Integer> burnTim = new TypeU2Nl("BURN_TIM");
+    private final Type<String> cmodCod = new TypeC1Nl("CMOD_COD");
+    private final Type<String> lotId = new TypeCn("LOT_ID");
+    private final Type<String> partTyp = new TypeCn("PART_TYP");
+    private final Type<String> nodeNam = new TypeCn("NODE_NAM");
+    private final Type<String> tstrTyp = new TypeCn("TSTR_TYP");
+    private final Type<String> jobNam = new TypeCn("JOB_NAM");
+    private final Type<String> jobRev = new TypeC1Nl("JOB_REV");
+    private final Type<String> sblotId = new TypeC1Nl("SBLOT_ID");
+    private final Type<String> operNam = new TypeC1Nl("OPER_NAM");
+    private final Type<String> execTyp = new TypeC1Nl("EXEC_TYP");
+    private final Type<String> execVer = new TypeC1Nl("EXEC_VER");
+    private final Type<String> testCod = new TypeC1Nl("TEST_COD");
+    private final Type<String> tstTemp = new TypeC1Nl("TST_TEMP");
+    private final Type<String> userTxt = new TypeC1Nl("USER_TXT");
+    private final Type<String> auxFile = new TypeC1Nl("AUX_FILE");
+    private final Type<String> pkgTyp = new TypeC1Nl("PKG_TYP");
+    private final Type<String> famlyId = new TypeC1Nl("FAMLY_ID");
+    private final Type<String> dateCod = new TypeC1Nl("DATE_COD");
+    private final Type<String> facilId = new TypeC1Nl("FACIL_ID");
+    private final Type<String> floorId = new TypeC1Nl("FLOOR_ID");
+    private final Type<String> procId = new TypeC1Nl("PROC_ID");
+    private final Type<String> operFrq = new TypeC1Nl("OPER_FRQ");
+    private final Type<String> specNam = new TypeC1Nl("SPEC_NAM");
+    private final Type<String> specVer = new TypeC1Nl("SPEC_VER");
+    private final Type<String> flowId = new TypeC1Nl("FLOW_ID");
+    private final Type<String> setupId = new TypeC1Nl("SETUP_ID");
+    private final Type<String> dsgnRev = new TypeC1Nl("DSGN_REV");
+    private final Type<String> engId = new TypeC1Nl("ENG_ID");
+    private final Type<String> romCod = new TypeC1Nl("ROM_COD");
+    private final Type<String> serlNum = new TypeC1Nl("SERL_NUM");
+    private final Type<String> suprNam = new TypeC1Nl("SUPR_NAM");
 
     RecordMir() {
         super(NAME, TYPE, CODE);
-        fields.put(SETUP_T, new TypeTime());
-        fields.put(START_T, new TypeTime());
-        fields.put(STAT_NUM, new TypeU1());
-        fields.put(MODE_COD, new TypeC1Nl());
-        fields.put(RTST_COD, new TypeC1Nl());
-        fields.put(PROT_COD, new TypeC1Nl());
-        fields.put(BURN_TIM, new TypeU2Nl());
-        fields.put(CMOD_COD, new TypeC1Nl());
-        fields.put(LOT_ID, new TypeCn());
-        fields.put(PART_TYP, new TypeCn());
-        fields.put(NODE_NAM, new TypeCn());
-        fields.put(TSTR_TYP, new TypeCn());
-        fields.put(JOB_NAM, new TypeCn());
-        fields.put(JOB_REV, new TypeCnNl());
-        fields.put(SBLOT_ID, new TypeCnNl());
-        fields.put(OPER_NAM, new TypeCnNl());
-        fields.put(EXEC_TYP, new TypeCnNl());
-        fields.put(EXEC_VER, new TypeCnNl());
-        fields.put(TEST_COD, new TypeCnNl());
-        fields.put(TST_TEMP, new TypeCnNl());
-        fields.put(USER_TXT, new TypeCnNl());
-        fields.put(AUX_FILE, new TypeCnNl());
-        fields.put(PKG_TYP, new TypeCnNl());
-        fields.put(FAMLY_ID, new TypeCnNl());
-        fields.put(DATE_COD, new TypeCnNl());
-        fields.put(FACIL_ID, new TypeCnNl());
-        fields.put(FLOOR_ID, new TypeCnNl());
-        fields.put(PROC_ID, new TypeCnNl());
-        fields.put(OPER_FRQ, new TypeCnNl());
-        fields.put(SPEC_NAM, new TypeCnNl());
-        fields.put(SPEC_VER, new TypeCnNl());
-        fields.put(FLOW_ID, new TypeCnNl());
-        fields.put(SETUP_ID, new TypeCnNl());
-        fields.put(DSGN_REV, new TypeCnNl());
-        fields.put(ENG_ID, new TypeCnNl());
-        fields.put(ROM_COD, new TypeCnNl());
-        fields.put(SERL_NUM, new TypeCnNl());
-        fields.put(SUPR_NAM, new TypeCnNl());
+        fields.add(setupT);
+        fields.add(startT);
+        fields.add(statNum);
+        fields.add(modeCod);
+        fields.add(rtstCod);
+        fields.add(protCod);
+        fields.add(burnTim);
+        fields.add(cmodCod);
+        fields.add(lotId);
+        fields.add(partTyp);
+        fields.add(nodeNam);
+        fields.add(tstrTyp);
+        fields.add(jobNam);
+        fields.add(jobRev);
+        fields.add(sblotId);
+        fields.add(operNam);
+        fields.add(execTyp);
+        fields.add(execVer);
+        fields.add(testCod);
+        fields.add(tstTemp);
+        fields.add(userTxt);
+        fields.add(auxFile);
+        fields.add(pkgTyp);
+        fields.add(famlyId);
+        fields.add(dateCod);
+        fields.add(facilId);
+        fields.add(floorId);
+        fields.add(procId);
+        fields.add(operFrq);
+        fields.add(specNam);
+        fields.add(specVer);
+        fields.add(flowId);
+        fields.add(setupId);
+        fields.add(dsgnRev);
+        fields.add(engId);
+        fields.add(romCod);
+        fields.add(serlNum);
+        fields.add(suprNam);
     }
 
     public static RecordMir newInstance() {
@@ -100,344 +100,344 @@ public class RecordMir extends Record {
     }
 
     public Optional<Instant> getSetupT() {
-        return Optional.ofNullable(TypeTime.cast(fields.get(SETUP_T).getValue()));
+        return Optional.ofNullable(setupT.getValue());
     }
 
     public Optional<Instant> getStartT() {
-        return Optional.ofNullable(TypeTime.cast(fields.get(START_T).getValue()));
+        return Optional.ofNullable(startT.getValue());
     }
 
     public Optional<Integer> getStatNum() {
-        return Optional.ofNullable(TypeInt.cast(fields.get(STAT_NUM).getValue()));
+        return Optional.ofNullable(statNum.getValue());
     }
 
     public Optional<String> getModeCod() {
-        return Optional.ofNullable(TypeString.cast(fields.get(MODE_COD).getValue()));
+        return Optional.ofNullable(modeCod.getValue());
     }
 
     public Optional<String> getRtstCod() {
-        return Optional.ofNullable(TypeString.cast(fields.get(RTST_COD).getValue()));
+        return Optional.ofNullable(rtstCod.getValue());
     }
 
     public Optional<String> getProtCod() {
-        return Optional.ofNullable(TypeString.cast(fields.get(PROT_COD).getValue()));
+        return Optional.ofNullable(protCod.getValue());
     }
 
     public Optional<Integer> getBurnTim() {
-        return Optional.ofNullable(TypeInt.cast(fields.get(BURN_TIM).getValue()));
+        return Optional.ofNullable(burnTim.getValue());
     }
 
     public Optional<String> getCmodCod() {
-        return Optional.ofNullable(TypeString.TYPE.cast(fields.get(CMOD_COD).getValue()));
+        return Optional.ofNullable(cmodCod.getValue());
     }
 
     public Optional<String> getLotId() {
-        return Optional.ofNullable(TypeString.cast(fields.get(LOT_ID).getValue()));
+        return Optional.ofNullable(lotId.getValue());
     }
 
     public Optional<String> getPartTyp() {
-        return Optional.ofNullable(TypeString.cast(fields.get(PART_TYP).getValue()));
+        return Optional.ofNullable(partTyp.getValue());
     }
 
     public Optional<String> getNodeNam() {
-        return Optional.ofNullable(TypeString.cast(fields.get(NODE_NAM).getValue()));
+        return Optional.ofNullable(nodeNam.getValue());
     }
 
     public Optional<String> getTstrTyp() {
-        return Optional.ofNullable(TypeString.cast(fields.get(TSTR_TYP).getValue()));
+        return Optional.ofNullable(tstrTyp.getValue());
     }
 
     public Optional<String> getJobNam() {
-        return Optional.ofNullable(TypeString.cast(fields.get(JOB_NAM).getValue()));
+        return Optional.ofNullable(jobNam.getValue());
     }
 
     public Optional<String> getJobRev() {
-        return Optional.ofNullable(TypeString.cast(fields.get(JOB_REV).getValue()));
+        return Optional.ofNullable(jobRev.getValue());
     }
 
     public Optional<String> getSblotId() {
-        return Optional.ofNullable(TypeString.cast(fields.get(SBLOT_ID).getValue()));
+        return Optional.ofNullable(sblotId.getValue());
     }
 
     public Optional<String> getOperNam() {
-        return Optional.ofNullable(TypeString.cast(fields.get(OPER_NAM).getValue()));
+        return Optional.ofNullable(operNam.getValue());
     }
 
     public Optional<String> getExecTyp() {
-        return Optional.ofNullable(TypeString.cast(fields.get(EXEC_TYP).getValue()));
+        return Optional.ofNullable(execTyp.getValue());
     }
 
     public Optional<String> getExecVer() {
-        return Optional.ofNullable(TypeString.cast(fields.get(EXEC_VER).getValue()));
+        return Optional.ofNullable(execVer.getValue());
     }
 
     public Optional<String> getTestCod() {
-        return Optional.ofNullable(TypeString.cast(fields.get(TEST_COD).getValue()));
+        return Optional.ofNullable(testCod.getValue());
     }
 
     public Optional<String> getTstTemp() {
-        return Optional.ofNullable(TypeString.cast(fields.get(TST_TEMP).getValue()));
+        return Optional.ofNullable(tstTemp.getValue());
     }
 
     public Optional<String> getUserTxt() {
-        return Optional.ofNullable(TypeString.cast(fields.get(USER_TXT).getValue()));
+        return Optional.ofNullable(userTxt.getValue());
     }
 
     public Optional<String> getAuxFile() {
-        return Optional.ofNullable(TypeString.cast(fields.get(AUX_FILE).getValue()));
+        return Optional.ofNullable(auxFile.getValue());
     }
 
     public Optional<String> getPkgTyp() {
-        return Optional.ofNullable(TypeString.cast(fields.get(PKG_TYP).getValue()));
+        return Optional.ofNullable(pkgTyp.getValue());
     }
 
     public Optional<String> getFamlyId() {
-        return Optional.ofNullable(TypeString.cast(fields.get(FAMLY_ID).getValue()));
+        return Optional.ofNullable(famlyId.getValue());
     }
 
     public Optional<String> getDateCod() {
-        return Optional.ofNullable(TypeString.cast(fields.get(DATE_COD).getValue()));
+        return Optional.ofNullable(dateCod.getValue());
     }
 
     public Optional<String> getFacilId() {
-        return Optional.ofNullable(TypeString.cast(fields.get(FACIL_ID).getValue()));
+        return Optional.ofNullable(facilId.getValue());
     }
 
     public Optional<String> getFloorId() {
-        return Optional.ofNullable(TypeString.cast(fields.get(FLOOR_ID).getValue()));
+        return Optional.ofNullable(floorId.getValue());
     }
 
     public Optional<String> getProcId() {
-        return Optional.ofNullable(TypeString.cast(fields.get(PROC_ID).getValue()));
+        return Optional.ofNullable(procId.getValue());
     }
 
     public Optional<String> getOperFrq() {
-        return Optional.ofNullable(TypeString.cast(fields.get(OPER_FRQ).getValue()));
+        return Optional.ofNullable(operFrq.getValue());
     }
 
     public Optional<String> getSpecNam() {
-        return Optional.ofNullable(TypeString.cast(fields.get(SPEC_NAM).getValue()));
+        return Optional.ofNullable(specNam.getValue());
     }
 
     public Optional<String> getSpecVer() {
-        return Optional.ofNullable(TypeString.cast(fields.get(SPEC_VER).getValue()));
+        return Optional.ofNullable(specVer.getValue());
     }
 
     public Optional<String> getFlowId() {
-        return Optional.ofNullable(TypeString.cast(fields.get(FLOW_ID).getValue()));
+        return Optional.ofNullable(flowId.getValue());
     }
 
     public Optional<String> getSetupId() {
-        return Optional.ofNullable(TypeString.cast(fields.get(SETUP_ID).getValue()));
+        return Optional.ofNullable(setupId.getValue());
     }
 
     public Optional<String> getDsgnRev() {
-        return Optional.ofNullable(TypeString.cast(fields.get(DSGN_REV).getValue()));
+        return Optional.ofNullable(dsgnRev.getValue());
     }
 
     public Optional<String> getEngId() {
-        return Optional.ofNullable(TypeString.cast(fields.get(ENG_ID).getValue()));
+        return Optional.ofNullable(engId.getValue());
     }
 
     public Optional<String> getRomCod() {
-        return Optional.ofNullable(TypeString.cast(fields.get(ROM_COD).getValue()));
+        return Optional.ofNullable(romCod.getValue());
     }
 
     public Optional<String> getSerlNum() {
-        return Optional.ofNullable(TypeString.cast(fields.get(SERL_NUM).getValue()));
+        return Optional.ofNullable(serlNum.getValue());
     }
 
     public Optional<String> getSuprNam() {
-        return Optional.ofNullable(TypeString.cast(fields.get(SUPR_NAM).getValue()));
+        return Optional.ofNullable(suprNam.getValue());
     }
 
     public RecordMir setSetupT(Instant value) {
-        fields.get(SETUP_T).setValue(value);
+        setupT.setValue(value);
         return this;
     }
 
     public RecordMir setStartT(Instant value) {
-        fields.get(START_T).setValue(value);
+        startT.setValue(value);
         return this;
     }
 
     public RecordMir setStatNum(Integer value) {
-        fields.get(STAT_NUM).setValue(value);
+        statNum.setValue(value);
         return this;
     }
 
     public RecordMir setModeCod(String value) {
-        fields.get(MODE_COD).setValue(value);
+        modeCod.setValue(value);
         return this;
     }
 
     public RecordMir setRtstCod(String value) {
-        fields.get(RTST_COD).setValue(value);
+        rtstCod.setValue(value);
         return this;
     }
 
     public RecordMir setProtCod(String value) {
-        fields.get(PROT_COD).setValue(value);
+        protCod.setValue(value);
         return this;
     }
 
     public RecordMir setBurnTim(Integer value) {
-        fields.get(BURN_TIM).setValue(value);
+        burnTim.setValue(value);
         return this;
     }
 
     public RecordMir setCmodCod(String value) {
-        fields.get(CMOD_COD).setValue(value);
+        cmodCod.setValue(value);
         return this;
     }
 
     public RecordMir setLotId(String value) {
-        fields.get(LOT_ID).setValue(value);
+        lotId.setValue(value);
         return this;
     }
 
     public RecordMir setPartTyp(String value) {
-        fields.get(PART_TYP).setValue(value);
+        partTyp.setValue(value);
         return this;
     }
 
     public RecordMir setNodeNam(String value) {
-        fields.get(NODE_NAM).setValue(value);
+        nodeNam.setValue(value);
         return this;
     }
 
     public RecordMir setTstrTyp(String value) {
-        fields.get(TSTR_TYP).setValue(value);
+        tstrTyp.setValue(value);
         return this;
     }
 
     public RecordMir setJobNam(String value) {
-        fields.get(JOB_NAM).setValue(value);
+        jobNam.setValue(value);
         return this;
     }
 
     public RecordMir setJobRev(String value) {
-        fields.get(JOB_REV).setValue(value);
+        jobRev.setValue(value);
         return this;
     }
 
     public RecordMir setSblotId(String value) {
-        fields.get(SBLOT_ID).setValue(value);
+        sblotId.setValue(value);
         return this;
     }
 
     public RecordMir setOperNam(String value) {
-        fields.get(OPER_NAM).setValue(value);
+        operNam.setValue(value);
         return this;
     }
 
     public RecordMir setExecTyp(String value) {
-        fields.get(EXEC_TYP).setValue(value);
+        execTyp.setValue(value);
         return this;
     }
 
     public RecordMir setExecVer(String value) {
-        fields.get(EXEC_VER).setValue(value);
+        execVer.setValue(value);
         return this;
     }
 
     public RecordMir setTestCod(String value) {
-        fields.get(TEST_COD).setValue(value);
+        testCod.setValue(value);
         return this;
     }
 
     public RecordMir setTstTemp(String value) {
-        fields.get(TST_TEMP).setValue(value);
+        tstTemp.setValue(value);
         return this;
     }
 
     public RecordMir setUserTxt(String value) {
-        fields.get(USER_TXT).setValue(value);
+        userTxt.setValue(value);
         return this;
     }
 
     public RecordMir setAuxFile(String value) {
-        fields.get(AUX_FILE).setValue(value);
+        auxFile.setValue(value);
         return this;
     }
 
     public RecordMir setPkgTyp(String value) {
-        fields.get(PKG_TYP).setValue(value);
+        pkgTyp.setValue(value);
         return this;
     }
 
     public RecordMir setFamlyId(String value) {
-        fields.get(FAMLY_ID).setValue(value);
+        famlyId.setValue(value);
         return this;
     }
 
     public RecordMir setDateCod(String value) {
-        fields.get(DATE_COD).setValue(value);
+        dateCod.setValue(value);
         return this;
     }
 
     public RecordMir setFacilId(String value) {
-        fields.get(FACIL_ID).setValue(value);
+        facilId.setValue(value);
         return this;
     }
 
     public RecordMir setFloorId(String value) {
-        fields.get(FLOOR_ID).setValue(value);
+        floorId.setValue(value);
         return this;
     }
 
     public RecordMir setProcId(String value) {
-        fields.get(PROC_ID).setValue(value);
+        procId.setValue(value);
         return this;
     }
 
     public RecordMir setOperFrq(String value) {
-        fields.get(OPER_FRQ).setValue(value);
+        operFrq.setValue(value);
         return this;
     }
 
     public RecordMir setSpecNam(String value) {
-        fields.get(SPEC_NAM).setValue(value);
+        specNam.setValue(value);
         return this;
     }
 
     public RecordMir setSpecVer(String value) {
-        fields.get(SPEC_VER).setValue(value);
+        specVer.setValue(value);
         return this;
     }
 
     public RecordMir setFlowId(String value) {
-        fields.get(FLOW_ID).setValue(value);
+        flowId.setValue(value);
         return this;
     }
 
     public RecordMir setSetupId(String value) {
-        fields.get(SETUP_ID).setValue(value);
+        setupId.setValue(value);
         return this;
     }
 
     public RecordMir setDsgnRev(String value) {
-        fields.get(DSGN_REV).setValue(value);
+        dsgnRev.setValue(value);
         return this;
     }
 
     public RecordMir setEngId(String value) {
-        fields.get(ENG_ID).setValue(value);
+        engId.setValue(value);
         return this;
     }
 
     public RecordMir setRomCod(String value) {
-        fields.get(ROM_COD).setValue(value);
+        romCod.setValue(value);
         return this;
     }
 
     public RecordMir setSerlNum(String value) {
-        fields.get(SERL_NUM).setValue(value);
+        serlNum.setValue(value);
         return this;
     }
 
     public RecordMir setSuprNam(String value) {
-        fields.get(SUPR_NAM).setValue(value);
+        suprNam.setValue(value);
         return this;
     }
 }

@@ -9,13 +9,11 @@ enum Records {
     ATR(RecordAtr::new),
     VUR(RecordVur::new),
     MIR(RecordMir::new),
-    RDR(RecordRdr::new);
-
-//    PCR(StdfRecordPcr::new),
-//    HBR(StdfRecordHbr::new),
-
-
-//    MRR(StdfRecordMrr::new);
+    MRR(RecordMrr::new),
+    RDR(RecordRdr::new),
+    PCR(RecordPcr::new),
+    HBR(RecordHbr::new),
+    SBR(RecordSbr::new);
 
     private Supplier<Record> supplier;
 

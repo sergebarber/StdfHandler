@@ -2,10 +2,14 @@ package org.barber.stdfhandler.file;
 
 import java.io.ByteArrayInputStream;
 
-class TypeCn extends TypeString {
+class TypeCn extends Type<String> {
 
     static final int MAX_LENGTH = 255;
     static final String NULL_VALUE = "";
+
+    TypeCn(String name) {
+        super(name);
+    }
 
     @Override
     void setValue(ByteArrayInputStream stream) {
@@ -14,9 +18,8 @@ class TypeCn extends TypeString {
     }
 
     @Override
-    void setValue(Object value) {
-        String actualValue = TYPE.cast(value);
-        this.value = actualValue.length() > MAX_LENGTH ? actualValue.substring(0, MAX_LENGTH) : actualValue;
+    void setValue(String value) {
+        this.value = value.length() > MAX_LENGTH ? value.substring(0, MAX_LENGTH) : value;
     }
 
     @Override

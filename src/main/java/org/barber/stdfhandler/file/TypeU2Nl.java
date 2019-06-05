@@ -6,6 +6,10 @@ class TypeU2Nl extends TypeU2 {
 
     private static final int NULL_VALUE = 65535;
 
+    TypeU2Nl(String name) {
+        super(name);
+    }
+
     @Override
     void setValue(ByteArrayInputStream stream) {
         int value = (int) byteStreamToNumber(stream, BYTE_LENGTH);
@@ -13,11 +17,8 @@ class TypeU2Nl extends TypeU2 {
     }
 
     @Override
-    void setValue(Object value) {
-        int actualValue = TYPE.cast(value);
-        if (actualValue < MIN_VALUE || actualValue > MAX_VALUE) {
-            throw new IllegalArgumentException(String.format(ILLEGAL_VALUE_MESSAGE, actualValue, MIN_VALUE, MAX_VALUE));
-        }
-        this.value = actualValue == NULL_VALUE ? null : actualValue;
+    void setValue(Integer value) {
+        checkValue(value);
+        this.value = value == NULL_VALUE ? null : value;
     }
 }

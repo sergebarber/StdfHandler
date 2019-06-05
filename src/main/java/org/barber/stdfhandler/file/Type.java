@@ -10,25 +10,28 @@ abstract class Type<T> {
     static final String U2_BINARY_STRING_FORMAT = "%16s";
     static final String U4_BINARY_STRING_FORMAT = "%32s";
 
-
-    static final long U4_NULL = 4_294_967_295L;
-
     protected T value;
+    private String name;
 
-    Type(){}
+    Type(String name){
+        this.name = name;
+    }
 
     public T getValue() {
         return value;
     }
 
+    public String getName() {
+        return name;
+    }
+
     abstract void setValue(ByteArrayInputStream stream);
-    abstract void setValue(Object value);
+    abstract void setValue(T value);
     abstract byte[] toBytes();
-    abstract String asString();
 
     @Override
     public String toString() {
-        return asString();
+        return value.toString();
     }
 
     private static byte[] readBytes(ByteArrayInputStream stream, int length) {

@@ -1,5 +1,7 @@
 package org.barber.stdfhandler.file;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -7,25 +9,28 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 abstract class RecordTest {
 
-    private FileReader fileReader = new FileReader();
+  private FileReader fileReader = new FileReader();
 
-    private FileImage readFile(ByteArrayOutputStream outputStream) throws IOException {
-        return fileReader.read(new ByteArrayInputStream(outputStream.toByteArray()));
-    }
+  private FileImage readFile(ByteArrayOutputStream outputStream) throws IOException {
+    return fileReader.read(new ByteArrayInputStream(outputStream.toByteArray()));
+  }
 
-    <T> void testFieldOptional(FileBuilder builder, Function<FileImage, Optional<T>> getter, T expected) throws IOException {
-        ByteArrayOutputStream outputStream = builder.toStream();
-        FileImage image = readFile(outputStream);
-        assertThat(getter.apply(image).orElseThrow()).isEqualTo(expected);
-    }
+  <T> void testOptionalField(FileBuilder builder, Function<FileImage, Optional<T>> getter, T expected)
+      throws IOException {
+    ByteArrayOutputStream outputStream = builder.toStream();
+    FileImage image = readFile(outputStream);
+    assertThat(getter.apply(image).orElseThrow()).isEqualTo(expected);
+  }
 
-    <T> void testFieldList(FileBuilder builder, Function<FileImage, List<T>> getter, List<T> expected) throws IOException {
-        ByteArrayOutputStream outputStream = builder.toStream();
-        FileImage image = readFile(outputStream);
-        assertThat(getter.apply(image)).isEqualTo(expected);
-    }
-}
+  <T> void testListField(FileBuilder builder, Function<FileImage, List<T>> getter, List<T> expected)
+      throws IOException {
+    ByteArrayOutputStream outputStream = builder.toStream();
+    FileImage image = readFile(outputStream);
+    assertThat(getter.apply(image)).isEqualTo(expected);
+  }
+
+
+
+  }

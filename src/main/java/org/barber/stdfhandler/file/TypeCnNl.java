@@ -4,6 +4,10 @@ import java.io.ByteArrayInputStream;
 
 class TypeCnNl extends TypeCn {
 
+    TypeCnNl(String name) {
+        super(name);
+    }
+
     @Override
     void setValue(ByteArrayInputStream stream) {
         int length = stream.read();
@@ -11,10 +15,9 @@ class TypeCnNl extends TypeCn {
     }
 
     @Override
-    void setValue(Object value) {
-        String actualValue = TYPE.cast(value);
+    void setValue(String value) {
         if (!value.equals(NULL_VALUE)) {
-            this.value = actualValue.length() > MAX_LENGTH ? actualValue.substring(0, MAX_LENGTH) : actualValue;
+            this.value = value.length() > MAX_LENGTH ? value.substring(0, MAX_LENGTH) : value;
         }
     }
 }

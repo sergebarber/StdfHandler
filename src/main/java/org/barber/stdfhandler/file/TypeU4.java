@@ -2,37 +2,37 @@ package org.barber.stdfhandler.file;
 
 import java.io.ByteArrayInputStream;
 
-class TypeU1 extends Type<Integer> {
+class TypeU4 extends Type<Long> {
 
+    private static final long MAX_VALUE = 4_294_967_295L;
     private static final int MIN_VALUE = 0;
-    private static final int MAX_VALUE = 255;
-    static final String ILLEGAL_VALUE_MESSAGE = "Illegal argument size %d for type StdfU1. Should be %d <= size <= %d";
+    static final String ILLEGAL_VALUE_MESSAGE = "Illegal argument size %d for type StdfU4. Should be %d <= size <= %d";
 
-    private static final int BYTE_LENGTH = 1;
+    static final int BYTE_LENGTH = 4;
     private static final int NULL_VALUE = 0;
 
-    TypeU1(String name) {
+    TypeU4(String name) {
         super(name);
     }
 
     @Override
     void setValue(ByteArrayInputStream stream) {
-        this.value = (int) byteStreamToNumber(stream, BYTE_LENGTH);
+        this.value = byteStreamToNumber(stream, BYTE_LENGTH);
     }
 
     @Override
-    void setValue(Integer value) {
+    void setValue(Long value) {
         checkValue(value);
         this.value = value;
     }
 
     @Override
     byte[] toBytes() {
-        int value = this.value == null ? NULL_VALUE : this.value;
-        return toBytes(value, U1_BINARY_STRING_FORMAT);
+        long value = this.value == null ? NULL_VALUE : this.value;
+        return toBytes(value, U4_BINARY_STRING_FORMAT);
     }
 
-    private void checkValue(int value) {
+    static void checkValue(long value) {
         if (value < MIN_VALUE || value > MAX_VALUE) {
             throw new IllegalArgumentException(String.format(ILLEGAL_VALUE_MESSAGE, value, MIN_VALUE, MAX_VALUE));
         }

@@ -9,7 +9,7 @@ class RecordVurTest extends RecordTest {
     @Test
     void testUpdNam() throws IOException {
         String expected = "Test UPD_NAM";
-        testFieldOptional(new FileBuilder().addRecord(RecordVur.newInstance().setUpdNam(expected)),
+        testOptionalField(new FileBuilder().addRecord(RecordVur.newInstance().setUpdNam(expected)),
                 fileImage -> fileImage.getVur().getUpdNam(), expected);
     }
 }

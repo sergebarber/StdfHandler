@@ -12,10 +12,9 @@ class RecordRdr extends Record {
     private static final byte TYPE = 1;
     private static final byte CODE = 70;
 
-    private static final String NUM_BINS = "NUM_BINS";
-    private static final String RTST_BIN = "RTST_BIN";
+    private static final String RTST_BIN = "RTST_BIN_";
 
-    private TypeU2 numBins = new TypeU2();
+    private TypeU2 numBins = new TypeU2("NUM_BINS");
     private TypeU2[] rtstBin = new TypeU2[0];
 
     RecordRdr() {
@@ -32,7 +31,7 @@ class RecordRdr extends Record {
         int binLength = numBins.getValue();
         rtstBin = new TypeU2[binLength];
         for (int i = 0; i < binLength; i++) {
-            rtstBin[i] = new TypeU2();
+            rtstBin[i] = new TypeU2(RTST_BIN + i);
             rtstBin[i].setValue(bytes);
         }
         addToImage(fileImage);
@@ -56,9 +55,9 @@ class RecordRdr extends Record {
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
-        builder.append(fieldAsString(NUM_BINS, numBins.asString()));
+        builder.append(fieldAsString(numBins.getName(), numBins.toString()));
         for (int i = 0; i < rtstBin.length; i++) {
-            builder.append(fieldAsString(RTST_BIN + i, rtstBin[i].asString()));
+            builder.append(fieldAsString(rtstBin[i].getName(), rtstBin[i].toString()));
         }
         return builder.toString();
     }
@@ -71,7 +70,7 @@ class RecordRdr extends Record {
         numBins.setValue(bins.size());
         rtstBin = new TypeU2[bins.size()];
         for (int i = 0; i < rtstBin.length; i++) {
-            rtstBin[i] = new TypeU2();
+            rtstBin[i] = new TypeU2(RTST_BIN + + i);
             rtstBin[i].setValue(bins.get(i));
         }
         return this;

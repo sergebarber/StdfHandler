@@ -8,105 +8,135 @@ import java.util.List;
 
 public class FileImage {
 
-    private RecordFar far;
-    private List<RecordAtr> atrs = new ArrayList<>();
-    private RecordVur vur;
-    private RecordMir mir;
-    private RecordRdr rdr;
+  private RecordFar far;
+  private List<RecordAtr> atrs = new ArrayList<>();
+  private RecordVur vur;
+  private RecordMir mir;
 
-//    private List<StdfRecordPcr> pcrs = new ArrayList<>();
-//    private List<StdfRecordHbr> hbrs = new ArrayList<>();
-//    private List<StdfRecordSbr> sbrs = new ArrayList<>();
+  private RecordRdr rdr;
 
-//    private StdfRecordMrr mrr;
+  private List<RecordPcr> pcrs = new ArrayList<>();
+  private List<RecordHbr> hbrs = new ArrayList<>();
+  private List<RecordSbr> sbrs = new ArrayList<>();
 
-    FileImage() {
-        this.far = new RecordFar();
+  private RecordMrr mrr;
+
+
+  FileImage() {
+    this.far = new RecordFar();
+  }
+
+  void setFar(RecordFar far) {
+    this.far = far;
+  }
+
+  void addAtr(RecordAtr atr) {
+    this.atrs.add(atr);
+  }
+
+  void setVur(RecordVur vur) {
+    this.vur = vur;
+  }
+
+  void setMir(RecordMir mir) {
+    this.mir = mir;
+  }
+
+  void setMrr(RecordMrr mrr) {
+    this.mrr = mrr;
+  }
+
+  void setRdr(RecordRdr rdr) {
+    this.rdr = rdr;
+  }
+
+  void addPcr(RecordPcr pcr) {
+    this.pcrs.add(pcr);
+  }
+
+  void addHbr(RecordHbr hbr) { this.hbrs.add(hbr); }
+
+  void addSbr(RecordSbr sbr) { this.sbrs.add(sbr); }
+
+  @Override
+  public String toString() {
+    StringBuilder builder = new StringBuilder();
+    builder.append(far != null ? far : "");
+    atrs.forEach(builder::append);
+    builder.append(vur != null ? vur : "");
+    builder.append(mir != null ? mir : "");
+    builder.append(rdr != null ? rdr : "");
+    pcrs.forEach(builder::append);
+    hbrs.forEach(builder::append);
+    sbrs.forEach(builder::append);
+
+    builder.append(mrr != null ? mrr : "");
+    return builder.toString();
+  }
+
+  ByteArrayOutputStream toStream() {
+    List<ByteArrayOutputStream> outputStreams = new LinkedList<>();
+    outputStreams.add(far.toBytes());
+    atrs.forEach(atr -> outputStreams.add(atr.toBytes()));
+    if (vur != null) {
+      outputStreams.add(vur.toBytes());
     }
-
-    void setFar(RecordFar far) {
-        this.far = far;
+    if (mir != null) {
+      outputStreams.add(mir.toBytes());
     }
-
-    void addAtr(RecordAtr atr) {
-        this.atrs.add(atr);
+    if (mir != null) {
+      outputStreams.add(mir.toBytes());
     }
-
-    void setVur(RecordVur vur) {
-        this.vur = vur;
+    if (rdr != null) {
+      outputStreams.add(rdr.toBytes());
     }
+    pcrs.forEach(atr -> outputStreams.add(atr.toBytes()));
+    hbrs.forEach(atr -> outputStreams.add(atr.toBytes()));
+    sbrs.forEach(atr -> outputStreams.add(atr.toBytes()));
 
-    void setMir(RecordMir mir) {
-        this.mir = mir;
+    if (mrr != null) {
+      outputStreams.add(mrr.toBytes());
     }
+    int length = outputStreams.stream().mapToInt(ByteArrayOutputStream::size).sum();
 
-    void setRdr(RecordRdr rdr) {
-        this.rdr = rdr;
-    }
+    ByteArrayOutputStream outputStream = new ByteArrayOutputStream(length);
+    outputStreams.forEach(stream -> outputStream.writeBytes(stream.toByteArray()));
+    return outputStream;
+  }
 
-    //    public void addPcr(StdfRecordPcr pcr) {
-//        this.pcrs.add(pcr);
-//    }
+  public RecordFar getFar() {
+    return this.far;
+  }
 
-//    public void addHbr(StdfRecordHbr hbr) { this.hbrs.add(hbr); }
+  public List<RecordAtr> getAtrs() {
+    return atrs;
+  }
 
-//    public void addSbr(StdfRecordSbr sbr) { this.sbrs.add(sbr); }
+  public RecordVur getVur() {
+    return vur;
+  }
 
+  public RecordMir getMir() {
+    return mir;
+  }
 
+  public RecordMrr getMrr() {
+    return mrr;
+  }
 
-//    public void setMrr(StdfRecordMrr mrr) {
-//        this.mrr = mrr;
-//    }
+  public RecordRdr getRdr() {
+    return rdr;
+  }
 
-    @Override
-    public String toString() {
-        StringBuilder builder = new StringBuilder();
-        builder.append(far != null ? far : "");
-        atrs.forEach(builder::append);
-        builder.append(vur != null ? vur : "");
-        builder.append(mir != null ? mir : "");
-        builder.append(rdr != null ? rdr : "");
-//        pcrs.forEach(builder::append);
-//        hbrs.forEach(builder::append);
-//        sbrs.forEach(builder::append);
-//
-//        builder.append(mrr != null ? mrr : "");
+  public List<RecordPcr> getPcrs() {
+    return pcrs;
+  }
 
-        return builder.toString();
-    }
+  public List<RecordHbr> getHbrs() {
+    return hbrs;
+  }
 
-    ByteArrayOutputStream toStream() {
-        List<ByteArrayOutputStream> outputStreams = new LinkedList<>();
-        outputStreams.add(far.toBytes());
-        atrs.forEach(atr -> outputStreams.add(atr.toBytes()));
-        if (vur != null) outputStreams.add(vur.toBytes());
-        if (mir != null) outputStreams.add(mir.toBytes());
-        if (rdr != null) outputStreams.add(rdr.toBytes());
-
-        int length = outputStreams.stream().mapToInt(ByteArrayOutputStream::size).sum();
-
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream(length);
-        outputStreams.forEach(stream -> outputStream.writeBytes(stream.toByteArray()));
-        return outputStream;
-    }
-
-    public RecordFar getFar() {
-        return this.far;
-    }
-
-    public List<RecordAtr> getAtrs() {
-        return atrs;
-    }
-
-    public RecordVur getVur() {
-        return vur;
-    }
-
-    public RecordMir getMir() {
-        return mir;
-    }
-
-    public RecordRdr getRdr() {
-        return rdr;
-    }
+  public List<RecordSbr> getSbrs() {
+    return sbrs;
+  }
 }

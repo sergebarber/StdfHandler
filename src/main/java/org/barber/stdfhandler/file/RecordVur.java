@@ -8,11 +8,11 @@ public class RecordVur extends Record {
     private static final int TYPE = 0;
     private static final int CODE = 30;
 
-    private static final String UPD_NAM = "UPD_NAM";
+    private static final Type<String> updNam = new TypeCn("UPD_NAM");
 
     RecordVur() {
         super(NAME, TYPE, CODE);
-        fields.put(UPD_NAM, new TypeCn());
+        fields.add(updNam);
     }
 
     @Override
@@ -25,11 +25,11 @@ public class RecordVur extends Record {
     }
 
     public Optional<String> getUpdNam() {
-        return Optional.ofNullable(TypeString.cast(fields.get(UPD_NAM).getValue()));
+        return Optional.ofNullable(updNam.getValue());
     }
 
     public RecordVur setUpdNam(String value) {
-        fields.get(UPD_NAM).setValue(value);
+        updNam.setValue(value);
         return this;
     }
 }

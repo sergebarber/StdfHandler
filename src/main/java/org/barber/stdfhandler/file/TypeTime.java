@@ -13,10 +13,8 @@ class TypeTime extends Type<Instant> {
     private static final int BYTE_LENGTH = 4;
     private static final int NULL_VALUE = 0;
 
-    static final Class<Instant> TYPE = Instant.class;
-
-    static Instant cast(Object value) {
-        return TYPE.cast(value);
+    TypeTime(String name) {
+        super(name);
     }
 
     @Override
@@ -25,9 +23,8 @@ class TypeTime extends Type<Instant> {
     }
 
     @Override
-    void setValue(Object value) {
-        Instant actualValue = TYPE.cast(value);
-        long epochSecond = actualValue.getEpochSecond();
+    void setValue(Instant value) {
+        long epochSecond = value.getEpochSecond();
         if (epochSecond < MIN_VALUE || epochSecond > MAX_VALUE) {
             throw new IllegalArgumentException(String.format(ILLEGAL_VALUE_MESSAGE, epochSecond, MIN_VALUE, MAX_VALUE));
         }
@@ -38,10 +35,5 @@ class TypeTime extends Type<Instant> {
     byte[] toBytes() {
         long value = this.value == null ? NULL_VALUE : this.value.getEpochSecond();
         return toBytes(value, U4_BINARY_STRING_FORMAT);
-    }
-
-    @Override
-    String asString() {
-        return value.toString();
     }
 }
