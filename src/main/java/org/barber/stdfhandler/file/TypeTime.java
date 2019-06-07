@@ -7,33 +7,34 @@ class TypeTime extends Type<Instant> {
 
     private static final long MAX_VALUE = 4_294_967_295L;
     private static final long MIN_VALUE = 0;
-    private static final String ILLEGAL_VALUE_MESSAGE =
-            "Illegal amount of seconds %d for type StdfTime. Should be %d <= seconds <= %d";
+    static final String ILLEGAL_VALUE_MESSAGE =
+            "Illegal amount of seconds %d for type StdfTime. Should be "+ MIN_VALUE + " <= seconds <= " + MAX_VALUE;
 
     private static final int BYTE_LENGTH = 4;
-    private static final int NULL_VALUE = 0;
 
-    TypeTime(String name) {
-        super(name);
+    TypeTime(String name, Instant nullValue) {
+        super(name, nullValue, Instant.ofEpochSecond(LONG_DEFAULT_VALUE));
     }
 
     @Override
-    void setValue(ByteArrayInputStream stream) {
-        this.value = Instant.ofEpochSecond(byteStreamToNumber(stream, BYTE_LENGTH));
+    void setValueFromStream(ByteArrayInputStream stream) {
+        Instant value = Instant.ofEpochSecond(byteStreamToNumber(stream, BYTE_LENGTH));
+        setValue(value);
     }
 
     @Override
-    void setValue(Instant value) {
+    void setValueFromUser(Instant value) {
         long epochSecond = value.getEpochSecond();
         if (epochSecond < MIN_VALUE || epochSecond > MAX_VALUE) {
-            throw new IllegalArgumentException(String.format(ILLEGAL_VALUE_MESSAGE, epochSecond, MIN_VALUE, MAX_VALUE));
+            throw new IllegalArgumentException(String.format(ILLEGAL_VALUE_MESSAGE, epochSecond));
         }
-        this.value = Instant.ofEpochSecond(epochSecond);
+        value = Instant.ofEpochSecond(epochSecond);
+        setValue(value);
     }
 
     @Override
     byte[] toBytes() {
-        long value = this.value == null ? NULL_VALUE : this.value.getEpochSecond();
+        long value = getActualValue().getEpochSecond();
         return toBytes(value, U4_BINARY_STRING_FORMAT);
     }
 }

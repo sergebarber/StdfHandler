@@ -3,42 +3,43 @@ package org.barber.stdfhandler.file;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 abstract class Record {
 
     static final int HEADER_LENGTH = 4;
+
+    static final int U2_MAX_NULL_VALUE = 65535;
+    static final long U4_MAX_NULL_VALUE = 4_294_967_295L;
 
     private static final String DELIMITER = ": ";
     private static final String NEW_LINE = "\n";
     private static final String TAB = " ".repeat(3);
 
     private final String name;
-    private final int group;
-    private final int code;
+    private final int type;
+    private final int subtype;
 
     List<Type> fields = new ArrayList<>();
 
-    Record(String name, int group, int code) {
+    Record(String name, int type, int subtype) {
         this.name = name;
-        this.group = group;
-        this.code = code;
+        this.type = type;
+        this.subtype = subtype;
     }
 
-    int getGroup() {
-        return group;
+    int getType() {
+        return type;
     }
 
-    int getCode() {
-        return code;
+    int getSubtype() {
+        return subtype;
     }
 
     protected abstract void addToImage(FileImage image);
 
     void fill(ByteArrayInputStream bytes, FileImage fileImage) {
-        fields.forEach(field -> field.setValue(bytes));
+        fields.forEach(field -> field.setValueFromStream(bytes));
         addToImage(fileImage);
     }
 
@@ -48,7 +49,7 @@ abstract class Record {
         return addHeader(fieldsBytes);
     }
 
-    ByteArrayOutputStream addHeader(ByteArrayOutputStream fieldsBytes) {
+    private ByteArrayOutputStream addHeader(ByteArrayOutputStream fieldsBytes) {
         ByteArrayOutputStream recordOutputStream = new ByteArrayOutputStream();
         recordOutputStream.writeBytes(getHeaderBytes(fieldsBytes.size()));
         recordOutputStream.writeBytes(fieldsBytes.toByteArray());
@@ -60,8 +61,8 @@ abstract class Record {
         return new byte[]{
                 recordLength[0],
                 recordLength[1],
-                Type.toBytes(group, Type.U1_BINARY_STRING_FORMAT)[0],
-                Type.toBytes(code, Type.U1_BINARY_STRING_FORMAT)[0]
+                Type.toBytes(type, Type.U1_BINARY_STRING_FORMAT)[0],
+                Type.toBytes(subtype, Type.U1_BINARY_STRING_FORMAT)[0]
         };
     }
 

@@ -13,7 +13,8 @@ enum Records {
     RDR(RecordRdr::new),
     PCR(RecordPcr::new),
     HBR(RecordHbr::new),
-    SBR(RecordSbr::new);
+    SBR(RecordSbr::new),
+    PMR(RecordPmr::new);
 
     private Supplier<Record> supplier;
 
@@ -27,13 +28,13 @@ enum Records {
 
     private static final EnumSet<Records> records = EnumSet.allOf(Records.class);
 
-    static Record getRecord(int group, int code) {
+    static Record getRecord(int type, int subtype) {
 
         Records enumInstance = records.stream()
-                .filter(record -> record.getRecord().getGroup() == group)
-                .filter(record -> record.getRecord().getCode() == code)
+                .filter(record -> record.getRecord().getType() == type)
+                .filter(record -> record.getRecord().getSubtype() == subtype)
                 .findFirst().orElseThrow(() -> new IllegalStateException(
-                        String.format("Unknown combination of record group %d and record type %d", group, code)));
+                        String.format("Unknown combination of record group %d and record type %d", type, subtype)));
 
         return enumInstance.getRecord();
     }

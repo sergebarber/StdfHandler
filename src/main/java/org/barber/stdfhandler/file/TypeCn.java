@@ -4,27 +4,28 @@ import java.io.ByteArrayInputStream;
 
 class TypeCn extends Type<String> {
 
-    static final int MAX_LENGTH = 255;
-    static final String NULL_VALUE = "";
+    private static final int MAX_LENGTH = 255;
 
-    TypeCn(String name) {
-        super(name);
+    TypeCn(String name, String nullValue) {
+        super(name, nullValue, STRING_DEFAULT_VALUE);
     }
 
     @Override
-    void setValue(ByteArrayInputStream stream) {
+    void setValueFromStream(ByteArrayInputStream stream) {
         int length = stream.read();
-        this.value = byteStreamToString(stream, length);
+        String value = byteStreamToString(stream, length);
+        setValue(value);
     }
 
     @Override
-    void setValue(String value) {
-        this.value = value.length() > MAX_LENGTH ? value.substring(0, MAX_LENGTH) : value;
+    void setValueFromUser(String value) {
+        value = value.length() > MAX_LENGTH ? value.substring(0, MAX_LENGTH) : value;
+        setValue(value);
     }
 
     @Override
     byte[] toBytes() {
-        String value = this.value == null ? NULL_VALUE : this.value;
+        String value = getActualValue();
         int length = value.length();
 
         byte[] res = new byte[length + 1];

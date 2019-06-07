@@ -30,7 +30,4 @@ abstract class RecordTest {
     FileImage image = readFile(outputStream);
     assertThat(getter.apply(image)).isEqualTo(expected);
   }
-
-
-
-  }
+}

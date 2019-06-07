@@ -6,12 +6,12 @@ public class RecordVur extends Record {
 
     private static final String NAME = "VUR";
     private static final int TYPE = 0;
-    private static final int CODE = 30;
+    private static final int SUBTYPE = 30;
 
-    private static final Type<String> updNam = new TypeCn("UPD_NAM");
+    private static final Type<String> updNam = new TypeCn("UPD_NAM", null);
 
     RecordVur() {
-        super(NAME, TYPE, CODE);
+        super(NAME, TYPE, SUBTYPE);
         fields.add(updNam);
     }
 
@@ -29,7 +29,7 @@ public class RecordVur extends Record {
     }
 
     public RecordVur setUpdNam(String value) {
-        updNam.setValue(value);
+        updNam.setValueFromUser(value);
         return this;
     }
 }

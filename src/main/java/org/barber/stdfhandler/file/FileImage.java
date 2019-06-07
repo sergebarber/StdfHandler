@@ -18,6 +18,7 @@ public class FileImage {
   private List<RecordPcr> pcrs = new ArrayList<>();
   private List<RecordHbr> hbrs = new ArrayList<>();
   private List<RecordSbr> sbrs = new ArrayList<>();
+  private List<RecordPmr> pmrs = new ArrayList<>();
 
   private RecordMrr mrr;
 
@@ -58,6 +59,8 @@ public class FileImage {
 
   void addSbr(RecordSbr sbr) { this.sbrs.add(sbr); }
 
+  void addPmr(RecordPmr pmr) { this.pmrs.add(pmr); }
+
   @Override
   public String toString() {
     StringBuilder builder = new StringBuilder();
@@ -69,6 +72,7 @@ public class FileImage {
     pcrs.forEach(builder::append);
     hbrs.forEach(builder::append);
     sbrs.forEach(builder::append);
+    pmrs.forEach(builder::append);
 
     builder.append(mrr != null ? mrr : "");
     return builder.toString();
@@ -91,8 +95,9 @@ public class FileImage {
       outputStreams.add(rdr.toBytes());
     }
     pcrs.forEach(atr -> outputStreams.add(atr.toBytes()));
-    hbrs.forEach(atr -> outputStreams.add(atr.toBytes()));
-    sbrs.forEach(atr -> outputStreams.add(atr.toBytes()));
+    hbrs.forEach(hbr -> outputStreams.add(hbr.toBytes()));
+    sbrs.forEach(sbr -> outputStreams.add(sbr.toBytes()));
+    pmrs.forEach(pmr -> outputStreams.add(pmr.toBytes()));
 
     if (mrr != null) {
       outputStreams.add(mrr.toBytes());
@@ -138,5 +143,9 @@ public class FileImage {
 
   public List<RecordSbr> getSbrs() {
     return sbrs;
+  }
+
+  public List<RecordPmr> getPmrs() {
+    return pmrs;
   }
 }

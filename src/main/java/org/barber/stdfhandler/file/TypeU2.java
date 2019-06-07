@@ -4,38 +4,34 @@ import java.io.ByteArrayInputStream;
 
 class TypeU2 extends Type<Integer> {
 
-    private static final int MAX_VALUE = 65535;
-    private static final int MIN_VALUE = 0;
+    static final int MAX_VALUE = 65535;
+    static final int MIN_VALUE = 0;
     static final String ILLEGAL_VALUE_MESSAGE =
-            "Illegal argument size %d for type StdfU2. Should be " + "%d <= size <= %d";
+            "Illegal argument size %d for type StdfU2. Should be " + MIN_VALUE + " <= size <= " + MAX_VALUE;
 
-    static final int BYTE_LENGTH = 2;
-    private static final int NULL_VALUE = 0;
+    private static final int BYTE_LENGTH = 2;
 
-    TypeU2(String name) {
-        super(name);
+    TypeU2(String name, Integer nullValue) {
+        super(name, nullValue, INT_DEFAULT_VALUE);
     }
 
     @Override
-    void setValue(ByteArrayInputStream stream) {
-        this.value = (int) byteStreamToNumber(stream, BYTE_LENGTH);
+    void setValueFromStream(ByteArrayInputStream stream) {
+        int value = (int) byteStreamToNumber(stream, BYTE_LENGTH);
+        setValue(value);
     }
 
     @Override
-    void setValue(Integer value) {
-        checkValue(value);
-        this.value = value;
+    void setValueFromUser(Integer value) {
+        if (value < MIN_VALUE || value > MAX_VALUE) {
+            throw new IllegalArgumentException(String.format(ILLEGAL_VALUE_MESSAGE, value));
+        }
+        setValue(value);
     }
 
     @Override
     byte[] toBytes() {
-        int value = this.value == null ? NULL_VALUE : this.value;
+        int value = getActualValue();
         return toBytes(value, U2_BINARY_STRING_FORMAT);
-    }
-
-    static void checkValue(int value) {
-        if (value < MIN_VALUE || value > MAX_VALUE) {
-            throw new IllegalArgumentException(String.format(ILLEGAL_VALUE_MESSAGE, value, MIN_VALUE, MAX_VALUE));
-        }
     }
 }

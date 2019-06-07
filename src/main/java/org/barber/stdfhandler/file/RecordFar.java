@@ -6,13 +6,13 @@ public class RecordFar extends Record {
 
     private static final String NAME = "FAR";
     private static final int TYPE = 0;
-    private static final int CODE = 10;
+    private static final int SUBTYPE = 10;
 
-    private final Type<Integer> cpuTyp = new TypeU1("CPU_TYP");
-    private final Type<Integer> stdfVer = new TypeU1("STDF_VER");
+    private final Type<Integer> cpuTyp = new TypeU1("CPU_TYP", null);
+    private final Type<Integer> stdfVer = new TypeU1("STDF_VER", null);
 
     RecordFar() {
-        super(NAME, TYPE, CODE);
+        super(NAME, TYPE, SUBTYPE);
         fields.add(cpuTyp);
         fields.add(stdfVer);
     }
@@ -35,12 +35,12 @@ public class RecordFar extends Record {
     }
 
     public RecordFar setCpuTyp(int value) {
-        cpuTyp.setValue(value);
+        cpuTyp.setValueFromUser(value);
         return this;
     }
 
     public RecordFar setStdfVer(int value) {
-        stdfVer.setValue(value);
+        stdfVer.setValueFromUser(value);
         return this;
     }
 }

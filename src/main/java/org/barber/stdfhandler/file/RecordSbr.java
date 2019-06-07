@@ -5,18 +5,18 @@ import java.util.Optional;
 public class RecordSbr extends Record {
 
   private static final String NAME = "SBR";
-  private static final int GROUP = 1;
-  private static final int TYPE = 50;
+  private static final int TYPE = 1;
+  private static final int SUBTYPE = 50;
 
-  private final Type<Integer> headNum = new TypeU1("HEAD_NUM");
-  private final Type<Integer> siteNum = new TypeU1("SITE_NUM");
-  private final Type<Integer> sbinNum = new TypeU2("SBIN_NUM");
-  private final Type<Long> sbinCnt = new TypeU4("SBIN_CNT");
-  private final Type<String> sbinPf = new TypeC1Nl("SBIN_PF");
-  private final Type<String> sbinNam = new TypeCnNl("SBIN_NAM");
+  private final Type<Integer> headNum = new TypeU1("HEAD_NUM", null);
+  private final Type<Integer> siteNum = new TypeU1("SITE_NUM", null);
+  private final Type<Integer> sbinNum = new TypeU2("SBIN_NUM", null);
+  private final Type<Long> sbinCnt = new TypeU4("SBIN_CNT", null);
+  private final Type<String> sbinPf = new TypeC1("SBIN_PF", " ");
+  private final Type<String> sbinNam = new TypeCn("SBIN_NAM", "");
 
   RecordSbr() {
-    super(NAME, GROUP, TYPE);
+    super(NAME, TYPE, SUBTYPE);
     fields.add(headNum);
     fields.add(siteNum);
     fields.add(sbinNum);
@@ -59,32 +59,32 @@ public class RecordSbr extends Record {
   }
 
   public RecordSbr setHeadNum(int value) {
-    headNum.setValue(value);
+    headNum.setValueFromUser(value);
     return this;
   }
 
   public RecordSbr setSiteNum(int value) {
-    siteNum.setValue(value);
+    siteNum.setValueFromUser(value);
     return this;
   }
 
   public RecordSbr setSbinNum(int value) {
-    sbinNum.setValue(value);
+    sbinNum.setValueFromUser(value);
     return this;
   }
 
   public RecordSbr setSbinCnt(long value) {
-    sbinCnt.setValue(value);
+    sbinCnt.setValueFromUser(value);
     return this;
   }
 
   public RecordSbr setSbinPf(String value) {
-    sbinPf.setValue(value);
+    sbinPf.setValueFromUser(value);
     return this;
   }
 
   public RecordSbr setSbinNam(String value) {
-    sbinNam.setValue(value);
+    sbinNam.setValueFromUser(value);
     return this;
   }
 }

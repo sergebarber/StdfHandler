@@ -5,18 +5,18 @@ import java.util.Optional;
 public class RecordHbr extends Record {
 
   private static final String NAME = "HBR";
-  private static final int GROUP = 1;
-  private static final int TYPE = 40;
+  private static final int TYPE = 1;
+  private static final int SUBTYPE = 40;
 
-  private final Type<Integer> headNum = new TypeU1("HEAD_NUM");
-  private final Type<Integer> siteNum = new TypeU1("SITE_NUM");
-  private final Type<Integer> hbinNum = new TypeU2("HBIN_NUM");
-  private final Type<Long> hbinCnt = new TypeU4("HBIN_CNT");
-  private final Type<String> hbinPf = new TypeC1Nl("HBIN_PF");
-  private final Type<String> hbinNam = new TypeCnNl("HBIN_NAM");
+  private final Type<Integer> headNum = new TypeU1("HEAD_NUM", null);
+  private final Type<Integer> siteNum = new TypeU1("SITE_NUM", null);
+  private final Type<Integer> hbinNum = new TypeU2("HBIN_NUM", null);
+  private final Type<Long> hbinCnt = new TypeU4("HBIN_CNT", null);
+  private final Type<String> hbinPf = new TypeC1("HBIN_PF", " ");
+  private final Type<String> hbinNam = new TypeCn("HBIN_NAM", "");
 
   RecordHbr() {
-    super(NAME, GROUP, TYPE);
+    super(NAME, TYPE, SUBTYPE);
     fields.add(headNum);
     fields.add(siteNum);
     fields.add(hbinNum);
@@ -60,32 +60,32 @@ public class RecordHbr extends Record {
   }
 
   public RecordHbr setHeadNum(Integer value) {
-    headNum.setValue(value);
+    headNum.setValueFromUser(value);
     return this;
   }
 
   public RecordHbr setSiteNum(Integer value) {
-    siteNum.setValue(value);
+    siteNum.setValueFromUser(value);
     return this;
   }
 
   public RecordHbr setHbinNum(Integer value) {
-    hbinNum.setValue(value);
+    hbinNum.setValueFromUser(value);
     return this;
   }
 
   public RecordHbr setHbinCnt(Long value) {
-    hbinCnt.setValue(value);
+    hbinCnt.setValueFromUser(value);
     return this;
   }
 
   public RecordHbr setHbinPf(String value) {
-    hbinPf.setValue(value);
+    hbinPf.setValueFromUser(value);
     return this;
   }
 
   public RecordHbr setHbinNam(String value) {
-    hbinNam.setValue(value);
+    hbinNam.setValueFromUser(value);
     return this;
   }
 }

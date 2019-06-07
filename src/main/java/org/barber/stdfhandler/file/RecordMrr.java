@@ -7,15 +7,15 @@ public class RecordMrr extends Record {
 
     private static final String NAME = "MRR";
     private static final int TYPE = 1;
-    private static final int GROUP = 20;
+    private static final int SUBTYPE = 20;
 
-    private final Type<Instant> finishT = new TypeTime("FINISH_T");
-    private final Type<String> dispCod = new TypeC1Nl("DISP_COD");
-    private final Type<String> usrDesc = new TypeCnNl("USR_DESC");
-    private final Type<String> excDesc = new TypeCnNl("EXC_DESC");
+    private final Type<Instant> finishT = new TypeTime("FINISH_T", null);
+    private final Type<String> dispCod = new TypeC1("DISP_COD", " ");
+    private final Type<String> usrDesc = new TypeCn("USR_DESC", "");
+    private final Type<String> excDesc = new TypeCn("EXC_DESC", "");
 
     public RecordMrr() {
-        super(NAME, TYPE, GROUP);
+        super(NAME, TYPE, SUBTYPE);
         fields.add(finishT);
         fields.add(dispCod);
         fields.add(usrDesc);
@@ -48,22 +48,22 @@ public class RecordMrr extends Record {
     }
 
     public RecordMrr setFinishT(Instant value) {
-        finishT.setValue(value);
+        finishT.setValueFromUser(value);
         return this;
     }
 
     public RecordMrr setDispCod(String value) {
-        dispCod.setValue(value);
+        dispCod.setValueFromUser(value);
         return this;
     }
 
     public RecordMrr setUsrDesc(String value) {
-        usrDesc.setValue(value);
+        usrDesc.setValueFromUser(value);
         return this;
     }
 
     public RecordMrr setExcDesc(String value) {
-        excDesc.setValue(value);
+        excDesc.setValueFromUser(value);
         return this;
     }
 }

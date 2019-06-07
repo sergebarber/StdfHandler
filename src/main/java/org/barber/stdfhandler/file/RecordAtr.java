@@ -7,13 +7,13 @@ public class RecordAtr extends Record {
 
     private static final String NAME = "ATR";
     private static final byte TYPE = 0;
-    private static final byte CODE = 20;
+    private static final byte SUBTYPE = 20;
 
-    private final Type<Instant> modTim = new TypeTime("MOD_TIM");
-    private final Type<String> cmdLine = new TypeCn("CMD_LINE");
+    private final Type<Instant> modTim = new TypeTime("MOD_TIM", null);
+    private final Type<String> cmdLine = new TypeCn("CMD_LINE", null);
 
     RecordAtr() {
-        super(NAME, TYPE, CODE);
+        super(NAME, TYPE, SUBTYPE);
         fields.add(modTim);
         fields.add(cmdLine);
     }
@@ -37,12 +37,12 @@ public class RecordAtr extends Record {
 
 
     public RecordAtr setModTim(Instant value) {
-        modTim.setValue(value);
+        modTim.setValueFromUser(value);
         return this;
     }
 
     public RecordAtr setCmdLine(String value) {
-        cmdLine.setValue(value);
+        cmdLine.setValueFromUser(value);
         return this;
     }
 }

@@ -6,18 +6,18 @@ public class RecordPcr extends Record {
 
     private static final String NAME = "PCR";
     private static final int TYPE = 1;
-    private static final int CODE = 30;
+    private static final int SUBTYPE = 30;
 
-    private final Type<Integer> headNum = new TypeU1("HEAD_NUM");
-    private final Type<Integer> siteNum = new TypeU1("SITE_NUM");
-    private final Type<Long> partCnt = new TypeU4("PART_CNT");
-    private final Type<Long> rtstCnt = new TypeU4Nl("RTST_CNT");
-    private final Type<Long> abrtCnt = new TypeU4Nl("ABRT_CNT");
-    private final Type<Long> goodCnt = new TypeU4Nl("GOOD_CNT");
-    private final Type<Long> funcCnt = new TypeU4Nl("FUNC_CNT");
+    private final Type<Integer> headNum = new TypeU1("HEAD_NUM", null);
+    private final Type<Integer> siteNum = new TypeU1("SITE_NUM", null);
+    private final Type<Long> partCnt = new TypeU4("PART_CNT", null);
+    private final Type<Long> rtstCnt = new TypeU4("RTST_CNT", U4_MAX_NULL_VALUE);
+    private final Type<Long> abrtCnt = new TypeU4("ABRT_CNT", U4_MAX_NULL_VALUE);
+    private final Type<Long> goodCnt = new TypeU4("GOOD_CNT", U4_MAX_NULL_VALUE);
+    private final Type<Long> funcCnt = new TypeU4("FUNC_CNT", U4_MAX_NULL_VALUE);
 
     RecordPcr() {
-        super(NAME, TYPE, CODE);
+        super(NAME, TYPE, SUBTYPE);
         fields.add(headNum);
         fields.add(siteNum);
         fields.add(partCnt);
@@ -65,37 +65,37 @@ public class RecordPcr extends Record {
     }
 
     public RecordPcr setHeadNum(int value) {
-        headNum.setValue(value);
+        headNum.setValueFromUser(value);
         return this;
     }
 
     public RecordPcr setSiteNum(int value) {
-        siteNum.setValue(value);
+        siteNum.setValueFromUser(value);
         return this;
     }
 
     public RecordPcr setPartCnt(long value) {
-        partCnt.setValue(value);
+        partCnt.setValueFromUser(value);
         return this;
     }
 
     public RecordPcr setRtstCnt(long value) {
-        rtstCnt.setValue(value);
+        rtstCnt.setValueFromUser(value);
         return this;
     }
 
     public RecordPcr setAbrtCnt(long value) {
-        abrtCnt.setValue(value);
+        abrtCnt.setValueFromUser(value);
         return this;
     }
 
     public RecordPcr setGoodCnt(long value) {
-        goodCnt.setValue(value);
+        goodCnt.setValueFromUser(value);
         return this;
     }
 
     public RecordPcr setFuncCnt(long value) {
-        funcCnt.setValue(value);
+        funcCnt.setValueFromUser(value);
         return this;
     }
 }

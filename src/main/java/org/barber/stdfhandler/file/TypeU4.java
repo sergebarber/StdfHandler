@@ -4,37 +4,34 @@ import java.io.ByteArrayInputStream;
 
 class TypeU4 extends Type<Long> {
 
-    private static final long MAX_VALUE = 4_294_967_295L;
-    private static final int MIN_VALUE = 0;
-    static final String ILLEGAL_VALUE_MESSAGE = "Illegal argument size %d for type StdfU4. Should be %d <= size <= %d";
+    static final long MAX_VALUE = 4_294_967_295L;
+    static final int MIN_VALUE = 0;
+    static final String ILLEGAL_VALUE_MESSAGE =
+            "Illegal argument size %d for type StdfU4. Should be " + MIN_VALUE + " <= size <= " + MAX_VALUE;
 
-    static final int BYTE_LENGTH = 4;
-    private static final int NULL_VALUE = 0;
+    private static final int BYTE_LENGTH = 4;
 
-    TypeU4(String name) {
-        super(name);
+    TypeU4(String name, Long nullValue) {
+        super(name, nullValue, LONG_DEFAULT_VALUE);
     }
 
     @Override
-    void setValue(ByteArrayInputStream stream) {
-        this.value = byteStreamToNumber(stream, BYTE_LENGTH);
+    void setValueFromStream(ByteArrayInputStream stream) {
+         long value = byteStreamToNumber(stream, BYTE_LENGTH);
+         setValue(value);
     }
 
     @Override
-    void setValue(Long value) {
-        checkValue(value);
-        this.value = value;
+    void setValueFromUser(Long value) {
+        if (value < MIN_VALUE || value > MAX_VALUE) {
+            throw new IllegalArgumentException(String.format(ILLEGAL_VALUE_MESSAGE, value));
+        }
+        setValue(value);
     }
 
     @Override
     byte[] toBytes() {
-        long value = this.value == null ? NULL_VALUE : this.value;
+        long value = getActualValue();
         return toBytes(value, U4_BINARY_STRING_FORMAT);
-    }
-
-    static void checkValue(long value) {
-        if (value < MIN_VALUE || value > MAX_VALUE) {
-            throw new IllegalArgumentException(String.format(ILLEGAL_VALUE_MESSAGE, value, MIN_VALUE, MAX_VALUE));
-        }
     }
 }

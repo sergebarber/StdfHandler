@@ -10,24 +10,39 @@ abstract class Type<T> {
     static final String U2_BINARY_STRING_FORMAT = "%16s";
     static final String U4_BINARY_STRING_FORMAT = "%32s";
 
-    protected T value;
+    static final String STRING_DEFAULT_VALUE = "";
+    static final Integer INT_DEFAULT_VALUE = 0;
+    static final Long LONG_DEFAULT_VALUE = 0L;
+
+    private T value;
+    private T nullValue;
     private String name;
 
-    Type(String name){
+    Type(String name, T nullValue, T defaultValue){
         this.name = name;
+        this.nullValue = nullValue;
+        this.value = this.nullValue != null ? this.nullValue : defaultValue;
     }
 
-    public T getValue() {
-        return value;
-    }
+    abstract void setValueFromStream(ByteArrayInputStream stream);
+    abstract void setValueFromUser(T value);
+    abstract byte[] toBytes();
 
     public String getName() {
         return name;
     }
 
-    abstract void setValue(ByteArrayInputStream stream);
-    abstract void setValue(T value);
-    abstract byte[] toBytes();
+    public T getValue() {
+        return this.value.equals(this.nullValue) ? null : value;
+    }
+
+    T getActualValue() {
+        return value;
+    }
+
+    void setValue(T value) {
+        this.value = value;
+    }
 
     @Override
     public String toString() {
