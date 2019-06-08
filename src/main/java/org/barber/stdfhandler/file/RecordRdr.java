@@ -27,7 +27,7 @@ class RecordRdr extends Record {
         int size = numBins.getValue();
         rtstBin = createList(size);
         rtstBin.forEach(e -> e.setValueFromStream(bytes));
-        fields.addAll(rtstBin);
+        setFields();
         addToImage(fileImage);
     }
 
@@ -40,6 +40,8 @@ class RecordRdr extends Record {
         image.setRdr(this);
     }
 
+
+
     public List<Integer> getRtstBins() {
         return rtstBin.stream().map(Type::getValue).collect(Collectors.toList());
     }
@@ -51,17 +53,21 @@ class RecordRdr extends Record {
         for (int i = 0; i < size; i++) {
             rtstBin.get(i).setValueFromUser(bins.get(i));
         }
-        fields = new ArrayList<>();
-        fields.add(numBins);
-        fields.addAll(rtstBin);
+        setFields();
         return this;
     }
 
     private List<TypeU2> createList(int size) {
         List<TypeU2> list = new ArrayList<>();
-        for (int i = 0; i < size; i++) {
+        for (int i = 1; i < size + 1; i++) {
             list.add(new TypeU2(RTST_BIN + i, null));
         }
         return list;
+    }
+
+    private void setFields() {
+        fields = new ArrayList<>();
+        fields.add(numBins);
+        fields.addAll(rtstBin);
     }
 }

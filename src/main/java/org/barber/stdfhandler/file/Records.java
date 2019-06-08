@@ -14,7 +14,9 @@ enum Records {
     PCR(RecordPcr::new),
     HBR(RecordHbr::new),
     SBR(RecordSbr::new),
-    PMR(RecordPmr::new);
+    PMR(RecordPmr::new),
+    PGR(RecordPgr::new),
+    PLR(RecordPlr::new);
 
     private Supplier<Record> supplier;
 

@@ -35,7 +35,6 @@ public class RecordAtr extends Record {
         return Optional.ofNullable(cmdLine.getValue());
     }
 
-
     public RecordAtr setModTim(Instant value) {
         modTim.setValueFromUser(value);
         return this;

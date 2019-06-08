@@ -14,7 +14,7 @@ public class RecordMrr extends Record {
     private final Type<String> usrDesc = new TypeCn("USR_DESC", "");
     private final Type<String> excDesc = new TypeCn("EXC_DESC", "");
 
-    public RecordMrr() {
+    RecordMrr() {
         super(NAME, TYPE, SUBTYPE);
         fields.add(finishT);
         fields.add(dispCod);
