@@ -13,6 +13,7 @@ public class FileImage {
     private RecordVur vur;
     private RecordMir mir;
     private RecordRdr rdr;
+    private List<RecordSdr> sdrs = new ArrayList<>();
     private List<RecordPcr> pcrs = new ArrayList<>();
     private List<RecordHbr> hbrs = new ArrayList<>();
     private List<RecordSbr> sbrs = new ArrayList<>();
@@ -43,12 +44,12 @@ public class FileImage {
         this.mir = mir;
     }
 
-    void setMrr(RecordMrr mrr) {
-        this.mrr = mrr;
-    }
-
     void setRdr(RecordRdr rdr) {
         this.rdr = rdr;
+    }
+
+    void addSdr(RecordSdr sdr) {
+        this.sdrs.add(sdr);
     }
 
     void addPcr(RecordPcr pcr) {
@@ -75,6 +76,11 @@ public class FileImage {
         this.plrs.add(plr);
     }
 
+
+    void setMrr(RecordMrr mrr) {
+        this.mrr = mrr;
+    }
+
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
@@ -83,6 +89,7 @@ public class FileImage {
         builder.append(vur != null ? vur : "");
         builder.append(mir != null ? mir : "");
         builder.append(rdr != null ? rdr : "");
+        sdrs.forEach(builder::append);
         pcrs.forEach(builder::append);
         hbrs.forEach(builder::append);
         sbrs.forEach(builder::append);
@@ -107,6 +114,7 @@ public class FileImage {
         if (rdr != null) {
             outputStreams.add(rdr.toBytes());
         }
+        sdrs.forEach(sdr -> outputStreams.add(sdr.toBytes()));
         pcrs.forEach(atr -> outputStreams.add(atr.toBytes()));
         hbrs.forEach(hbr -> outputStreams.add(hbr.toBytes()));
         sbrs.forEach(sbr -> outputStreams.add(sbr.toBytes()));
@@ -140,12 +148,12 @@ public class FileImage {
         return mir;
     }
 
-    public RecordMrr getMrr() {
-        return mrr;
-    }
-
     public RecordRdr getRdr() {
         return rdr;
+    }
+
+    public List<RecordSdr> getSdrs() {
+        return sdrs;
     }
 
     public List<RecordPcr> getPcrs() {
@@ -170,5 +178,9 @@ public class FileImage {
 
     public List<RecordPlr> getPlrs() {
         return plrs;
+    }
+
+    public RecordMrr getMrr() {
+        return mrr;
     }
 }

@@ -6,6 +6,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -35,6 +36,12 @@ class FullTest {
                         .setSpecVer("SPEC_VER").setFlowId("FLOW_ID").setSetupId("SETUP_ID").setDsgnRev("DSGN_REV")
                         .setEngId("ENG_ID").setRomCod("ROM_COD").setSerlNum("SERL_NUM").setSuprNam("SUPR_NAM"))
                 .addRecord(RecordRdr.newInstance().setRtstBin(DEFAULT_U2_LIST))
+                .addRecord(RecordSdr.newInstance().setHeadNum(123).setSiteGrp(123)
+                        .setSiteNum(Arrays.asList(123, 124, 125, 126, 127)). setHandTyp("HAND_TYP")
+                        .setHandId("HAND_ID").setCardTyp("CARD_TYP").setCardId("CARD_ID").setLoadTyp("LOAD_TYP")
+                        .setLoadId("LOAD_ID").setDibTyp("DIB_TYP").setDibId("DIB_ID").setCablTyp("CABL_TYP")
+                        .setCablId("CABL_ID").setContTyp("CONT_TYP").setContId("CONT_ID").setLasrTyp("LASR_TYP")
+                        .setLasrId("LASR_ID").setExtrTyp("EXTR_TYP").setExtrId("EXTR_ID"))
                 .addRecord(RecordPcr.newInstance().setHeadNum(DEFULT_U1).setSiteNum(DEFULT_U1)
                         .setPartCnt(DEFULT_U4).setRtstCnt(DEFULT_U4).setAbrtCnt(DEFULT_U4).setGoodCnt(DEFULT_U4)
                         .setFuncCnt(DEFULT_U4))

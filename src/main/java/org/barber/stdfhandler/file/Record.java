@@ -12,7 +12,9 @@ abstract class Record {
     static final int U2_MAX_NULL_VALUE = 65535;
     static final long U4_MAX_NULL_VALUE = 4_294_967_295L;
 
-    private static final String DELIMITER = ": ";
+    private static final String RECORD_DELIMITER = "_".repeat(30) + "\n";
+    private static final String FIELD_FORMAT = "%s%-12s %s%s";
+    private static final String DELIMITER = ":";
     private static final String NEW_LINE = "\n";
     private static final String TAB = " ".repeat(3);
 
@@ -74,10 +76,10 @@ abstract class Record {
     }
 
     private static String recordAsString(String name) {
-        return name + DELIMITER + NEW_LINE;
+        return RECORD_DELIMITER + name + DELIMITER + NEW_LINE;
     }
 
-    static String fieldAsString(String name, String value) {
-        return TAB + name + DELIMITER + value + NEW_LINE;
+    private static String fieldAsString(String name, String value) {
+        return String.format(FIELD_FORMAT , TAB, name + DELIMITER, value, NEW_LINE );
     }
 }
