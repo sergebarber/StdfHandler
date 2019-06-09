@@ -14,7 +14,7 @@ public class FileBuilder {
   }
 
   public FileBuilder() {
-    RecordFar far = new RecordFar();
+    RecordFar far = RecordFar.newInstance();
     far.setCpuTyp(DEFAULT_CPU_TYP);
     far.setStdfVer(DEFAULT_STDF_VER);
     image.setFar(far);
@@ -22,6 +22,11 @@ public class FileBuilder {
 
   public FileBuilder addRecord(Record record) {
     record.addToImage(image);
+    return this;
+  }
+
+  public FileBuilder addWaferData(WaferData waferData) {
+    image.addWaferData(waferData);
     return this;
   }
 }

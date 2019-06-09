@@ -2,7 +2,6 @@ package org.barber.stdfhandler.file;
 
 import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -36,7 +35,7 @@ public class RecordSdr extends Record {
     private final Type<String> extrTyp = new TypeCn("EXTR_TYP", "");
     private final Type<String> extrId = new TypeCn("EXTR_ID", "");
 
-    RecordSdr() {
+    private RecordSdr() {
         super(NAME, TYPE, SUBTYPE);
         setFields();
     }
@@ -254,9 +253,9 @@ public class RecordSdr extends Record {
 
     private void setFields() {
         fields = new ArrayList<>();
-        fields.addAll(Arrays.asList(headNum, siteGrp, siteCnt));
+        fields.addAll(asList(headNum, siteGrp, siteCnt));
         fields.addAll(siteNum);
-        fields.addAll(Arrays.asList(handTyp, handId, cardTyp, cardId, loadTyp, loadId, dibTyp, dibId, cablTyp, cablId,
+        fields.addAll(asList(handTyp, handId, cardTyp, cardId, loadTyp, loadId, dibTyp, dibId, cablTyp, cablId,
                 contTyp, contId, lasrTyp, lasrId, extrTyp, extrId));
     }
 }

@@ -1,5 +1,7 @@
-package org.barber.stdfhandler.file;
+package org.barber.stdfhandler.test;
 
+import org.barber.stdfhandler.file.RecordHbr;
+import org.barber.stdfhandler.file.TypeC1;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;

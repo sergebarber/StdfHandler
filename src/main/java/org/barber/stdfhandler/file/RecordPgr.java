@@ -19,7 +19,7 @@ public class RecordPgr extends Record {
     private final Type<Integer> indxCnt = new TypeU2("INDX_CNT", null);
     private List<TypeU2> pmrIndx = new ArrayList<>();
 
-    RecordPgr() {
+    private RecordPgr() {
         super(NAME, TYPE, SUBTYPE);
         setFields();
     }
@@ -86,9 +86,7 @@ public class RecordPgr extends Record {
 
     private void setFields() {
         fields = new ArrayList<>();
-        fields.add(grpIndx);
-        fields.add(grpNam);
-        fields.add(indxCnt);
+        fields.addAll(asList(grpIndx, grpNam, indxCnt));
         fields.addAll(pmrIndx);
     }
 }

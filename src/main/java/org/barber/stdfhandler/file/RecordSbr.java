@@ -15,14 +15,9 @@ public class RecordSbr extends Record {
   private final Type<String> sbinPf = new TypeC1("SBIN_PF", " ");
   private final Type<String> sbinNam = new TypeCn("SBIN_NAM", "");
 
-  RecordSbr() {
+  private RecordSbr() {
     super(NAME, TYPE, SUBTYPE);
-    fields.add(headNum);
-    fields.add(siteNum);
-    fields.add(sbinNum);
-    fields.add(sbinCnt);
-    fields.add(sbinPf);
-    fields.add(sbinNam);
+    fields.addAll(asList(headNum, siteNum, sbinNum, sbinCnt, sbinPf, sbinNam));
   }
 
   public static RecordSbr newInstance() {

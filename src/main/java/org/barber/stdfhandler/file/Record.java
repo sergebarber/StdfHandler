@@ -3,14 +3,15 @@ package org.barber.stdfhandler.file;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
-abstract class Record {
+public abstract class Record {
 
     static final int HEADER_LENGTH = 4;
 
-    static final int U2_MAX_NULL_VALUE = 65535;
-    static final long U4_MAX_NULL_VALUE = 4_294_967_295L;
+    public static final int U2_MAX_NULL_VALUE = 65535;
+    public static final long U4_MAX_NULL_VALUE = 4_294_967_295L;
 
     private static final String RECORD_DELIMITER = "_".repeat(30) + "\n";
     private static final String FIELD_FORMAT = "%s%-12s %s%s";
@@ -66,6 +67,10 @@ abstract class Record {
                 Type.toBytes(type, Type.U1_BINARY_STRING_FORMAT)[0],
                 Type.toBytes(subtype, Type.U1_BINARY_STRING_FORMAT)[0]
         };
+    }
+
+    List<Type> asList(Type ... fields) {
+        return Arrays.asList(fields);
     }
 
     @Override

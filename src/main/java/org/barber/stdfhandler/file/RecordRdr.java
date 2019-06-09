@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-class RecordRdr extends Record {
+public class RecordRdr extends Record {
 
     private static final String NAME = "RDR";
     private static final byte TYPE = 1;
@@ -16,9 +16,9 @@ class RecordRdr extends Record {
     private TypeU2 numBins = new TypeU2("NUM_BINS", null);
     private List<TypeU2> rtstBin = new ArrayList<>();
 
-    RecordRdr() {
+    private RecordRdr() {
         super(NAME, TYPE, SUBTYPE);
-        fields.add(numBins);
+        setFields();
     }
 
     @Override

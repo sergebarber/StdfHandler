@@ -5,20 +5,22 @@ import java.util.function.Supplier;
 
 enum Records {
 
-    FAR(RecordFar::new),
-    ATR(RecordAtr::new),
-    VUR(RecordVur::new),
-    MIR(RecordMir::new),
-    SDR(RecordSdr::new),
-    RDR(RecordRdr::new),
-    PCR(RecordPcr::new),
-    HBR(RecordHbr::new),
-    SBR(RecordSbr::new),
-    PMR(RecordPmr::new),
-    PGR(RecordPgr::new),
-    PLR(RecordPlr::new),
+    FAR(RecordFar::newInstance),
+    ATR(RecordAtr::newInstance),
+    VUR(RecordVur::newInstance),
+    MIR(RecordMir::newInstance),
+    SDR(RecordSdr::newInstance),
+    RDR(RecordRdr::newInstance),
+    PCR(RecordPcr::newInstance),
+    HBR(RecordHbr::newInstance),
+    SBR(RecordSbr::newInstance),
+    PMR(RecordPmr::newInstance),
+    PGR(RecordPgr::newInstance),
+    PLR(RecordPlr::newInstance),
+    WIR(RecordWir::newInstance),
+    WRR(RecordWrr::newInstance),
 
-    MRR(RecordMrr::new);
+    MRR(RecordMrr::newInstance);
 
     private Supplier<Record> supplier;
 

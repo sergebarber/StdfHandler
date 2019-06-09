@@ -28,9 +28,9 @@ public class RecordPlr extends Record {
     private List<TypeCn> pgmChal = new ArrayList<>();
     private List<TypeCn> rtnChal = new ArrayList<>();
 
-    RecordPlr() {
+    private RecordPlr() {
         super(NAME, TYPE, SUBTYPE);
-        fields.add(grpCnt);
+        setFields();
     }
 
     public static RecordPlr newInstance() {

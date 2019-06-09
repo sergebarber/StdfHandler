@@ -2,10 +2,10 @@ package org.barber.stdfhandler.file;
 
 import java.io.ByteArrayInputStream;
 
-class TypeC1 extends Type<String> {
+public class TypeC1 extends Type<String> {
 
-    static final int MAX_LENGTH = 1;
-    static final String ILLEGAL_VALUE_MESSAGE =
+    public static final int MAX_LENGTH = 1;
+    public static final String ILLEGAL_VALUE_MESSAGE =
             "Illegal argument length %d for type StdfC1. Cannot be longer than " + MAX_LENGTH;
 
     private static final int BYTE_LENGTH = 1;

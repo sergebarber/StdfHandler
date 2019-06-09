@@ -2,11 +2,11 @@ package org.barber.stdfhandler.file;
 
 import java.io.ByteArrayInputStream;
 
-class TypeU4 extends Type<Long> {
+public class TypeU4 extends Type<Long> {
 
-    static final long MAX_VALUE = 4_294_967_295L;
-    static final int MIN_VALUE = 0;
-    static final String ILLEGAL_VALUE_MESSAGE =
+    public static final long MAX_VALUE = 4_294_967_295L;
+    public static final int MIN_VALUE = 0;
+    public static final String ILLEGAL_VALUE_MESSAGE =
             "Illegal argument size %d for type StdfU4. Should be " + MIN_VALUE + " <= size <= " + MAX_VALUE;
 
     private static final int BYTE_LENGTH = 4;

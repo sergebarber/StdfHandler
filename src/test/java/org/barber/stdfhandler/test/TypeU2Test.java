@@ -1,5 +1,6 @@
-package org.barber.stdfhandler.file;
+package org.barber.stdfhandler.test;
 
+import org.barber.stdfhandler.file.*;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;

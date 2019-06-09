@@ -16,15 +16,9 @@ public class RecordPmr extends Record {
   private final Type<Integer> headNum = new TypeU1("HEAD_NUM", 1);
   private final Type<Integer> siteNum = new TypeU1("SITE_NUM", 1);
 
-  RecordPmr() {
+  private RecordPmr() {
     super(NAME, TYPE, SUBTYPE);
-    fields.add(pmrIndx);
-    fields.add(chanTyp);
-    fields.add(chanNam);
-    fields.add(phyNam);
-    fields.add(logNam);
-    fields.add(headNum);
-    fields.add(siteNum);
+    fields.addAll(asList(pmrIndx, chanTyp, chanNam, phyNam, logNam, headNum, siteNum));
   }
 
   public static RecordPmr newInstance() {

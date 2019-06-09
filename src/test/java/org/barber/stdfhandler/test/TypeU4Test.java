@@ -1,5 +1,9 @@
-package org.barber.stdfhandler.file;
+package org.barber.stdfhandler.test;
 
+import org.barber.stdfhandler.file.Record;
+import org.barber.stdfhandler.file.RecordHbr;
+import org.barber.stdfhandler.file.RecordPcr;
+import org.barber.stdfhandler.file.TypeU4;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;

@@ -1,5 +1,9 @@
-package org.barber.stdfhandler.file;
+package org.barber.stdfhandler.test;
 
+import org.barber.stdfhandler.file.FileBuilder;
+import org.barber.stdfhandler.file.FileImage;
+import org.barber.stdfhandler.file.FileReader;
+import org.barber.stdfhandler.file.RecordPlr;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayInputStream;

@@ -1,12 +1,12 @@
-package org.barber.stdfhandler.file;
+package org.barber.stdfhandler.test;
 
+import org.barber.stdfhandler.file.*;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.time.Instant;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -61,6 +61,16 @@ class FullTest {
                         Arrays.asList("RTN_CHAR_1", "RTN_CHAR_2", "RTN_CHAR_3", "RTN_CHAR_4", "RTN_CHAR_5"),
                         Arrays.asList("PGM_CHAL_1", "PGM_CHAL_2", "PGM_CHAL_3", "PGM_CHAL_4", "PGM_CHAL_5"),
                         Arrays.asList("RTN_CHAL_1", "RTN_CHAL_2", "RTN_CHAL_3", "RTN_CHAL_4", "RTN_CHAL_5")))
+
+                .addWaferData(WaferData.newInstance()
+                        .setWir(RecordWir.newInstance().setHeadNum(123).setSiteGrp(123).setStartT(Instant.now())
+                                .setWaferId("WAFER_ID"))
+                        .setWrr(RecordWrr.newInstance().setHeadNum(123).setSiteGrp(123).setFinishT(Instant.now())
+                                .setPartCnt(123456L).setRtstCnt(123456L).setAbrtCnt(123456L).setGoodCnt(123456L)
+                                .setFuncCnt(123456L).setWaferId("WAFER_ID").setFabwfId("FABWF_ID")
+                                .setFrameId("FRAME_ID").setMaskId("MASK_ID").setUsrDesc("USR_DESC")
+                                .setExcDesc("EXC_DESC")))
+
 
 
                 .addRecord(RecordMrr.newInstance().setFinishT(DEFAULT_TIME).setDispCod("E").setUsrDesc("USR_DESC")

@@ -21,11 +21,14 @@ public class FileImage {
     private List<RecordPgr> pgrs = new ArrayList<>();
     private List<RecordPlr> plrs = new ArrayList<>();
 
+    private List<WaferData> waferData = new ArrayList<>();
+    private WaferData wafer;
+
     private RecordMrr mrr;
 
 
     FileImage() {
-        this.far = new RecordFar();
+        this.far = RecordFar.newInstance();
     }
 
     void setFar(RecordFar far) {
@@ -76,6 +79,23 @@ public class FileImage {
         this.plrs.add(plr);
     }
 
+    void addWaferData(WaferData waferData) {
+        this.waferData.add(waferData);
+    }
+
+    void setWir(RecordWir wir) {
+        this.wafer = wafer == null ? WaferData.newInstance() : wafer;
+        this.wafer.setWir(wir);
+    }
+
+    void setWrr(RecordWrr wrr) {
+        if (this.wafer == null) {
+            throw new StdfFileIntegrityException("Attempt to set WRR record without corresponding WIR record.");
+        }
+        this.wafer.setWrr(wrr);
+        this.waferData.add(wafer);
+        this.wafer = null;
+    }
 
     void setMrr(RecordMrr mrr) {
         this.mrr = mrr;
@@ -96,6 +116,7 @@ public class FileImage {
         pmrs.forEach(builder::append);
         pgrs.forEach(builder::append);
         plrs.forEach(builder::append);
+        waferData.forEach(wd -> wd.getRecords().forEach(builder::append));
 
         builder.append(mrr != null ? mrr : "");
         return builder.toString();
@@ -121,6 +142,7 @@ public class FileImage {
         pmrs.forEach(pmr -> outputStreams.add(pmr.toBytes()));
         pgrs.forEach(pgr -> outputStreams.add(pgr.toBytes()));
         plrs.forEach(plr -> outputStreams.add(plr.toBytes()));
+        waferData.forEach(wd -> wd.getRecords().forEach(record -> outputStreams.add(record.toBytes())));
 
         if (mrr != null) {
             outputStreams.add(mrr.toBytes());
@@ -178,6 +200,10 @@ public class FileImage {
 
     public List<RecordPlr> getPlrs() {
         return plrs;
+    }
+
+    public List<WaferData> getWaferData() {
+        return waferData;
     }
 
     public RecordMrr getMrr() {

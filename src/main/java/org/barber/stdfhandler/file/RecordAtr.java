@@ -12,10 +12,9 @@ public class RecordAtr extends Record {
     private final Type<Instant> modTim = new TypeTime("MOD_TIM", null);
     private final Type<String> cmdLine = new TypeCn("CMD_LINE", null);
 
-    RecordAtr() {
+    private RecordAtr() {
         super(NAME, TYPE, SUBTYPE);
-        fields.add(modTim);
-        fields.add(cmdLine);
+        fields.addAll(asList(modTim, cmdLine));
     }
 
     @Override

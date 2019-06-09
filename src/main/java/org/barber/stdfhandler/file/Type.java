@@ -1,7 +1,6 @@
 package org.barber.stdfhandler.file;
 
 import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 abstract class Type<T> {

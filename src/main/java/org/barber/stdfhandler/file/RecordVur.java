@@ -10,7 +10,7 @@ public class RecordVur extends Record {
 
     private static final Type<String> updNam = new TypeCn("UPD_NAM", null);
 
-    RecordVur() {
+    private RecordVur() {
         super(NAME, TYPE, SUBTYPE);
         fields.add(updNam);
     }

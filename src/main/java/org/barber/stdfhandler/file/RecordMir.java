@@ -48,46 +48,12 @@ public class RecordMir extends Record {
     private final Type<String> serlNum = new TypeCn("SERL_NUM", "");
     private final Type<String> suprNam = new TypeCn("SUPR_NAM", "");
 
-    RecordMir() {
+    private RecordMir() {
         super(NAME, TYPE, SUBTYPE);
-        fields.add(setupT);
-        fields.add(startT);
-        fields.add(statNum);
-        fields.add(modeCod);
-        fields.add(rtstCod);
-        fields.add(protCod);
-        fields.add(burnTim);
-        fields.add(cmodCod);
-        fields.add(lotId);
-        fields.add(partTyp);
-        fields.add(nodeNam);
-        fields.add(tstrTyp);
-        fields.add(jobNam);
-        fields.add(jobRev);
-        fields.add(sblotId);
-        fields.add(operNam);
-        fields.add(execTyp);
-        fields.add(execVer);
-        fields.add(testCod);
-        fields.add(tstTemp);
-        fields.add(userTxt);
-        fields.add(auxFile);
-        fields.add(pkgTyp);
-        fields.add(famlyId);
-        fields.add(dateCod);
-        fields.add(facilId);
-        fields.add(floorId);
-        fields.add(procId);
-        fields.add(operFrq);
-        fields.add(specNam);
-        fields.add(specVer);
-        fields.add(flowId);
-        fields.add(setupId);
-        fields.add(dsgnRev);
-        fields.add(engId);
-        fields.add(romCod);
-        fields.add(serlNum);
-        fields.add(suprNam);
+        fields.addAll(asList(setupT, startT, statNum, modeCod, rtstCod, protCod, burnTim, cmodCod, lotId, partTyp,
+                nodeNam, tstrTyp, jobNam, jobRev, sblotId, operNam, execTyp, execVer, testCod, tstTemp, userTxt,
+                auxFile, pkgTyp, famlyId, dateCod, facilId, floorId, procId, operFrq, specNam, specVer, flowId,
+                setupId, dsgnRev, engId, romCod, serlNum, suprNam));
     }
 
     public static RecordMir newInstance() {

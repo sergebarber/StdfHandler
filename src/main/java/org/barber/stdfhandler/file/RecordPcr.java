@@ -16,15 +16,9 @@ public class RecordPcr extends Record {
     private final Type<Long> goodCnt = new TypeU4("GOOD_CNT", U4_MAX_NULL_VALUE);
     private final Type<Long> funcCnt = new TypeU4("FUNC_CNT", U4_MAX_NULL_VALUE);
 
-    RecordPcr() {
+    private RecordPcr() {
         super(NAME, TYPE, SUBTYPE);
-        fields.add(headNum);
-        fields.add(siteNum);
-        fields.add(partCnt);
-        fields.add(rtstCnt);
-        fields.add(abrtCnt);
-        fields.add(goodCnt);
-        fields.add(funcCnt);
+        fields.addAll(asList(headNum, siteNum, partCnt, rtstCnt, abrtCnt, goodCnt, funcCnt));
     }
 
     public static RecordPcr newInstance() {

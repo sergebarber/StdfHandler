@@ -3,11 +3,11 @@ package org.barber.stdfhandler.file;
 import java.io.ByteArrayInputStream;
 import java.time.Instant;
 
-class TypeTime extends Type<Instant> {
+public class TypeTime extends Type<Instant> {
 
     private static final long MAX_VALUE = 4_294_967_295L;
     private static final long MIN_VALUE = 0;
-    static final String ILLEGAL_VALUE_MESSAGE =
+    public static final String ILLEGAL_VALUE_MESSAGE =
             "Illegal amount of seconds %d for type StdfTime. Should be "+ MIN_VALUE + " <= seconds <= " + MAX_VALUE;
 
     private static final int BYTE_LENGTH = 4;

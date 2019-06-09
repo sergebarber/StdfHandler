@@ -11,10 +11,9 @@ public class RecordFar extends Record {
     private final Type<Integer> cpuTyp = new TypeU1("CPU_TYP", null);
     private final Type<Integer> stdfVer = new TypeU1("STDF_VER", null);
 
-    RecordFar() {
+    private RecordFar() {
         super(NAME, TYPE, SUBTYPE);
-        fields.add(cpuTyp);
-        fields.add(stdfVer);
+        fields.addAll(asList(cpuTyp, stdfVer));
     }
 
     @Override
