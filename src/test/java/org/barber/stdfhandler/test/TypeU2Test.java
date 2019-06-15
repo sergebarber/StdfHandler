@@ -14,14 +14,14 @@ class TypeU2Test extends TypeTest {
     void testNullValueNull() throws IOException {
         int expected = 0;
         fileBuilder = fileBuilder.addRecord(RecordHbr.newInstance());
-        assertThat(fileReader.read(getInputStream()).getHbrs().get(0).getHbinNum().orElseThrow()).isEqualTo(expected);
+        assertThat(fileHandler.read(getInputStream()).getHbrs().get(0).getHbinNum().orElseThrow()).isEqualTo(expected);
     }
 
     @Test
     void testDefaultNullValueSet() throws IOException {
         int expected = 0;
         fileBuilder = fileBuilder.addRecord(RecordHbr.newInstance().setHbinNum(expected));
-        assertThat(fileReader.read(getInputStream()).getHbrs().get(0).getHbinNum().orElseThrow()).isEqualTo(expected);
+        assertThat(fileHandler.read(getInputStream()).getHbrs().get(0).getHbinNum().orElseThrow()).isEqualTo(expected);
     }
 
     @Test
@@ -43,19 +43,19 @@ class TypeU2Test extends TypeTest {
     @Test
     void testReturnsNullWhenNullValueNotNull() {
         fileBuilder = fileBuilder.addRecord(RecordMir.newInstance());
-        assertThatThrownBy(() -> fileReader.read(getInputStream()).getMir().getBurnTim().orElseThrow());
+        assertThatThrownBy(() -> fileHandler.read(getInputStream()).getMir().getBurnTim().orElseThrow());
 
         fileBuilder = fileBuilder.addRecord(RecordPmr.newInstance());
-        assertThatThrownBy(() -> fileReader.read(getInputStream()).getPmrs().get(0).getChanTyp().orElseThrow());
+        assertThatThrownBy(() -> fileHandler.read(getInputStream()).getPmrs().get(0).getChanTyp().orElseThrow());
     }
 
     @Test
     void testReturnsNullWhenNullValueSet() {
         fileBuilder = fileBuilder.addRecord(RecordMir.newInstance().setBurnTim(Record.U2_MAX_NULL_VALUE));
-        assertThatThrownBy(() -> fileReader.read(getInputStream()).getMir().getBurnTim().orElseThrow());
+        assertThatThrownBy(() -> fileHandler.read(getInputStream()).getMir().getBurnTim().orElseThrow());
 
         int nullValue = 0;
         fileBuilder = fileBuilder.addRecord(RecordPmr.newInstance().setChanTyp(nullValue));
-        assertThatThrownBy(() -> fileReader.read(getInputStream()).getPmrs().get(0).getChanTyp().orElseThrow());
+        assertThatThrownBy(() -> fileHandler.read(getInputStream()).getPmrs().get(0).getChanTyp().orElseThrow());
     }
 }

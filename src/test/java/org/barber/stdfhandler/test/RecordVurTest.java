@@ -1,6 +1,5 @@
 package org.barber.stdfhandler.test;
 
-import org.barber.stdfhandler.file.FileBuilder;
 import org.barber.stdfhandler.file.RecordVur;
 import org.junit.jupiter.api.Test;
 
@@ -11,7 +10,7 @@ class RecordVurTest extends RecordTest {
     @Test
     void testUpdNam() throws IOException {
         String expected = "Test UPD_NAM";
-        testOptionalField(new FileBuilder().addRecord(RecordVur.newInstance().setUpdNam(expected)),
+        testOptionalField(fileHandler.getBuilder().addRecord(RecordVur.newInstance().setUpdNam(expected)),
                 fileImage -> fileImage.getVur().getUpdNam(), expected);
     }
 }

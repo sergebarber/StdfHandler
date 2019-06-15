@@ -1,12 +1,13 @@
 package org.barber.stdfhandler.file;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class WaferData {
 
     private RecordWir wir;
-
+    private RecordWcr wcr;
     private RecordWrr wrr;
 
     private WaferData() {}
@@ -19,7 +20,13 @@ public class WaferData {
     }
 
     List<Record> getRecords() {
-        return Arrays.asList(wir, wrr);
+        List<Record> records = new ArrayList<>();
+        records.add(wir);
+        if (wcr != null) {
+            records.add(wcr);
+        }
+        records.add(wrr);
+        return records;
     }
 
     public RecordWir getWir() {
@@ -30,8 +37,17 @@ public class WaferData {
         return wrr;
     }
 
+    public RecordWcr getWcr() {
+        return wcr;
+    }
+
     public WaferData setWir(RecordWir wir) {
         this.wir = wir;
+        return this;
+    }
+
+    public WaferData setWcr(RecordWcr wcr) {
+        this.wcr = wcr;
         return this;
     }
 

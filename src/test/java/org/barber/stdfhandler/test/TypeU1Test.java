@@ -9,20 +9,20 @@ import java.io.IOException;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-public class TypeU1Test extends TypeTest {
+class TypeU1Test extends TypeTest {
 
     @Test
     void testNullValueNull() throws IOException {
         int expected = 0;
         fileBuilder = fileBuilder.addRecord(RecordHbr.newInstance());
-        assertThat(fileReader.read(getInputStream()).getHbrs().get(0).getHeadNum().orElseThrow()).isEqualTo(expected);
+        assertThat(fileHandler.read(getInputStream()).getHbrs().get(0).getHeadNum().orElseThrow()).isEqualTo(expected);
     }
 
     @Test
     void testDefaultNullValueSet() throws IOException {
         int expected = 0;
         fileBuilder = fileBuilder.addRecord(RecordHbr.newInstance().setHeadNum(expected));
-        assertThat(fileReader.read(getInputStream()).getHbrs().get(0).getHeadNum().orElseThrow()).isEqualTo(expected);
+        assertThat(fileHandler.read(getInputStream()).getHbrs().get(0).getHeadNum().orElseThrow()).isEqualTo(expected);
     }
 
     @Test

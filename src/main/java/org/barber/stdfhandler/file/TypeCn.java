@@ -1,6 +1,7 @@
 package org.barber.stdfhandler.file;
 
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 
 class TypeCn extends Type<String> {
 
@@ -11,10 +12,9 @@ class TypeCn extends Type<String> {
     }
 
     @Override
-    void setValueFromStream(ByteArrayInputStream stream) {
+    void setValueFromStream(ByteArrayInputStream stream, ByteConverter byteConverter) throws IOException {
         int length = stream.read();
-        String value = byteStreamToString(stream, length);
-        setValue(value);
+        setValue(byteConverter.bytesToString(stream, length));
     }
 
     @Override
@@ -24,14 +24,7 @@ class TypeCn extends Type<String> {
     }
 
     @Override
-    byte[] toBytes() {
-        String value = getActualValue();
-        int length = value.length();
-
-        byte[] res = new byte[length + 1];
-        res[0] = toBytes(length, U1_BINARY_STRING_FORMAT)[0];
-        System.arraycopy(value.getBytes(), 0, res, 1, length);
-
-        return res;
+    byte[] toBytes(ByteConverter byteConverter) {
+        return byteConverter.stringToBytes(getActualValue(), true);
     }
 }

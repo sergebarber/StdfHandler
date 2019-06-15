@@ -11,13 +11,13 @@ class TypeC1Test extends TypeTest {
     @Test
     void testReturnsNullWhenNullValueNotNull() {
         fileBuilder = fileBuilder.addRecord(RecordHbr.newInstance());
-        assertThatThrownBy(() -> fileReader.read(getInputStream()).getHbrs().get(0).getHbinPf().orElseThrow());
+        assertThatThrownBy(() -> fileHandler.read(getInputStream()).getHbrs().get(0).getHbinPf().orElseThrow());
     }
 
     @Test
     void testReturnsNullWhenNullValueSet() {
         fileBuilder = fileBuilder.addRecord(RecordHbr.newInstance().setHbinPf(" "));
-        assertThatThrownBy(() -> fileReader.read(getInputStream()).getHbrs().get(0).getHbinPf().orElseThrow());
+        assertThatThrownBy(() -> fileHandler.read(getInputStream()).getHbrs().get(0).getHbinPf().orElseThrow());
     }
 
     @Test

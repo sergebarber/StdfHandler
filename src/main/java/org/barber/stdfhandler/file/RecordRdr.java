@@ -1,6 +1,7 @@
 package org.barber.stdfhandler.file;
 
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -22,11 +23,13 @@ public class RecordRdr extends Record {
     }
 
     @Override
-    void fill(ByteArrayInputStream bytes, FileImage fileImage) {
-        numBins.setValueFromStream(bytes);
+    void fill(ByteArrayInputStream bytes, ByteConverter byteConverter, FileImage fileImage) throws IOException {
+        numBins.setValueFromStream(bytes, byteConverter);
         int size = numBins.getValue();
         rtstBin = createList(size);
-        rtstBin.forEach(e -> e.setValueFromStream(bytes));
+        for (TypeU2 e : rtstBin) {
+            e.setValueFromStream(bytes, byteConverter);
+        }
         setFields();
         addToImage(fileImage);
     }

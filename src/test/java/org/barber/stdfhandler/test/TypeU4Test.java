@@ -17,14 +17,14 @@ class TypeU4Test extends TypeTest {
     void testNullValueNull() throws IOException {
         int expected = 0;
         fileBuilder = fileBuilder.addRecord(RecordHbr.newInstance());
-        assertThat(fileReader.read(getInputStream()).getHbrs().get(0).getHbinCnt().orElseThrow()).isEqualTo(expected);
+        assertThat(fileHandler.read(getInputStream()).getHbrs().get(0).getHbinCnt().orElseThrow()).isEqualTo(expected);
     }
 
     @Test
     void testDefaultNullValueSet() throws IOException {
         long expected = 0;
         fileBuilder = fileBuilder.addRecord(RecordHbr.newInstance().setHbinCnt(expected));
-        assertThat(fileReader.read(getInputStream()).getHbrs().get(0).getHbinCnt().orElseThrow()).isEqualTo(expected);
+        assertThat(fileHandler.read(getInputStream()).getHbrs().get(0).getHbinCnt().orElseThrow()).isEqualTo(expected);
     }
 
     @Test
@@ -46,12 +46,12 @@ class TypeU4Test extends TypeTest {
     @Test
     void testReturnsNullWhenNullValueNotNull() {
         fileBuilder = fileBuilder.addRecord(RecordPcr.newInstance());
-        assertThatThrownBy(() -> fileReader.read(getInputStream()).getPcrs().get(0).getRtstCnt().orElseThrow());
+        assertThatThrownBy(() -> fileHandler.read(getInputStream()).getPcrs().get(0).getRtstCnt().orElseThrow());
     }
 
     @Test
     void testReturnsNullWhenNullValueSet() {
         fileBuilder = fileBuilder.addRecord(RecordPcr.newInstance().setRtstCnt(Record.U4_MAX_NULL_VALUE));
-        assertThatThrownBy(() -> fileReader.read(getInputStream()).getPcrs().get(0).getRtstCnt().orElseThrow());
+        assertThatThrownBy(() -> fileHandler.read(getInputStream()).getPcrs().get(0).getRtstCnt().orElseThrow());
     }
 }

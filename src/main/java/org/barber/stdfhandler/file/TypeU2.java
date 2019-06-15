@@ -1,6 +1,7 @@
 package org.barber.stdfhandler.file;
 
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 
 public class TypeU2 extends Type<Integer> {
 
@@ -16,9 +17,8 @@ public class TypeU2 extends Type<Integer> {
     }
 
     @Override
-    void setValueFromStream(ByteArrayInputStream stream) {
-        int value = (int) byteStreamToNumber(stream, BYTE_LENGTH);
-        setValue(value);
+    void setValueFromStream(ByteArrayInputStream stream, ByteConverter byteConverter) throws IOException {
+        setValue(byteConverter.bytesToUnsignedInt(stream, BYTE_LENGTH));
     }
 
     @Override
@@ -30,8 +30,7 @@ public class TypeU2 extends Type<Integer> {
     }
 
     @Override
-    byte[] toBytes() {
-        int value = getActualValue();
-        return toBytes(value, U2_BINARY_STRING_FORMAT);
+    byte[] toBytes(ByteConverter byteConverter) {
+        return byteConverter.unsignedIntegerToBytes(getActualValue(), ByteConverter.L2BYTES_BINARY_STRING_FORMAT);
     }
 }

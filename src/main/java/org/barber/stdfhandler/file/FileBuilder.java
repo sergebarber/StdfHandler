@@ -8,12 +8,14 @@ public class FileBuilder {
   public static final int DEFAULT_STDF_VER = 4;
 
   private final FileImage image = new FileImage();
+  private final ByteConverter byteConverter;
 
   public ByteArrayOutputStream toStream() {
-    return image.toStream();
+    return image.toStream(byteConverter);
   }
 
-  public FileBuilder() {
+  FileBuilder(ByteConverter byteConverter) {
+    this.byteConverter = byteConverter;
     RecordFar far = RecordFar.newInstance();
     far.setCpuTyp(DEFAULT_CPU_TYP);
     far.setStdfVer(DEFAULT_STDF_VER);

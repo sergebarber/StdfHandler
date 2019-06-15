@@ -2,6 +2,7 @@ package org.barber.stdfhandler.file;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -41,31 +42,33 @@ public abstract class Record {
 
     protected abstract void addToImage(FileImage image);
 
-    void fill(ByteArrayInputStream bytes, FileImage fileImage) {
-        fields.forEach(field -> field.setValueFromStream(bytes));
+    void fill(ByteArrayInputStream bytes, ByteConverter byteConverter, FileImage fileImage) throws IOException {
+        for (Type field : fields) {
+            field.setValueFromStream(bytes, byteConverter);
+        }
         addToImage(fileImage);
     }
 
-    ByteArrayOutputStream toBytes() {
+    ByteArrayOutputStream toBytes(ByteConverter byteConverter) {
         ByteArrayOutputStream fieldsBytes = new ByteArrayOutputStream();
-        fields.forEach(field -> fieldsBytes.writeBytes(field.toBytes()));
-        return addHeader(fieldsBytes);
+        fields.forEach(field -> fieldsBytes.writeBytes(field.toBytes(byteConverter)));
+        return addHeader(fieldsBytes, byteConverter);
     }
 
-    private ByteArrayOutputStream addHeader(ByteArrayOutputStream fieldsBytes) {
+    private ByteArrayOutputStream addHeader(ByteArrayOutputStream fieldsBytes, ByteConverter byteConverter) {
         ByteArrayOutputStream recordOutputStream = new ByteArrayOutputStream();
-        recordOutputStream.writeBytes(getHeaderBytes(fieldsBytes.size()));
+        recordOutputStream.writeBytes(getHeaderBytes(fieldsBytes.size(), byteConverter));
         recordOutputStream.writeBytes(fieldsBytes.toByteArray());
         return recordOutputStream;
     }
 
-    private byte[] getHeaderBytes(int length) {
-        byte[] recordLength = Type.toBytes(length, Type.U2_BINARY_STRING_FORMAT);
+    private byte[] getHeaderBytes(int length, ByteConverter byteConverter) {
+        byte[] recordLength = byteConverter.toBytes(length, ByteConverter.L2BYTES_BINARY_STRING_FORMAT);
         return new byte[]{
                 recordLength[0],
                 recordLength[1],
-                Type.toBytes(type, Type.U1_BINARY_STRING_FORMAT)[0],
-                Type.toBytes(subtype, Type.U1_BINARY_STRING_FORMAT)[0]
+                byteConverter.toBytes(type, ByteConverter.L1BYTE_BINARY_STRING_FORMAT)[0],
+                byteConverter.toBytes(subtype, ByteConverter.L1BYTE_BINARY_STRING_FORMAT)[0]
         };
     }
 

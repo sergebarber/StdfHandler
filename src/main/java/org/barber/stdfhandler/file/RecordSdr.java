@@ -1,6 +1,7 @@
 package org.barber.stdfhandler.file;
 
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -45,15 +46,17 @@ public class RecordSdr extends Record {
     }
 
     @Override
-    void fill(ByteArrayInputStream bytes, FileImage fileImage) {
+    void fill(ByteArrayInputStream bytes, ByteConverter byteConverter, FileImage fileImage) throws IOException {
         for (Type field : fields) {
             if (field != siteCnt) {
-                field.setValueFromStream(bytes);
+                field.setValueFromStream(bytes, byteConverter);
             }
             else {
-                siteCnt.setValueFromStream(bytes);
+                siteCnt.setValueFromStream(bytes, byteConverter);
                 createList(siteCnt.getValue());
-                siteNum.forEach(f -> f.setValueFromStream(bytes));
+                for (TypeU1 f : siteNum) {
+                    f.setValueFromStream(bytes, byteConverter);
+                }
             }
         }
         setFields();

@@ -1,6 +1,7 @@
 package org.barber.stdfhandler.file;
 
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 
 public class TypeU4 extends Type<Long> {
 
@@ -16,9 +17,8 @@ public class TypeU4 extends Type<Long> {
     }
 
     @Override
-    void setValueFromStream(ByteArrayInputStream stream) {
-         long value = byteStreamToNumber(stream, BYTE_LENGTH);
-         setValue(value);
+    void setValueFromStream(ByteArrayInputStream stream, ByteConverter byteConverter) throws IOException {
+         setValue(byteConverter.bytesToUnsignedLong(stream, BYTE_LENGTH));
     }
 
     @Override
@@ -30,8 +30,7 @@ public class TypeU4 extends Type<Long> {
     }
 
     @Override
-    byte[] toBytes() {
-        long value = getActualValue();
-        return toBytes(value, U4_BINARY_STRING_FORMAT);
+    byte[] toBytes(ByteConverter byteConverter) {
+        return byteConverter.unsignedIntegerToBytes(getActualValue(), ByteConverter.L4BYTES_BINARY_STRING_FORMAT);
     }
 }

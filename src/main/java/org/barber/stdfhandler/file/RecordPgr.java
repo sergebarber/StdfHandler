@@ -1,6 +1,7 @@
 package org.barber.stdfhandler.file;
 
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -29,11 +30,15 @@ public class RecordPgr extends Record {
     }
 
     @Override
-    void fill(ByteArrayInputStream bytes, FileImage fileImage) {
-        fields.forEach(field -> field.setValueFromStream(bytes));
+    void fill(ByteArrayInputStream bytes, ByteConverter byteConverter, FileImage fileImage) throws IOException {
+        for (Type field : fields) {
+            field.setValueFromStream(bytes, byteConverter);
+        }
         int size = indxCnt.getValue();
         pmrIndx = createList(size);
-        pmrIndx.forEach(e -> e.setValueFromStream(bytes));
+        for (TypeU2 field : pmrIndx) {
+            field.setValueFromStream(bytes, byteConverter);
+        }
         setFields();
         addToImage(fileImage);
     }

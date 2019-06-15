@@ -1,6 +1,7 @@
 package org.barber.stdfhandler.file;
 
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -38,16 +39,30 @@ public class RecordPlr extends Record {
     }
 
     @Override
-    void fill(ByteArrayInputStream bytes, FileImage fileImage) {
-        grpCnt.setValueFromStream(bytes);
+    void fill(ByteArrayInputStream bytes, ByteConverter byteConverter, FileImage fileImage) throws IOException {
+        grpCnt.setValueFromStream(bytes, byteConverter);
         createLists();
-        grpIndx.forEach(field -> field.setValueFromStream(bytes));
-        grpMode.forEach(field -> field.setValueFromStream(bytes));
-        grpRadx.forEach(field -> field.setValueFromStream(bytes));
-        pgmChar.forEach(field -> field.setValueFromStream(bytes));
-        rtnChar.forEach(field -> field.setValueFromStream(bytes));
-        pgmChal.forEach(field -> field.setValueFromStream(bytes));
-        rtnChal.forEach(field -> field.setValueFromStream(bytes));
+        for (TypeU2 typeU2 : grpIndx) {
+            typeU2.setValueFromStream(bytes, byteConverter);
+        }
+        for (TypeU2 typeU2 : grpMode) {
+            typeU2.setValueFromStream(bytes, byteConverter);
+        }
+        for (TypeU1 typeU1 : grpRadx) {
+            typeU1.setValueFromStream(bytes, byteConverter);
+        }
+        for (TypeCn typeCn : pgmChar) {
+            typeCn.setValueFromStream(bytes, byteConverter);
+        }
+        for (TypeCn typeCn : rtnChar) {
+            typeCn.setValueFromStream(bytes, byteConverter);
+        }
+        for (TypeCn typeCn : pgmChal) {
+            typeCn.setValueFromStream(bytes, byteConverter);
+        }
+        for (TypeCn field : rtnChal) {
+            field.setValueFromStream(bytes, byteConverter);
+        }
         setFields();
         addToImage(fileImage);
     }

@@ -1,6 +1,5 @@
 package org.barber.stdfhandler.test;
 
-import org.barber.stdfhandler.file.FileBuilder;
 import org.barber.stdfhandler.file.RecordRdr;
 import org.junit.jupiter.api.Test;
 
@@ -14,7 +13,7 @@ class RecordRdrTest extends RecordTest {
     void testRtstBin() throws IOException {
         List<Integer> expected = Arrays.asList(1, 2, 3, 4, 5);
 
-        testListField(new FileBuilder().addRecord(RecordRdr.newInstance().setRtstBin(expected)),
+        testListField(fileHandler.getBuilder().addRecord(RecordRdr.newInstance().setRtstBin(expected)),
                 fileImage -> fileImage.getRdr().getRtstBins(), expected);
     }
 }

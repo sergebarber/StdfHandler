@@ -3,22 +3,22 @@ package org.barber.stdfhandler.file;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
-public class TypeU1 extends Type<Integer> {
+public class TypeI2 extends Type<Integer> {
 
-    public static final int MIN_VALUE = 0;
-    public static final int MAX_VALUE = 255;
+    public static final int MAX_VALUE = 32767;
+    public static final int MIN_VALUE = -32768;
     public static final String ILLEGAL_VALUE_MESSAGE =
-            "Illegal argument size %d for type StdfU1. Should be " + MIN_VALUE + " <= size <= " + MAX_VALUE;
+            "Illegal argument size %d for type StdfI2. Should be " + MIN_VALUE + " <= size <= " + MAX_VALUE;
 
-    private static final int BYTE_LENGTH = 1;
+    private static final int BYTE_LENGTH = 2;
 
-    TypeU1(String name, Integer nullValue) {
+    TypeI2(String name, Integer nullValue) {
         super(name, nullValue, INT_DEFAULT_VALUE);
     }
 
     @Override
     void setValueFromStream(ByteArrayInputStream stream, ByteConverter byteConverter) throws IOException {
-        setValue(byteConverter.bytesToUnsignedInt(stream, BYTE_LENGTH));
+        setValue(byteConverter.bytesToSignedInt(stream, BYTE_LENGTH));
     }
 
     @Override
@@ -31,6 +31,7 @@ public class TypeU1 extends Type<Integer> {
 
     @Override
     byte[] toBytes(ByteConverter byteConverter) {
-        return byteConverter.unsignedIntegerToBytes(getActualValue(), ByteConverter.L1BYTE_BINARY_STRING_FORMAT);
+        return byteConverter.signedIntegerToBytes(getActualValue(), ByteConverter.L2BYTES_BINARY_STRING_FORMAT,
+                BYTE_LENGTH);
     }
 }

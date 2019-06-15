@@ -21,7 +21,7 @@ class FullTest {
     @Test
     void createAndPrintFullFile() throws IOException {
 
-        FileBuilder builder = new FileBuilder()
+        FileBuilder builder = FileHandler.newInstance().getBuilder()
                 .addRecord(RecordAtr.newInstance().setModTim(DEFAULT_TIME).setCmdLine("CMD_LINE"))
                 .addRecord(RecordAtr.newInstance().setModTim(DEFAULT_TIME).setCmdLine("CMD_LINE"))
                 .addRecord(RecordVur.newInstance().setUpdNam("UPD_NAM"))
@@ -65,6 +65,9 @@ class FullTest {
                 .addWaferData(WaferData.newInstance()
                         .setWir(RecordWir.newInstance().setHeadNum(123).setSiteGrp(123).setStartT(Instant.now())
                                 .setWaferId("WAFER_ID"))
+                        .setWcr(RecordWcr.newInstance().setWafrSiz(12.34f).setDieHt(12.34f).setDieWid(12.34f)
+                                .setWfUnits(123).setWfFlat("F").setCenterX(-12345).setCenterY(12345)
+                                .setPosX("X").setPosY("Y"))
                         .setWrr(RecordWrr.newInstance().setHeadNum(123).setSiteGrp(123).setFinishT(Instant.now())
                                 .setPartCnt(123456L).setRtstCnt(123456L).setAbrtCnt(123456L).setGoodCnt(123456L)
                                 .setFuncCnt(123456L).setWaferId("WAFER_ID").setFabwfId("FABWF_ID")
@@ -78,8 +81,8 @@ class FullTest {
 
 
         ByteArrayOutputStream outputStream = builder.toStream();
-        FileReader fileReader = new FileReader();
-        FileImage image = fileReader.read(new ByteArrayInputStream(outputStream.toByteArray()));
+        FileHandler fileHandler = FileHandler.newInstance();
+        FileImage image = fileHandler.read(new ByteArrayInputStream(outputStream.toByteArray()));
         System.out.println(image.toString());
 
     }

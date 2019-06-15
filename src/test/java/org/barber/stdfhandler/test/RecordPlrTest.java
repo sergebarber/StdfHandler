@@ -1,8 +1,6 @@
 package org.barber.stdfhandler.test;
 
-import org.barber.stdfhandler.file.FileBuilder;
 import org.barber.stdfhandler.file.FileImage;
-import org.barber.stdfhandler.file.FileReader;
 import org.barber.stdfhandler.file.RecordPlr;
 import org.junit.jupiter.api.Test;
 
@@ -31,9 +29,9 @@ class RecordPlrTest extends RecordTest {
         List<String> pgmChal = Arrays.asList(PGM_CHAL + 1, PGM_CHAL + 2, PGM_CHAL + 3, PGM_CHAL + 4, PGM_CHAL + 5);
         List<String> rtnChal = Arrays.asList(RTN_CHAL + 1, RTN_CHAL + 2, RTN_CHAL + 3, RTN_CHAL + 4, RTN_CHAL + 5);
 
-        ByteArrayOutputStream outputStream = new FileBuilder().addRecord(RecordPlr.newInstance().setValues(
+        ByteArrayOutputStream outputStream = fileHandler.getBuilder().addRecord(RecordPlr.newInstance().setValues(
                 grpIndx, grpMode, grpRadx, pgmChar, rtnChar, pgmChal, rtnChal)).toStream();
-        FileImage fileImage = new FileReader().read(new ByteArrayInputStream(outputStream.toByteArray()));
+        FileImage fileImage = fileHandler.read(new ByteArrayInputStream(outputStream.toByteArray()));
 
         assertThat(fileImage.getPlrs().get(0).getGrpIndx()).isEqualTo(grpIndx);
         assertThat(fileImage.getPlrs().get(0).getGrpMode()).isEqualTo(grpMode);

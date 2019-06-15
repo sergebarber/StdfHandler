@@ -17,14 +17,14 @@ class TypeTimeTest extends TypeTest {
     void testNullValueNull() throws IOException {
         Instant expected = Instant.ofEpochSecond(0);
         fileBuilder = fileBuilder.addRecord(RecordAtr.newInstance());
-        assertThat(fileReader.read(getInputStream()).getAtrs().get(0).getModTim().orElseThrow()).isEqualTo(expected);
+        assertThat(fileHandler.read(getInputStream()).getAtrs().get(0).getModTim().orElseThrow()).isEqualTo(expected);
     }
 
     @Test
     void testNullValueSet() throws IOException {
         Instant expected = Instant.ofEpochSecond(0);
         fileBuilder = fileBuilder.addRecord(RecordAtr.newInstance().setModTim(expected));
-        assertThat(fileReader.read(getInputStream()).getAtrs().get(0).getModTim().orElseThrow()).isEqualTo(expected);
+        assertThat(fileHandler.read(getInputStream()).getAtrs().get(0).getModTim().orElseThrow()).isEqualTo(expected);
     }
 
     @Test

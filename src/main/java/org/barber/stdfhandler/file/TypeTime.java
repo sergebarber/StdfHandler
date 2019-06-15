@@ -1,6 +1,7 @@
 package org.barber.stdfhandler.file;
 
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.time.Instant;
 
 public class TypeTime extends Type<Instant> {
@@ -17,8 +18,8 @@ public class TypeTime extends Type<Instant> {
     }
 
     @Override
-    void setValueFromStream(ByteArrayInputStream stream) {
-        Instant value = Instant.ofEpochSecond(byteStreamToNumber(stream, BYTE_LENGTH));
+    void setValueFromStream(ByteArrayInputStream stream, ByteConverter byteConverter) throws IOException {
+        Instant value = Instant.ofEpochSecond(byteConverter.bytesToUnsignedLong(stream, BYTE_LENGTH));
         setValue(value);
     }
 
@@ -33,8 +34,7 @@ public class TypeTime extends Type<Instant> {
     }
 
     @Override
-    byte[] toBytes() {
-        long value = getActualValue().getEpochSecond();
-        return toBytes(value, U4_BINARY_STRING_FORMAT);
+    byte[] toBytes(ByteConverter byteConverter) {
+        return byteConverter.unsignedIntegerToBytes(getActualValue().getEpochSecond(), ByteConverter.L4BYTES_BINARY_STRING_FORMAT);
     }
 }

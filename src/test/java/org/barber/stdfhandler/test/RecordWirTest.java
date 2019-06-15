@@ -1,6 +1,5 @@
 package org.barber.stdfhandler.test;
 
-import org.barber.stdfhandler.file.FileBuilder;
 import org.barber.stdfhandler.file.RecordWir;
 import org.barber.stdfhandler.file.WaferData;
 import org.junit.jupiter.api.Test;
@@ -14,7 +13,7 @@ class RecordWirTest extends RecordTest {
     void testHeadNum() throws IOException {
         int expected = "HEAD_NUM".substring(0, 1).codePoints().sum();
         testOptionalField(
-                new FileBuilder().addWaferData(
+                fileHandler.getBuilder().addWaferData(
                         WaferData.newInstance().setWir(
                                 RecordWir.newInstance().setHeadNum(expected))),
                 fileImage -> fileImage.getWaferData().get(0).getWir().getHeadNum(),
@@ -25,7 +24,7 @@ class RecordWirTest extends RecordTest {
     void testSiteGrp() throws IOException {
         int expected = "SITE_GRP".substring(0, 1).codePoints().sum();
         testOptionalField(
-                new FileBuilder().addWaferData(
+                fileHandler.getBuilder().addWaferData(
                         WaferData.newInstance().setWir(
                                 RecordWir.newInstance().setSiteGrp(expected))),
                 fileImage -> fileImage.getWaferData().get(0).getWir().getSiteGrp(),
@@ -36,7 +35,7 @@ class RecordWirTest extends RecordTest {
     void testStartT() throws IOException {
         Instant expected = Instant.ofEpochSecond("START_T".codePoints().sum());
         testOptionalField(
-                new FileBuilder().addWaferData(
+                fileHandler.getBuilder().addWaferData(
                         WaferData.newInstance().setWir(
                                 RecordWir.newInstance().setStartT(expected))),
                 fileImage -> fileImage.getWaferData().get(0).getWir().getStartT(),
@@ -47,7 +46,7 @@ class RecordWirTest extends RecordTest {
     void testWaferId() throws IOException {
         String expected = "WAFER_ID";
         testOptionalField(
-                new FileBuilder().addWaferData(
+                fileHandler.getBuilder().addWaferData(
                         WaferData.newInstance().setWir(
                                 RecordWir.newInstance().setWaferId(expected))),
                 fileImage -> fileImage.getWaferData().get(0).getWir().getWaferId(),

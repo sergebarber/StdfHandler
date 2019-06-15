@@ -88,6 +88,11 @@ public class FileImage {
         this.wafer.setWir(wir);
     }
 
+    void setWcr(RecordWcr wcr) {
+        this.wafer = wafer == null ? WaferData.newInstance() : wafer;
+        this.wafer.setWcr(wcr);
+    }
+
     void setWrr(RecordWrr wrr) {
         if (this.wafer == null) {
             throw new StdfFileIntegrityException("Attempt to set WRR record without corresponding WIR record.");
@@ -122,30 +127,30 @@ public class FileImage {
         return builder.toString();
     }
 
-    ByteArrayOutputStream toStream() {
+    ByteArrayOutputStream toStream(ByteConverter byteConverter) {
         List<ByteArrayOutputStream> outputStreams = new LinkedList<>();
-        outputStreams.add(far.toBytes());
-        atrs.forEach(atr -> outputStreams.add(atr.toBytes()));
+        outputStreams.add(far.toBytes(byteConverter));
+        atrs.forEach(atr -> outputStreams.add(atr.toBytes(byteConverter)));
         if (vur != null) {
-            outputStreams.add(vur.toBytes());
+            outputStreams.add(vur.toBytes(byteConverter));
         }
         if (mir != null) {
-            outputStreams.add(mir.toBytes());
+            outputStreams.add(mir.toBytes(byteConverter));
         }
         if (rdr != null) {
-            outputStreams.add(rdr.toBytes());
+            outputStreams.add(rdr.toBytes(byteConverter));
         }
-        sdrs.forEach(sdr -> outputStreams.add(sdr.toBytes()));
-        pcrs.forEach(atr -> outputStreams.add(atr.toBytes()));
-        hbrs.forEach(hbr -> outputStreams.add(hbr.toBytes()));
-        sbrs.forEach(sbr -> outputStreams.add(sbr.toBytes()));
-        pmrs.forEach(pmr -> outputStreams.add(pmr.toBytes()));
-        pgrs.forEach(pgr -> outputStreams.add(pgr.toBytes()));
-        plrs.forEach(plr -> outputStreams.add(plr.toBytes()));
-        waferData.forEach(wd -> wd.getRecords().forEach(record -> outputStreams.add(record.toBytes())));
+        sdrs.forEach(sdr -> outputStreams.add(sdr.toBytes(byteConverter)));
+        pcrs.forEach(atr -> outputStreams.add(atr.toBytes(byteConverter)));
+        hbrs.forEach(hbr -> outputStreams.add(hbr.toBytes(byteConverter)));
+        sbrs.forEach(sbr -> outputStreams.add(sbr.toBytes(byteConverter)));
+        pmrs.forEach(pmr -> outputStreams.add(pmr.toBytes(byteConverter)));
+        pgrs.forEach(pgr -> outputStreams.add(pgr.toBytes(byteConverter)));
+        plrs.forEach(plr -> outputStreams.add(plr.toBytes(byteConverter)));
+        waferData.forEach(wd -> wd.getRecords().forEach(record -> outputStreams.add(record.toBytes(byteConverter))));
 
         if (mrr != null) {
-            outputStreams.add(mrr.toBytes());
+            outputStreams.add(mrr.toBytes(byteConverter));
         }
         int length = outputStreams.stream().mapToInt(ByteArrayOutputStream::size).sum();
 
