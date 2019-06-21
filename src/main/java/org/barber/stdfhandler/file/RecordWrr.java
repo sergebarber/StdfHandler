@@ -36,7 +36,7 @@ public class RecordWrr extends Record {
 
     @Override
     protected void addToImage(FileImage image) {
-        image.setWrr(this);
+        image.addWrr(this);
 
     }
 

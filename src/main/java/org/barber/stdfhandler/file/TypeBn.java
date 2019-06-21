@@ -1,0 +1,52 @@
+package org.barber.stdfhandler.file;
+
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.util.Arrays;
+
+public class TypeBn extends Type<byte[]> {
+
+    static final int MAX_LENGTH = 255;
+    static final String ILLEGAL_LENGTH_MESSAGE =
+            "Illegal length %d of the argument array. Should be no more then " + MAX_LENGTH;
+
+    private byte[] nullValue;
+
+    TypeBn(String name, byte[] nullValue) {
+        super(name, nullValue, Type.TYPE_BN_DEFAULT_VALUE);
+        this.nullValue = nullValue;
+    }
+
+    @Override
+    void setValueFromStream(ByteArrayInputStream stream, ByteConverter byteConverter) throws IOException {
+        int length = stream.read();
+        setValue(stream.readNBytes(length));
+    }
+
+    @Override
+    public byte[] getValue() {
+        return Arrays.equals(getActualValue(), nullValue) ? null : getActualValue();
+    }
+
+    @Override
+    void setValueFromUser(byte[] value) {
+        if (value.length > MAX_LENGTH) {
+            throw new IllegalArgumentException(String.format(ILLEGAL_LENGTH_MESSAGE, value.length));
+        }
+        setValue(value);
+    }
+
+    @Override
+    byte[] toBytes(ByteConverter byteConverter) {
+        byte[] value = getActualValue();
+        byte[] res = new byte[value.length + 1];
+        res[0] = (byte)value.length;
+        System.arraycopy(value, 0, res, 1, value.length);
+        return res;
+    }
+
+    @Override
+    public String toString() {
+        return Arrays.toString(getActualValue());
+    }
+}

@@ -12,11 +12,11 @@ public class RecordMir extends Record {
     private final Type<Instant> setupT = new TypeTime("SETUP_T", null);
     private final Type<Instant> startT = new TypeTime("START_T", null);
     private final Type<Integer> statNum = new TypeU1("STAT_NUM", null);
-    private final Type<String> modeCod = new TypeC1("MODE_COD", " ");
-    private final Type<String> rtstCod = new TypeC1("RTST_COD", " ");
-    private final Type<String> protCod = new TypeC1("PROT_COD", " ");
+    private final Type<Character> modeCod = new TypeC1("MODE_COD", ' ');
+    private final Type<Character> rtstCod = new TypeC1("RTST_COD", ' ');
+    private final Type<Character> protCod = new TypeC1("PROT_COD", ' ');
     private final Type<Integer> burnTim = new TypeU2("BURN_TIM", U2_MAX_NULL_VALUE);
-    private final Type<String> cmodCod = new TypeC1("CMOD_COD", " ");
+    private final Type<Character> cmodCod = new TypeC1("CMOD_COD", ' ');
     private final Type<String> lotId = new TypeCn("LOT_ID", null);
     private final Type<String> partTyp = new TypeCn("PART_TYP", null);
     private final Type<String> nodeNam = new TypeCn("NODE_NAM", null);
@@ -77,15 +77,15 @@ public class RecordMir extends Record {
         return Optional.ofNullable(statNum.getValue());
     }
 
-    public Optional<String> getModeCod() {
+    public Optional<Character> getModeCod() {
         return Optional.ofNullable(modeCod.getValue());
     }
 
-    public Optional<String> getRtstCod() {
+    public Optional<Character> getRtstCod() {
         return Optional.ofNullable(rtstCod.getValue());
     }
 
-    public Optional<String> getProtCod() {
+    public Optional<Character> getProtCod() {
         return Optional.ofNullable(protCod.getValue());
     }
 
@@ -93,7 +93,7 @@ public class RecordMir extends Record {
         return Optional.ofNullable(burnTim.getValue());
     }
 
-    public Optional<String> getCmodCod() {
+    public Optional<Character> getCmodCod() {
         return Optional.ofNullable(cmodCod.getValue());
     }
 
@@ -232,17 +232,17 @@ public class RecordMir extends Record {
         return this;
     }
 
-    public RecordMir setModeCod(String value) {
+    public RecordMir setModeCod(char value) {
         modeCod.setValueFromUser(value);
         return this;
     }
 
-    public RecordMir setRtstCod(String value) {
+    public RecordMir setRtstCod(char value) {
         rtstCod.setValueFromUser(value);
         return this;
     }
 
-    public RecordMir setProtCod(String value) {
+    public RecordMir setProtCod(char value) {
         protCod.setValueFromUser(value);
         return this;
     }
@@ -252,7 +252,7 @@ public class RecordMir extends Record {
         return this;
     }
 
-    public RecordMir setCmodCod(String value) {
+    public RecordMir setCmodCod(char value) {
         cmodCod.setValueFromUser(value);
         return this;
     }

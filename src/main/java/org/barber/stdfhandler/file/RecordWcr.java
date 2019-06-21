@@ -13,11 +13,11 @@ public class RecordWcr extends Record {
     private final Type<Float> dieHt = new TypeR4("DIE_HT", 0f);
     private final Type<Float> dieWid = new TypeR4("DIE_WID", 0f);
     private final Type<Integer> wfUnits = new TypeU1("WF_UNITS", 0);
-    private final Type<String> wfFlat = new TypeC1("WF_FLAT", " ");
+    private final Type<Character> wfFlat = new TypeC1("WF_FLAT", ' ');
     private final Type<Integer> centerX = new TypeI2("CENTER_X", TypeI2.MIN_VALUE);
     private final Type<Integer> centerY = new TypeI2("CENTER_Y", TypeI2.MIN_VALUE);
-    private final Type<String> posX = new TypeC1("POS_X", " ");
-    private final Type<String> posY = new TypeC1("POS_Y", " ");
+    private final Type<Character> posX = new TypeC1("POS_X", ' ');
+    private final Type<Character> posY = new TypeC1("POS_Y", ' ');
 
     private RecordWcr() {
         super(NAME, TYPE, SUBTYPE);
@@ -30,7 +30,7 @@ public class RecordWcr extends Record {
 
     @Override
     protected void addToImage(FileImage image) {
-        image.setWcr(this);
+        image.addWcr(this);
     }
 
     public Optional<Float> getWafrSiz() {
@@ -49,7 +49,7 @@ public class RecordWcr extends Record {
         return Optional.ofNullable(wfUnits.getValue());
     }
 
-    public Optional<String> getWfFlat() {
+    public Optional<Character> getWfFlat() {
         return Optional.ofNullable(wfFlat.getValue());
     }
 
@@ -61,11 +61,11 @@ public class RecordWcr extends Record {
         return Optional.ofNullable(centerY.getValue());
     }
 
-    public Optional<String> getPosX() {
+    public Optional<Character> getPosX() {
         return Optional.ofNullable(posX.getValue());
     }
 
-    public Optional<String> getPosY() {
+    public Optional<Character> getPosY() {
         return Optional.ofNullable(posY.getValue());
     }
 
@@ -90,7 +90,7 @@ public class RecordWcr extends Record {
         return this;
     }
 
-    public RecordWcr setWfFlat(String value) {
+    public RecordWcr setWfFlat(char value) {
         wfFlat.setValueFromUser(value);
         return this;
     }
@@ -105,12 +105,12 @@ public class RecordWcr extends Record {
         return this;
     }
 
-    public RecordWcr setPosX(String value) {
+    public RecordWcr setPosX(char value) {
         posX.setValueFromUser(value);
         return this;
     }
 
-    public RecordWcr setPosY(String value) {
+    public RecordWcr setPosY(char value) {
         posY.setValueFromUser(value);
         return this;
     }

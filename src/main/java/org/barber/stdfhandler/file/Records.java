@@ -20,8 +20,11 @@ enum Records {
     WIR(RecordWir::newInstance),
     WCR(RecordWcr::newInstance),
     WRR(RecordWrr::newInstance),
+    PIR(RecordPir::newInstance),
+    PRR(RecordPrr::newInstance),
 
-    MRR(RecordMrr::newInstance);
+    MRR(RecordMrr::newInstance),
+    TST(RecordTst::newInstance);
 
     private Supplier<Record> supplier;
 

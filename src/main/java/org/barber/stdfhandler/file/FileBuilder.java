@@ -27,8 +27,13 @@ public class FileBuilder {
     return this;
   }
 
-  public FileBuilder addWaferData(WaferData waferData) {
-    image.addWaferData(waferData);
+  public FileBuilder addWafer(WaferData wafer) {
+    image.addWafer(wafer);
+    return this;
+  }
+
+  public FileBuilder addPart(PartData part) {
+    image.addPart(part);
     return this;
   }
 }

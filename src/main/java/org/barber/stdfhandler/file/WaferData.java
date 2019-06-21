@@ -1,13 +1,14 @@
 package org.barber.stdfhandler.file;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class WaferData {
 
     private RecordWir wir;
     private RecordWcr wcr;
+    private List<PartData> partData = new ArrayList<>();
+    private PartData part;
     private RecordWrr wrr;
 
     private WaferData() {}
@@ -25,20 +26,9 @@ public class WaferData {
         if (wcr != null) {
             records.add(wcr);
         }
+        partData.forEach(part -> records.addAll(part.getRecords()));
         records.add(wrr);
         return records;
-    }
-
-    public RecordWir getWir() {
-        return wir;
-    }
-
-    public RecordWrr getWrr() {
-        return wrr;
-    }
-
-    public RecordWcr getWcr() {
-        return wcr;
     }
 
     public WaferData setWir(RecordWir wir) {
@@ -55,4 +45,43 @@ public class WaferData {
         this.wrr = wrr;
         return this;
     }
+
+    public WaferData addPart(PartData part) {
+        this.partData.add(part);
+        return this;
+    }
+
+    public WaferData addPir(RecordPir pir) {
+        if (this.part != null) {
+            this.partData.add(part);
+        }
+        this.part = PartData.newInstance().setPir(pir);
+        return this;
+    }
+
+    public void addPrr(RecordPrr prr) {
+        if (this.part == null) {
+            this.part = PartData.newInstance();
+        }
+        this.partData.add(this.part.setPrr(prr));
+        this.part = null;
+    }
+
+    public RecordWir getWir() {
+        return wir;
+    }
+
+    public RecordWrr getWrr() {
+        return wrr;
+    }
+
+    public RecordWcr getWcr() {
+        return wcr;
+    }
+
+    public List<PartData> getPartData() {
+        return partData;
+    }
+
+
 }

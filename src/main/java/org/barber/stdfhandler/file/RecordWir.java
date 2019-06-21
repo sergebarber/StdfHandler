@@ -25,7 +25,7 @@ public class RecordWir extends Record {
 
     @Override
     protected void addToImage(FileImage image) {
-        image.setWir(this);
+        image.addWir(this);
     }
 
     public Optional<Integer> getHeadNum() {

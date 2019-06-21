@@ -10,14 +10,14 @@ public enum  FloatingPointConverter {
         float bytesToFloat(ByteArrayInputStream stream) {
             StringBuilder binaryBuilder = new StringBuilder();
             for (int i = 0; i < SINGLE_PRECISION_BYTE_LENGTH; i++) {
-                binaryBuilder.append(ByteConverter.toBinaryString(stream.read(), ByteConverter.L1BYTE_BINARY_STRING_FORMAT));
+                binaryBuilder.append(ByteConverter.unsignedToBinaryString(stream.read(), ByteConverter.L1BYTE_BINARY_STRING_FORMAT));
             }
             return Float.intBitsToFloat(Integer.parseInt(binaryBuilder.toString(), 2));
         }
 
         @Override
         byte[] floatToBytes(Float value) {
-            String bits = ByteConverter.toBinaryString(Float.floatToRawIntBits(value),
+            String bits = ByteConverter.unsignedToBinaryString(Float.floatToRawIntBits(value),
                     ByteConverter.L4BYTES_BINARY_STRING_FORMAT);
             return splitToBytes(bits, SINGLE_PRECISION_BYTE_LENGTH);
         }

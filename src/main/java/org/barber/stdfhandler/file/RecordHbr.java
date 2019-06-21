@@ -12,7 +12,7 @@ public class RecordHbr extends Record {
     private final Type<Integer> siteNum = new TypeU1("SITE_NUM", null);
     private final Type<Integer> hbinNum = new TypeU2("HBIN_NUM", null);
     private final Type<Long> hbinCnt = new TypeU4("HBIN_CNT", null);
-    private final Type<String> hbinPf = new TypeC1("HBIN_PF", " ");
+    private final Type<Character> hbinPf = new TypeC1("HBIN_PF", ' ');
     private final Type<String> hbinNam = new TypeCn("HBIN_NAM", "");
 
     private RecordHbr() {
@@ -46,7 +46,7 @@ public class RecordHbr extends Record {
         return Optional.ofNullable(hbinCnt.getValue());
     }
 
-    public Optional<String> getHbinPf() {
+    public Optional<Character> getHbinPf() {
         return Optional.ofNullable(hbinPf.getValue());
     }
 
@@ -74,7 +74,7 @@ public class RecordHbr extends Record {
         return this;
     }
 
-    public RecordHbr setHbinPf(String value) {
+    public RecordHbr setHbinPf(char value) {
         hbinPf.setValueFromUser(value);
         return this;
     }

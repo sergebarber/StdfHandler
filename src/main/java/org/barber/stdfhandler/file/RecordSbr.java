@@ -12,7 +12,7 @@ public class RecordSbr extends Record {
   private final Type<Integer> siteNum = new TypeU1("SITE_NUM", null);
   private final Type<Integer> sbinNum = new TypeU2("SBIN_NUM", null);
   private final Type<Long> sbinCnt = new TypeU4("SBIN_CNT", null);
-  private final Type<String> sbinPf = new TypeC1("SBIN_PF", " ");
+  private final Type<Character> sbinPf = new TypeC1("SBIN_PF", ' ');
   private final Type<String> sbinNam = new TypeCn("SBIN_NAM", "");
 
   private RecordSbr() {
@@ -45,7 +45,7 @@ public class RecordSbr extends Record {
     return Optional.ofNullable(sbinCnt.getValue());
   }
 
-  public Optional<String> getSbinPf() {
+  public Optional<Character> getSbinPf() {
     return Optional.ofNullable(sbinPf.getValue());
   }
 
@@ -73,7 +73,7 @@ public class RecordSbr extends Record {
     return this;
   }
 
-  public RecordSbr setSbinPf(String value) {
+  public RecordSbr setSbinPf(char value) {
     sbinPf.setValueFromUser(value);
     return this;
   }

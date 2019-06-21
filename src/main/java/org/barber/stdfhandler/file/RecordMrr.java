@@ -10,7 +10,7 @@ public class RecordMrr extends Record {
     private static final int SUBTYPE = 20;
 
     private final Type<Instant> finishT = new TypeTime("FINISH_T", null);
-    private final Type<String> dispCod = new TypeC1("DISP_COD", " ");
+    private final Type<Character> dispCod = new TypeC1("DISP_COD", ' ');
     private final Type<String> usrDesc = new TypeCn("USR_DESC", "");
     private final Type<String> excDesc = new TypeCn("EXC_DESC", "");
 
@@ -32,7 +32,7 @@ public class RecordMrr extends Record {
         return Optional.ofNullable(finishT.getValue());
     }
 
-    public Optional<String> getDispCod() {
+    public Optional<Character> getDispCod() {
         return Optional.ofNullable(dispCod.getValue());
     }
 
@@ -49,7 +49,7 @@ public class RecordMrr extends Record {
         return this;
     }
 
-    public RecordMrr setDispCod(String value) {
+    public RecordMrr setDispCod(char value) {
         dispCod.setValueFromUser(value);
         return this;
     }

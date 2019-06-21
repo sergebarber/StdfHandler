@@ -12,7 +12,7 @@ public enum IntegerConverter {
 
             for (int i = bytes.length - 1; i > -1; i--) {
                 int unsigned = Byte.toUnsignedInt(bytes[i]);
-                builder.append(ByteConverter.toBinaryString(unsigned, ByteConverter.L1BYTE_BINARY_STRING_FORMAT));
+                builder.append(ByteConverter.unsignedToBinaryString(unsigned, ByteConverter.L1BYTE_BINARY_STRING_FORMAT));
             }
             return builder.toString();
         }
@@ -42,7 +42,7 @@ public enum IntegerConverter {
 
             for (int i = 0; i < bytes.length; i++) {
                 int unsigned = Byte.toUnsignedInt(bytes[i]);
-                builder.append(ByteConverter.toBinaryString(unsigned, ByteConverter.L1BYTE_BINARY_STRING_FORMAT));
+                builder.append(ByteConverter.unsignedToBinaryString(unsigned, ByteConverter.L1BYTE_BINARY_STRING_FORMAT));
             }
             return builder.toString();
         }

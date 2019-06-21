@@ -24,7 +24,12 @@ public class FileImage {
     private List<WaferData> waferData = new ArrayList<>();
     private WaferData wafer;
 
+    private List<PartData> partData = new ArrayList<>();
+    private PartData part;
+
     private RecordMrr mrr;
+
+    private RecordTst test;
 
 
     FileImage() {
@@ -79,21 +84,26 @@ public class FileImage {
         this.plrs.add(plr);
     }
 
-    void addWaferData(WaferData waferData) {
-        this.waferData.add(waferData);
+    void addWafer(WaferData wafer) {
+        this.waferData.add(wafer);
     }
 
-    void setWir(RecordWir wir) {
-        this.wafer = wafer == null ? WaferData.newInstance() : wafer;
+    void addWir(RecordWir wir) {
+        if (this.wafer != null) {
+            throw new StdfFileIntegrityException("Attempt to set WIR record without previous WRR record.");
+        }
+        wafer = WaferData.newInstance().setWir(wir);
         this.wafer.setWir(wir);
     }
 
-    void setWcr(RecordWcr wcr) {
-        this.wafer = wafer == null ? WaferData.newInstance() : wafer;
+    void addWcr(RecordWcr wcr) {
+        if (this.wafer == null) {
+            throw new StdfFileIntegrityException("Attempt to set WCR record without corresponding WIR record.");
+        }
         this.wafer.setWcr(wcr);
     }
 
-    void setWrr(RecordWrr wrr) {
+    void addWrr(RecordWrr wrr) {
         if (this.wafer == null) {
             throw new StdfFileIntegrityException("Attempt to set WRR record without corresponding WIR record.");
         }
@@ -102,9 +112,36 @@ public class FileImage {
         this.wafer = null;
     }
 
+    void addPart(PartData part) {
+        this.partData.add(part);
+    }
+
+    void addPir(RecordPir pir) {
+        if (this.wafer != null) {
+            wafer.addPir(pir);
+        }
+        if (this.part != null) {
+            this.partData.add(part);
+        }
+        this.part = PartData.newInstance().setPir(pir);
+    }
+
+    void addPrr(RecordPrr prr) {
+        if (this.wafer != null) {
+            this.wafer.addPrr(prr);
+        }
+        if (this.part == null) {
+            this.part = PartData.newInstance();
+        }
+        this.partData.add(this.part.setPrr(prr));
+        this.part = null;
+    }
+
     void setMrr(RecordMrr mrr) {
         this.mrr = mrr;
     }
+
+    void setTest(RecordTst test) {this.test = test;}
 
     @Override
     public String toString() {
@@ -148,9 +185,13 @@ public class FileImage {
         pgrs.forEach(pgr -> outputStreams.add(pgr.toBytes(byteConverter)));
         plrs.forEach(plr -> outputStreams.add(plr.toBytes(byteConverter)));
         waferData.forEach(wd -> wd.getRecords().forEach(record -> outputStreams.add(record.toBytes(byteConverter))));
+        partData.forEach(pd -> pd.getRecords().forEach(record -> outputStreams.add(record.toBytes(byteConverter))));
 
         if (mrr != null) {
             outputStreams.add(mrr.toBytes(byteConverter));
+        }
+        if (test != null) {
+            outputStreams.add(test.toBytes(byteConverter));
         }
         int length = outputStreams.stream().mapToInt(ByteArrayOutputStream::size).sum();
 
@@ -211,7 +252,15 @@ public class FileImage {
         return waferData;
     }
 
+    public List<PartData> getPartData() {
+        return this.partData;
+    }
+
     public RecordMrr getMrr() {
         return mrr;
+    }
+
+    public RecordTst getTest() {
+        return test;
     }
 }

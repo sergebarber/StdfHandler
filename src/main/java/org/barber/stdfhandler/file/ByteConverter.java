@@ -8,6 +8,7 @@ class ByteConverter {
     static final String L1BYTE_BINARY_STRING_FORMAT = "%8s";
     static final String L2BYTES_BINARY_STRING_FORMAT = "%16s";
     static final String L4BYTES_BINARY_STRING_FORMAT = "%32s";
+    static final String L8BYTES_BINARY_STRING_FORMAT = "%64s";
 
     private final IntegerConverter integerConverter;
     private final FloatingPointConverter floatingPointConverter;
@@ -76,14 +77,7 @@ class ByteConverter {
         if (value >= 0) {
             return unsignedIntegerToBytes(value, binaryStringFormat);
         }
-        StringBuilder bits = new StringBuilder(Long.toBinaryString(value));
-        bits = new StringBuilder(bits.substring(bits.length() - (byteLength * 8)));
-        String[] split = bits.toString().split("");
-        bits = new StringBuilder("1");
-        for (int i = 1; i < split.length; i++) {
-            bits.append(split[i].equals("1") ? "0" : "1");
-        }
-        return integerConverter.splitToBytes(bits.toString());
+        return integerConverter.splitToBytes(switchSign(value, byteLength));
     }
 
 
@@ -94,12 +88,27 @@ class ByteConverter {
 
     // Helpers
 
-    static String toBinaryString(long value, String format) {
+    static String unsignedToBinaryString(long value, String format) {
         return String.format(format, Long.toBinaryString(value)).replace(' ', '0');
     }
 
+    static String signedToBinaryString(long value, int byteLength) {
+        String bits = unsignedToBinaryString(value, L8BYTES_BINARY_STRING_FORMAT);
+        return bits.substring(bits.length() - (byteLength * 8));
+    }
+
+    static String switchSign(long value, int byteLength) {
+        StringBuilder bits = new StringBuilder(signedToBinaryString(value, byteLength));
+        String[] split = bits.toString().split("");
+        bits = new StringBuilder("1");
+        for (int i = 1; i < split.length; i++) {
+            bits.append(split[i].equals("1") ? "0" : "1");
+        }
+        return bits.toString();
+    }
+
     byte[] toBytes(long value, String format) {
-        String binary = toBinaryString(value, format);
+        String binary = unsignedToBinaryString(value, format);
         return integerConverter.splitToBytes(binary);
     }
 }
