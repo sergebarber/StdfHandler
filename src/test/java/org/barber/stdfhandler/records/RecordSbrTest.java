@@ -38,8 +38,8 @@ class RecordSbrTest extends RecordTest {
 
   @Test
   void testSbinPf() throws IOException {
-    testOptionalField(fileHandler.getBuilder().addRecord(RecordSbr.newInstance().setSbinPf(CHAR_EXPECTED)),
-        fileImage -> fileImage.getSbrs().get(0).getSbinPf(), CHAR_EXPECTED);
+    testOptionalField(fileHandler.getBuilder().addRecord(RecordSbr.newInstance().setSbinPf(TYPE_C1_EXPECTED_VALUE)),
+        fileImage -> fileImage.getSbrs().get(0).getSbinPf(), TYPE_C1_EXPECTED_VALUE);
   }
 
   @Test

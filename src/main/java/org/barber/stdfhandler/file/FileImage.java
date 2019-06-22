@@ -27,6 +27,7 @@ public class FileImage {
     private List<PartData> partData = new ArrayList<>();
     private PartData part;
 
+    private List<RecordTsr> tsrs = new ArrayList<>();
     private RecordMrr mrr;
 
     private RecordTst test;
@@ -119,6 +120,7 @@ public class FileImage {
     void addPir(RecordPir pir) {
         if (this.wafer != null) {
             wafer.addPir(pir);
+            return;
         }
         if (this.part != null) {
             this.partData.add(part);
@@ -129,12 +131,29 @@ public class FileImage {
     void addPrr(RecordPrr prr) {
         if (this.wafer != null) {
             this.wafer.addPrr(prr);
+            return;
         }
         if (this.part == null) {
             this.part = PartData.newInstance();
         }
         this.partData.add(this.part.setPrr(prr));
         this.part = null;
+    }
+
+    void addPtr(RecordPtr ptr) {
+        if (this.wafer != null) {
+            wafer.addPtr(ptr);
+            return;
+        }
+        if (this.part != null) {
+            part.addPtr(ptr);
+            return;
+        }
+        this.part = PartData.newInstance().addPtr(ptr);
+    }
+
+    void addTsr(RecordTsr tsr) {
+        this.tsrs.add(tsr);
     }
 
     void setMrr(RecordMrr mrr) {
@@ -160,6 +179,7 @@ public class FileImage {
         plrs.forEach(builder::append);
         waferData.forEach(wd -> wd.getRecords().forEach(builder::append));
 
+        tsrs.forEach(builder::append);
         builder.append(mrr != null ? mrr : "");
         return builder.toString();
     }
@@ -187,6 +207,7 @@ public class FileImage {
         waferData.forEach(wd -> wd.getRecords().forEach(record -> outputStreams.add(record.toBytes(byteConverter))));
         partData.forEach(pd -> pd.getRecords().forEach(record -> outputStreams.add(record.toBytes(byteConverter))));
 
+        tsrs.forEach(tsr -> outputStreams.add(tsr.toBytes(byteConverter)));
         if (mrr != null) {
             outputStreams.add(mrr.toBytes(byteConverter));
         }
@@ -254,6 +275,10 @@ public class FileImage {
 
     public List<PartData> getPartData() {
         return this.partData;
+    }
+
+    public List<RecordTsr> getTsrs() {
+        return tsrs;
     }
 
     public RecordMrr getMrr() {

@@ -59,6 +59,14 @@ public class WaferData {
         return this;
     }
 
+    public void addPtr(RecordPtr ptr) {
+        if (this.part != null) {
+            part.addPtr(ptr);
+            return;
+        }
+        this.part = PartData.newInstance().addPtr(ptr);
+    }
+
     public void addPrr(RecordPrr prr) {
         if (this.part == null) {
             this.part = PartData.newInstance();
@@ -82,6 +90,5 @@ public class WaferData {
     public List<PartData> getPartData() {
         return partData;
     }
-
 
 }

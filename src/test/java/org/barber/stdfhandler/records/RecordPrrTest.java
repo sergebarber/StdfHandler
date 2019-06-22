@@ -40,7 +40,7 @@ class RecordPrrTest extends RecordTest {
 
   @Test
   void testPartFlgBit() throws IOException {
-    int expected = 1;
+    boolean expected = true;
     int position = 3;
     ByteArrayOutputStream outputStream = fileHandler.getBuilder().addPart(PartData.newInstance().setPrr(
         RecordPrr.newInstance().setPartFlgBit(expected, position))).toStream();

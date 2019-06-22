@@ -19,8 +19,6 @@ public class TypeB1 extends Type<String> {
             "Illegal argument %s for type StdfB1. Should be a binary string";
     public static final String ILLEGAL_POSITION_MESSAGE =
             "Illegal position argument %d for type StdfB1. Should be between " + MIN_POSITION + " and " + MAX_POSITION;
-    public static final String ILLEGAL_BIT_VALUE_MESSAGE =
-        "Illegal bit argument %d for type StdfB1. Should be either 0 or 1";
 
     TypeB1(String name, String nullValue) {
         super(name, nullValue, TYPE_B1_DEFAULT_VALUE);
@@ -48,21 +46,19 @@ public class TypeB1 extends Type<String> {
         return new byte[]{(byte)Integer.parseInt(getActualValue(), 2)};
     }
 
-    int getBitInPosition(int position) {
+    boolean getBitInPosition(int position) {
         if (position < MIN_POSITION || position > MAX_POSITION) {
             throw new IllegalArgumentException(String.format(ILLEGAL_POSITION_MESSAGE, position));
         }
-        return Integer.parseInt(getActualValue().substring(position, position + 1));
+        return getActualValue().substring(position, position + 1).equals("0");
     }
 
-    void setBitInPosition(int value, int position) {
+    void setBitInPosition(boolean value, int position) {
         if (position < MIN_POSITION || position > MAX_POSITION) {
             throw new IllegalArgumentException(String.format(ILLEGAL_POSITION_MESSAGE, position));
         }
-        if (value != 0 && value != 1) {
-            throw new IllegalArgumentException(String.format(ILLEGAL_BIT_VALUE_MESSAGE, value));
-        }
         String actualValue = getActualValue();
-        setValueFromUser(actualValue.substring(0, position) + value + actualValue.substring(position + 1));
+        int intValue = value ? 0 : 1;
+        setValueFromUser(actualValue.substring(0, position) + intValue + actualValue.substring(position + 1));
     }
 }

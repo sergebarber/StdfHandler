@@ -49,7 +49,7 @@ public class RecordPrr extends Record {
         return Optional.ofNullable(partFlg.getValue());
     }
 
-    public int getPartFlgBit(int position) {
+    public boolean getPartFlgBit(int position) {
         return partFlg.getBitInPosition(position);
     }
 
@@ -105,7 +105,7 @@ public class RecordPrr extends Record {
         return this;
     }
 
-    public RecordPrr setPartFlgBit(int value, int position) {
+    public RecordPrr setPartFlgBit(boolean value, int position) {
         partFlg.setBitInPosition(value, position);
         return this;
     }

@@ -6,11 +6,12 @@ import java.io.IOException;
 public abstract class Type<T> {
 
     static final String STRING_DEFAULT_VALUE = "";
-    static final char CHAR_DEFAULT_VALUE = ' ';
+    static final Character CHAR_DEFAULT_VALUE = ' ';
+    static final Byte BYTE_DEFAULT_VALUE = 0;
     static final Integer INT_DEFAULT_VALUE = 0;
     static final Long LONG_DEFAULT_VALUE = 0L;
     static final Float FLOAT_DEFAULT_VALUE = 0f;
-    static final String TYPE_B1_DEFAULT_VALUE = "00000000";
+    static final String TYPE_B1_DEFAULT_VALUE = "1".repeat(8);
     static final byte[] TYPE_BN_DEFAULT_VALUE = new byte[0];
 
     private T value;

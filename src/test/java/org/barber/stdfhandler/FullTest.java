@@ -1,112 +1,223 @@
 package org.barber.stdfhandler;
 
-import org.barber.stdfhandler.file.FileBuilder;
-import org.barber.stdfhandler.file.FileHandler;
-import org.barber.stdfhandler.file.FileImage;
-import org.barber.stdfhandler.file.PartData;
-import org.barber.stdfhandler.file.RecordAtr;
-import org.barber.stdfhandler.file.RecordHbr;
-import org.barber.stdfhandler.file.RecordMir;
-import org.barber.stdfhandler.file.RecordMrr;
-import org.barber.stdfhandler.file.RecordPcr;
-import org.barber.stdfhandler.file.RecordPgr;
-import org.barber.stdfhandler.file.RecordPir;
-import org.barber.stdfhandler.file.RecordPlr;
-import org.barber.stdfhandler.file.RecordPmr;
-import org.barber.stdfhandler.file.RecordPrr;
-import org.barber.stdfhandler.file.RecordRdr;
-import org.barber.stdfhandler.file.RecordSbr;
-import org.barber.stdfhandler.file.RecordSdr;
-import org.barber.stdfhandler.file.RecordVur;
-import org.barber.stdfhandler.file.RecordWcr;
-import org.barber.stdfhandler.file.RecordWir;
-import org.barber.stdfhandler.file.RecordWrr;
-import org.barber.stdfhandler.file.WaferData;
+import org.barber.stdfhandler.file.*;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.time.Instant;
-import java.util.Arrays;
 import java.util.List;
 
-class FullTest {
+class FullTest extends StdfTest {
 
-  private static final Instant DEFAULT_TIME = Instant.ofEpochSecond(12345678);
-  private static final int DEFULT_U1 = 123;
-  private static final int DEFULT_U2 = 12345;
-  private static final long DEFULT_U4 = 12345678;
-  private static final List<Integer> DEFAULT_U2_LIST = Arrays.asList(12345, 12346, 12347, 12348, 12349);
+    @Test
+    void createAndPrintFullFile() throws IOException {
 
-  @Test
-  void createAndPrintFullFile() throws IOException {
+        FileBuilder builder = FileHandler.newInstance().getBuilder()
+                .addRecord(RecordAtr.newInstance()
+                        .setModTim(TYPE_TIME_EXPECTED_VALUE)
+                        .setCmdLine(TYPE_CN_EXPECTED_VALUE))
+                .addRecord(RecordVur.newInstance()
+                        .setUpdNam(TYPE_CN_EXPECTED_VALUE))
+                .addRecord(RecordMir.newInstance()
+                        .setSetupT(TYPE_TIME_EXPECTED_VALUE)
+                        .setStartT(TYPE_TIME_EXPECTED_VALUE)
+                        .setStatNum(TYPE_U1_EXPECTED_VALUE)
+                        .setModeCod(TYPE_C1_EXPECTED_VALUE)
+                        .setRtstCod(TYPE_C1_EXPECTED_VALUE)
+                        .setProtCod(TYPE_C1_EXPECTED_VALUE)
+                        .setBurnTim(TYPE_U2_EXPECTED_VALUE)
+                        .setCmodCod(TYPE_C1_EXPECTED_VALUE)
+                        .setLotId(TYPE_CN_EXPECTED_VALUE)
+                        .setPartTyp(TYPE_CN_EXPECTED_VALUE)
+                        .setNodeNam(TYPE_CN_EXPECTED_VALUE)
+                        .setTstrTyp(TYPE_CN_EXPECTED_VALUE)
+                        .setJobNam(TYPE_CN_EXPECTED_VALUE)
+                        .setJobRev(TYPE_CN_EXPECTED_VALUE)
+                        .setSblotId(TYPE_CN_EXPECTED_VALUE)
+                        .setOperNam(TYPE_CN_EXPECTED_VALUE)
+                        .setExecTyp(TYPE_CN_EXPECTED_VALUE)
+                        .setExecVer(TYPE_CN_EXPECTED_VALUE)
+                        .setTestCod(TYPE_CN_EXPECTED_VALUE)
+                        .setTstTemp(TYPE_CN_EXPECTED_VALUE)
+                        .setUserTxt(TYPE_CN_EXPECTED_VALUE)
+                        .setAuxFile(TYPE_CN_EXPECTED_VALUE)
+                        .setPkgTyp(TYPE_CN_EXPECTED_VALUE)
+                        .setFamlyId(TYPE_CN_EXPECTED_VALUE)
+                        .setDateCod(TYPE_CN_EXPECTED_VALUE)
+                        .setFacilId(TYPE_CN_EXPECTED_VALUE)
+                        .setFloorId(TYPE_CN_EXPECTED_VALUE)
+                        .setProcId(TYPE_CN_EXPECTED_VALUE)
+                        .setOperFrq(TYPE_CN_EXPECTED_VALUE)
+                        .setSpecNam(TYPE_CN_EXPECTED_VALUE)
+                        .setSpecVer(TYPE_CN_EXPECTED_VALUE)
+                        .setFlowId(TYPE_CN_EXPECTED_VALUE)
+                        .setSetupId(TYPE_CN_EXPECTED_VALUE)
+                        .setDsgnRev(TYPE_CN_EXPECTED_VALUE)
+                        .setEngId(TYPE_CN_EXPECTED_VALUE)
+                        .setRomCod(TYPE_CN_EXPECTED_VALUE)
+                        .setSerlNum(TYPE_CN_EXPECTED_VALUE)
+                        .setSuprNam(TYPE_CN_EXPECTED_VALUE))
+                .addRecord(RecordRdr.newInstance()
+                        .setRtstBin(List.of(TYPE_U2_EXPECTED_VALUE, TYPE_U2_EXPECTED_VALUE)))
+                .addRecord(RecordSdr.newInstance()
+                        .setHeadNum(TYPE_U1_EXPECTED_VALUE)
+                        .setSiteGrp(TYPE_U1_EXPECTED_VALUE)
+                        .setSiteNum(List.of(TYPE_U1_EXPECTED_VALUE, TYPE_U1_EXPECTED_VALUE))
+                        .setHandTyp(TYPE_CN_EXPECTED_VALUE)
+                        .setHandId(TYPE_CN_EXPECTED_VALUE)
+                        .setCardTyp(TYPE_CN_EXPECTED_VALUE)
+                        .setCardId(TYPE_CN_EXPECTED_VALUE)
+                        .setLoadTyp(TYPE_CN_EXPECTED_VALUE)
+                        .setLoadId(TYPE_CN_EXPECTED_VALUE)
+                        .setDibTyp(TYPE_CN_EXPECTED_VALUE)
+                        .setDibId(TYPE_CN_EXPECTED_VALUE)
+                        .setCablTyp(TYPE_CN_EXPECTED_VALUE)
+                        .setCablId(TYPE_CN_EXPECTED_VALUE)
+                        .setContTyp(TYPE_CN_EXPECTED_VALUE)
+                        .setContId(TYPE_CN_EXPECTED_VALUE)
+                        .setLasrTyp(TYPE_CN_EXPECTED_VALUE)
+                        .setLasrId(TYPE_CN_EXPECTED_VALUE)
+                        .setExtrTyp(TYPE_CN_EXPECTED_VALUE)
+                        .setExtrId(TYPE_CN_EXPECTED_VALUE))
+                .addRecord(RecordPcr.newInstance()
+                        .setHeadNum(TYPE_U1_EXPECTED_VALUE)
+                        .setSiteNum(TYPE_U1_EXPECTED_VALUE)
+                        .setPartCnt(TYPE_U4_EXPECTED_VALUE)
+                        .setRtstCnt(TYPE_U4_EXPECTED_VALUE)
+                        .setAbrtCnt(TYPE_U4_EXPECTED_VALUE)
+                        .setGoodCnt(TYPE_U4_EXPECTED_VALUE)
+                        .setFuncCnt(TYPE_U4_EXPECTED_VALUE))
+                .addRecord(RecordHbr.newInstance()
+                        .setHeadNum(TYPE_U1_EXPECTED_VALUE)
+                        .setSiteNum(TYPE_U1_EXPECTED_VALUE)
+                        .setHbinNum(TYPE_U2_EXPECTED_VALUE)
+                        .setHbinCnt(TYPE_U4_EXPECTED_VALUE)
+                        .setHbinPf(TYPE_C1_EXPECTED_VALUE)
+                        .setHbinNam(TYPE_CN_EXPECTED_VALUE))
+                .addRecord(RecordSbr.newInstance()
+                        .setHeadNum(TYPE_U1_EXPECTED_VALUE)
+                        .setSiteNum(TYPE_U1_EXPECTED_VALUE)
+                        .setSbinNum(TYPE_U2_EXPECTED_VALUE)
+                        .setSbinCnt(TYPE_U4_EXPECTED_VALUE)
+                        .setSbinPf(TYPE_C1_EXPECTED_VALUE)
+                        .setSbinNam(TYPE_CN_EXPECTED_VALUE))
+                .addRecord(RecordPmr.newInstance()
+                        .setPmrIndx(TYPE_U2_EXPECTED_VALUE)
+                        .setChanTyp(TYPE_U2_EXPECTED_VALUE)
+                        .setChanNam(TYPE_CN_EXPECTED_VALUE)
+                        .setPhyNam(TYPE_CN_EXPECTED_VALUE)
+                        .setLogNam(TYPE_CN_EXPECTED_VALUE)
+                        .setHeadNum(TYPE_U1_EXPECTED_VALUE)
+                        .setSiteNum(TYPE_U1_EXPECTED_VALUE))
+                .addRecord(RecordPgr.newInstance()
+                        .setGrpIndx(TYPE_U2_EXPECTED_VALUE)
+                        .setGrpNam(TYPE_CN_EXPECTED_VALUE)
+                        .setPmrIndx(List.of(TYPE_U2_EXPECTED_VALUE, TYPE_U2_EXPECTED_VALUE)))
+                .addRecord(RecordPlr.newInstance().setValues(
+                        List.of(TYPE_U2_EXPECTED_VALUE, TYPE_U2_EXPECTED_VALUE),
+                        List.of(TYPE_U2_EXPECTED_VALUE, TYPE_U2_EXPECTED_VALUE),
+                        List.of(TYPE_U1_EXPECTED_VALUE, TYPE_U1_EXPECTED_VALUE),
+                        List.of(TYPE_CN_EXPECTED_VALUE, TYPE_CN_EXPECTED_VALUE),
+                        List.of(TYPE_CN_EXPECTED_VALUE, TYPE_CN_EXPECTED_VALUE),
+                        List.of(TYPE_CN_EXPECTED_VALUE, TYPE_CN_EXPECTED_VALUE),
+                        List.of(TYPE_CN_EXPECTED_VALUE, TYPE_CN_EXPECTED_VALUE)))
+                .addWafer(WaferData.newInstance()
+                        .setWir(RecordWir.newInstance()
+                                .setHeadNum(TYPE_U1_EXPECTED_VALUE)
+                                .setSiteGrp(TYPE_U1_EXPECTED_VALUE)
+                                .setStartT(TYPE_TIME_EXPECTED_VALUE)
+                                .setWaferId(TYPE_CN_EXPECTED_VALUE))
+                        .setWcr(RecordWcr.newInstance()
+                                .setWafrSiz(TYPE_R4_EXPECTED_VALUE)
+                                .setDieHt(TYPE_R4_EXPECTED_VALUE)
+                                .setDieWid(TYPE_R4_EXPECTED_VALUE)
+                                .setWfUnits(TYPE_U1_EXPECTED_VALUE)
+                                .setWfFlat(TYPE_C1_EXPECTED_VALUE)
+                                .setCenterX(TYPE_I2_EXPECTED_VALUE)
+                                .setCenterY(TYPE_I2_EXPECTED_VALUE)
+                                .setPosX(TYPE_C1_EXPECTED_VALUE)
+                                .setPosY(TYPE_C1_EXPECTED_VALUE))
+                        .setWrr(RecordWrr.newInstance()
+                                .setHeadNum(TYPE_U1_EXPECTED_VALUE)
+                                .setSiteGrp(TYPE_U1_EXPECTED_VALUE)
+                                .setFinishT(TYPE_TIME_EXPECTED_VALUE)
+                                .setPartCnt(TYPE_U4_EXPECTED_VALUE)
+                                .setRtstCnt(TYPE_U4_EXPECTED_VALUE)
+                                .setAbrtCnt(TYPE_U4_EXPECTED_VALUE)
+                                .setGoodCnt(TYPE_U4_EXPECTED_VALUE)
+                                .setFuncCnt(TYPE_U4_EXPECTED_VALUE)
+                                .setWaferId(TYPE_CN_EXPECTED_VALUE)
+                                .setFabwfId(TYPE_CN_EXPECTED_VALUE)
+                                .setFrameId(TYPE_CN_EXPECTED_VALUE)
+                                .setMaskId(TYPE_CN_EXPECTED_VALUE)
+                                .setUsrDesc(TYPE_CN_EXPECTED_VALUE)
+                                .setExcDesc(TYPE_CN_EXPECTED_VALUE))
+                        .addPart(PartData.newInstance()
+                                .setPir(RecordPir.newInstance()
+                                        .setHeadNum(TYPE_U1_EXPECTED_VALUE)
+                                        .setSiteNum(TYPE_U1_EXPECTED_VALUE))
+                                .addPtr(RecordPtr.newInstance()
+                                        .setTestNum(TYPE_U4_EXPECTED_VALUE)
+                                        .setHeadNum(TYPE_U1_EXPECTED_VALUE)
+                                        .setSiteNum(TYPE_U1_EXPECTED_VALUE)
+                                        .setTestFlg(TYPE_B1_DEFAULT_VALUE)
+                                        .setParmFlg(TYPE_B1_DEFAULT_VALUE)
+                                        .setResult(TYPE_R4_EXPECTED_VALUE)
+                                        .setTestTxt(TYPE_CN_EXPECTED_VALUE)
+                                        .setAlarmId(TYPE_CN_EXPECTED_VALUE)
+                                        .setOptFlag(TYPE_B1_DEFAULT_VALUE)
+                                        .setResScal(TYPE_I1_EXPECTED_VALUE)
+                                        .setLlmScal(TYPE_I1_EXPECTED_VALUE)
+                                        .setHlmScal(TYPE_I1_EXPECTED_VALUE)
+                                        .setLoLimit(TYPE_R4_EXPECTED_VALUE)
+                                        .setHiLimit(TYPE_R4_EXPECTED_VALUE)
+                                        .setUnits(TYPE_CN_EXPECTED_VALUE)
+                                        .setcResfmt(TYPE_CN_EXPECTED_VALUE)
+                                        .setcLlmft(TYPE_CN_EXPECTED_VALUE)
+                                        .setcHlmft(TYPE_CN_EXPECTED_VALUE)
+                                        .setLoSpec(TYPE_R4_EXPECTED_VALUE)
+                                        .setHiSpec(TYPE_R4_EXPECTED_VALUE))
+                                .setPrr(RecordPrr.newInstance()
+                                        .setHeadNum(TYPE_U1_EXPECTED_VALUE)
+                                        .setSiteNum(TYPE_U1_EXPECTED_VALUE)
+                                        .setPartFlg(TYPE_B1_EXPECTED_VALUE)
+                                        .setNumTest(TYPE_U2_EXPECTED_VALUE)
+                                        .setHardBin(TYPE_U2_EXPECTED_VALUE)
+                                        .setSoftBin(TYPE_U2_EXPECTED_VALUE)
+                                        .setXCoord(TYPE_I2_EXPECTED_VALUE)
+                                        .setYCoord(TYPE_I2_EXPECTED_VALUE)
+                                        .setTestT(TYPE_U4_EXPECTED_VALUE)
+                                        .setPartId(TYPE_CN_EXPECTED_VALUE)
+                                        .setPartTxt(TYPE_CN_EXPECTED_VALUE)
+                                        .setPartFix(TYPE_BN_EXPECTED_VALUE))))
+                .addRecord(RecordTsr.newInstance()
+                        .setHeadNum(TYPE_U1_EXPECTED_VALUE)
+                        .setSiteNum(TYPE_U1_EXPECTED_VALUE)
+                        .setTestTyp(TYPE_C1_EXPECTED_VALUE)
+                        .setTestNum(TYPE_U4_EXPECTED_VALUE)
+                        .setExecCnt(TYPE_U4_EXPECTED_VALUE)
+                        .setFailCnt(TYPE_U4_EXPECTED_VALUE)
+                        .setAlrmCnt(TYPE_U4_EXPECTED_VALUE)
+                        .setTestNam(TYPE_CN_EXPECTED_VALUE)
+                        .setSeqName(TYPE_CN_EXPECTED_VALUE)
+                        .setTestLbl(TYPE_CN_EXPECTED_VALUE)
+                        .setOptFlag(TYPE_B1_DEFAULT_VALUE)
+                        .setTestTim(TYPE_R4_EXPECTED_VALUE)
+                        .setTestMin(TYPE_R4_EXPECTED_VALUE)
+                        .setTestMax(TYPE_R4_EXPECTED_VALUE)
+                        .setTstSums(TYPE_R4_EXPECTED_VALUE)
+                        .setTstSqrc(TYPE_R4_EXPECTED_VALUE))
+                .addRecord(RecordMrr.newInstance()
+                        .setFinishT(TYPE_TIME_EXPECTED_VALUE)
+                        .setDispCod(TYPE_C1_EXPECTED_VALUE)
+                        .setUsrDesc(TYPE_CN_EXPECTED_VALUE)
+                        .setExcDesc(TYPE_CN_EXPECTED_VALUE));
 
-    FileBuilder builder = FileHandler.newInstance().getBuilder()
-        .addRecord(RecordAtr.newInstance().setModTim(DEFAULT_TIME).setCmdLine("CMD_LINE"))
-        .addRecord(RecordAtr.newInstance().setModTim(DEFAULT_TIME).setCmdLine("CMD_LINE"))
-        .addRecord(RecordVur.newInstance().setUpdNam("UPD_NAM"))
-        .addRecord(RecordMir.newInstance().setSetupT(DEFAULT_TIME).setStartT(DEFAULT_TIME)
-            .setStatNum(DEFULT_U1).setModeCod('A').setRtstCod('D').setProtCod('E')
-            .setBurnTim(DEFULT_U2).setCmodCod('F').setLotId("LOT_ID").setPartTyp("PART_TYP")
-            .setNodeNam("NODE_NAM").setTstrTyp("TSTR_TYP").setJobNam("JOB_NAM").setJobRev("JOB_REV")
-            .setSblotId("SBLOT_ID").setOperNam("OPER_NAM").setExecTyp("EXEC_TYP").setExecVer("EXEC_VER")
-            .setTestCod("TEST_COD").setTstTemp("TST_TEMP").setUserTxt("USER_TXT").setAuxFile("AUX_FILE")
-            .setPkgTyp("PKG_TYP").setFamlyId("FAMLY_ID").setDateCod("DATE_COD").setFacilId("FACIL_ID")
-            .setFloorId("FLOOR_ID").setProcId("PROC_ID").setOperFrq("OPER_FRQ").setSpecNam("SPEC_NAM")
-            .setSpecVer("SPEC_VER").setFlowId("FLOW_ID").setSetupId("SETUP_ID").setDsgnRev("DSGN_REV")
-            .setEngId("ENG_ID").setRomCod("ROM_COD").setSerlNum("SERL_NUM").setSuprNam("SUPR_NAM"))
-        .addRecord(RecordRdr.newInstance().setRtstBin(DEFAULT_U2_LIST))
-        .addRecord(RecordSdr.newInstance().setHeadNum(123).setSiteGrp(123)
-            .setSiteNum(Arrays.asList(123, 124, 125, 126, 127)).setHandTyp("HAND_TYP")
-            .setHandId("HAND_ID").setCardTyp("CARD_TYP").setCardId("CARD_ID").setLoadTyp("LOAD_TYP")
-            .setLoadId("LOAD_ID").setDibTyp("DIB_TYP").setDibId("DIB_ID").setCablTyp("CABL_TYP")
-            .setCablId("CABL_ID").setContTyp("CONT_TYP").setContId("CONT_ID").setLasrTyp("LASR_TYP")
-            .setLasrId("LASR_ID").setExtrTyp("EXTR_TYP").setExtrId("EXTR_ID"))
-        .addRecord(RecordPcr.newInstance().setHeadNum(DEFULT_U1).setSiteNum(DEFULT_U1)
-            .setPartCnt(DEFULT_U4).setRtstCnt(DEFULT_U4).setAbrtCnt(DEFULT_U4).setGoodCnt(DEFULT_U4)
-            .setFuncCnt(DEFULT_U4))
-        .addRecord(RecordHbr.newInstance().setHeadNum(DEFULT_U1).setSiteNum(DEFULT_U1).setHbinNum(DEFULT_U2)
-            .setHbinCnt(DEFULT_U4).setHbinPf('E').setHbinNam("HBIN_NAM"))
-        .addRecord(RecordSbr.newInstance().setHeadNum(DEFULT_U1).setSiteNum(DEFULT_U1).setSbinNum(DEFULT_U2)
-            .setSbinCnt(DEFULT_U4).setSbinPf('E').setSbinNam("SBIN_NAM"))
-        .addRecord(RecordPmr.newInstance().setPmrIndx(DEFULT_U2).setChanTyp(DEFULT_U2).setChanNam("CHAN_NAM")
-            .setPhyNam("PHY_NAM").setLogNam("LOG_NAM").setHeadNum(DEFULT_U1).setSiteNum(DEFULT_U1))
-        .addRecord(RecordPgr.newInstance().setGrpIndx(DEFULT_U2).setGrpNam("GRP_NAM")
-            .setPmrIndx(DEFAULT_U2_LIST))
-        .addRecord(RecordPlr.newInstance().setValues(
-            Arrays.asList(12345, 12346, 12347, 12348, 12349),
-            Arrays.asList(12345, 12346, 12347, 12348, 12349),
-            Arrays.asList(123, 124, 125, 126, 127),
-            Arrays.asList("PGM_CHAR_1", "PGM_CHAR_2", "PGM_CHAR_3", "PGM_CHAR_4", "PGM_CHAR_5"),
-            Arrays.asList("RTN_CHAR_1", "RTN_CHAR_2", "RTN_CHAR_3", "RTN_CHAR_4", "RTN_CHAR_5"),
-            Arrays.asList("PGM_CHAL_1", "PGM_CHAL_2", "PGM_CHAL_3", "PGM_CHAL_4", "PGM_CHAL_5"),
-            Arrays.asList("RTN_CHAL_1", "RTN_CHAL_2", "RTN_CHAL_3", "RTN_CHAL_4", "RTN_CHAL_5")))
+        ByteArrayOutputStream outputStream = builder.toStream();
+        FileHandler fileHandler = FileHandler.newInstance();
+        FileImage image = fileHandler.read(new ByteArrayInputStream(outputStream.toByteArray()));
+        System.out.println(image.toString());
 
-        .addWafer(WaferData.newInstance()
-            .setWir(RecordWir.newInstance().setHeadNum(123).setSiteGrp(123).setStartT(Instant.now())
-                .setWaferId("WAFER_ID"))
-            .setWcr(RecordWcr.newInstance().setWafrSiz(12.34f).setDieHt(12.34f).setDieWid(12.34f)
-                .setWfUnits(123).setWfFlat('F').setCenterX(-12345).setCenterY(12345)
-                .setPosX('X').setPosY('Y'))
-            .setWrr(RecordWrr.newInstance().setHeadNum(123).setSiteGrp(123).setFinishT(Instant.now())
-                .setPartCnt(123456L).setRtstCnt(123456L).setAbrtCnt(123456L).setGoodCnt(123456L)
-                .setFuncCnt(123456L).setWaferId("WAFER_ID").setFabwfId("FABWF_ID")
-                .setFrameId("FRAME_ID").setMaskId("MASK_ID").setUsrDesc("USR_DESC")
-                .setExcDesc("EXC_DESC"))
-            .addPart(PartData.newInstance()
-                .setPir(RecordPir.newInstance().setHeadNum(123).setSiteNum(123))
-                .setPrr(RecordPrr.newInstance().setHeadNum(123).setSiteNum(123).setPartFlg("00100010")
-                    .setNumTest(12345).setHardBin(12345).setSoftBin(12345).setXCoord(-12345).setYCoord(-12345)
-                    .setTestT(1234567890).setPartId("PART_ID").setPartTxt("PART_TXT")
-                    .setPartFix(new byte[]{12, 13, 14}))))
-        .addRecord(RecordMrr.newInstance().setFinishT(DEFAULT_TIME).setDispCod('E').setUsrDesc("USR_DESC")
-            .setExcDesc("EXC_DESC"));
-
-    ByteArrayOutputStream outputStream = builder.toStream();
-    FileHandler fileHandler = FileHandler.newInstance();
-    FileImage image = fileHandler.read(new ByteArrayInputStream(outputStream.toByteArray()));
-    System.out.println(image.toString());
-
-  }
+    }
 }

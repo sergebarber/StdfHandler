@@ -42,7 +42,7 @@ class RecordTst extends Record {
     return Optional.ofNullable(typeB1WithDefault.getValue());
   }
 
-  int getPartFlgBit(int position) {
+  boolean getPartFlgBit(int position) {
     return typeB1WithDefault.getBitInPosition(position);
   }
 
@@ -56,7 +56,7 @@ class RecordTst extends Record {
     return this;
   }
 
-  RecordTst setPartFlgBit(int value, int position) {
+  RecordTst setPartFlgBit(boolean value, int position) {
     typeB1WithDefault.setBitInPosition(value, position);
     return this;
   }

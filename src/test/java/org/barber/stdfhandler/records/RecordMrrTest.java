@@ -17,8 +17,8 @@ public class RecordMrrTest extends RecordTest {
 
   @Test
   void testDispCod() throws IOException {
-    testOptionalField(fileHandler.getBuilder().addRecord(RecordMrr.newInstance().setDispCod(CHAR_EXPECTED)),
-        fileImage -> fileImage.getMrr().getDispCod(), CHAR_EXPECTED);
+    testOptionalField(fileHandler.getBuilder().addRecord(RecordMrr.newInstance().setDispCod(TYPE_C1_EXPECTED_VALUE)),
+        fileImage -> fileImage.getMrr().getDispCod(), TYPE_C1_EXPECTED_VALUE);
   }
 
   @Test

@@ -47,9 +47,9 @@ class RecordWcrTest extends RecordTest {
     @Test
     void testWfFlat() throws IOException {
         testOptionalField(fileHandler.getBuilder().addWafer(
-                WaferData.newInstance().setWcr(RecordWcr.newInstance().setWfFlat(CHAR_EXPECTED))),
+                WaferData.newInstance().setWcr(RecordWcr.newInstance().setWfFlat(TYPE_C1_EXPECTED_VALUE))),
                 fileImage -> fileImage.getWaferData().get(0).getWcr().getWfFlat(),
-                CHAR_EXPECTED);
+                TYPE_C1_EXPECTED_VALUE);
     }
 
     @Test
@@ -73,16 +73,16 @@ class RecordWcrTest extends RecordTest {
     @Test
     void testPosX() throws IOException {
         testOptionalField(fileHandler.getBuilder().addWafer(
-                WaferData.newInstance().setWcr(RecordWcr.newInstance().setPosX(CHAR_EXPECTED))),
+                WaferData.newInstance().setWcr(RecordWcr.newInstance().setPosX(TYPE_C1_EXPECTED_VALUE))),
                 fileImage -> fileImage.getWaferData().get(0).getWcr().getPosX(),
-                CHAR_EXPECTED);
+                TYPE_C1_EXPECTED_VALUE);
     }
 
     @Test
     void testPosY() throws IOException {
         testOptionalField(fileHandler.getBuilder().addWafer(
-                WaferData.newInstance().setWcr(RecordWcr.newInstance().setPosY(CHAR_EXPECTED))),
+                WaferData.newInstance().setWcr(RecordWcr.newInstance().setPosY(TYPE_C1_EXPECTED_VALUE))),
                 fileImage -> fileImage.getWaferData().get(0).getWcr().getPosY(),
-                CHAR_EXPECTED);
+                TYPE_C1_EXPECTED_VALUE);
     }
 }

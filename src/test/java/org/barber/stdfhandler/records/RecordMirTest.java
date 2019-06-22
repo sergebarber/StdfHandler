@@ -32,20 +32,20 @@ class RecordMirTest extends RecordTest {
 
     @Test
     void testModeCod() throws IOException {
-        testOptionalField(fileHandler.getBuilder().addRecord(RecordMir.newInstance().setModeCod(CHAR_EXPECTED)),
-                fileImage -> fileImage.getMir().getModeCod(), CHAR_EXPECTED);
+        testOptionalField(fileHandler.getBuilder().addRecord(RecordMir.newInstance().setModeCod(TYPE_C1_EXPECTED_VALUE)),
+                fileImage -> fileImage.getMir().getModeCod(), TYPE_C1_EXPECTED_VALUE);
     }
 
     @Test
     void testRtstCod() throws IOException {
-        testOptionalField(fileHandler.getBuilder().addRecord(RecordMir.newInstance().setRtstCod(CHAR_EXPECTED)),
-                fileImage -> fileImage.getMir().getRtstCod(), CHAR_EXPECTED);
+        testOptionalField(fileHandler.getBuilder().addRecord(RecordMir.newInstance().setRtstCod(TYPE_C1_EXPECTED_VALUE)),
+                fileImage -> fileImage.getMir().getRtstCod(), TYPE_C1_EXPECTED_VALUE);
     }
 
     @Test
     void testProdCod() throws IOException {
-        testOptionalField(fileHandler.getBuilder().addRecord(RecordMir.newInstance().setProtCod(CHAR_EXPECTED)),
-                fileImage -> fileImage.getMir().getProtCod(), CHAR_EXPECTED);
+        testOptionalField(fileHandler.getBuilder().addRecord(RecordMir.newInstance().setProtCod(TYPE_C1_EXPECTED_VALUE)),
+                fileImage -> fileImage.getMir().getProtCod(), TYPE_C1_EXPECTED_VALUE);
     }
 
     @Test
@@ -57,8 +57,8 @@ class RecordMirTest extends RecordTest {
 
     @Test
     void testCmodCod() throws IOException {
-        testOptionalField(fileHandler.getBuilder().addRecord(RecordMir.newInstance().setCmodCod(CHAR_EXPECTED)),
-                fileImage -> fileImage.getMir().getCmodCod(), CHAR_EXPECTED);
+        testOptionalField(fileHandler.getBuilder().addRecord(RecordMir.newInstance().setCmodCod(TYPE_C1_EXPECTED_VALUE)),
+                fileImage -> fileImage.getMir().getCmodCod(), TYPE_C1_EXPECTED_VALUE);
     }
 
     @Test

@@ -6,7 +6,7 @@ import java.util.List;
 public class PartData {
 
     private RecordPir pir;
-
+    private List<RecordPtr> ptrs = new ArrayList<>();
     private RecordPrr prr;
 
     private PartData(){}
@@ -20,6 +20,7 @@ public class PartData {
         if (pir != null) {
             records.add(pir);
         }
+        records.addAll(ptrs);
         if (prr != null) {
             records.add(prr);
         }
@@ -30,12 +31,21 @@ public class PartData {
         return pir;
     }
 
+    public List<RecordPtr> getPtrs() {
+        return ptrs;
+    }
+
     public RecordPrr getPrr() {
         return prr;
     }
 
     public PartData setPir() {
         this.pir = RecordPir.newInstance();
+        return this;
+    }
+
+    public PartData addPtr(RecordPtr ptr) {
+        this.ptrs.add(ptr);
         return this;
     }
 

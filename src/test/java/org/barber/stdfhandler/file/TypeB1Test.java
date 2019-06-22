@@ -72,9 +72,9 @@ class TypeB1Test extends TypeTest {
 
     @Test
     void testGetFlagBitValidPosition() throws IOException {
-        String flagString = "00000100";
+        String flagString = "11111011";
         int position = 5;
-        int expected = 1;
+        boolean expected = true;
         testValue(
                 RecordTst.newInstance().setTypeB1WithDefault(flagString),
                 recordTst -> Optional.of(recordTst.getPartFlgBit(position)),
@@ -84,7 +84,7 @@ class TypeB1Test extends TypeTest {
     @Test
     void testSetFlagBitIllegalPositionMin() {
         int position = TypeB1.MIN_POSITION - 1;
-        int bit = 1;
+        boolean bit = true;
         testIllegalValue(
                 () -> RecordTst.newInstance().setPartFlgBit(bit, position),
                 String.format(TypeB1.ILLEGAL_POSITION_MESSAGE, position)
@@ -94,7 +94,7 @@ class TypeB1Test extends TypeTest {
     @Test
     void testSetFlagBitIllegalPositionMax() {
         int position = TypeB1.MAX_POSITION + 1;
-        int bit = 1;
+        boolean bit = true;
         testIllegalValue(
                 () -> RecordTst.newInstance().setPartFlgBit(bit, position),
                 String.format(TypeB1.ILLEGAL_POSITION_MESSAGE, position)
@@ -102,19 +102,9 @@ class TypeB1Test extends TypeTest {
     }
 
     @Test
-    void testSetFlagBitIllegalBitValue() {
-        int position = 1;
-        int bit = 2;
-        testIllegalValue(
-                () -> RecordTst.newInstance().setPartFlgBit(bit, position),
-                String.format(TypeB1.ILLEGAL_BIT_VALUE_MESSAGE, bit)
-        );
-    }
-
-    @Test
     void testSetFlagBitValidPosition() throws IOException {
-        String expected = "00000001";
-        int bit = 1;
+        String expected = "11111110";
+        boolean bit = true;
         int position = 7;
         testValue(RecordTst.newInstance().setPartFlgBit(bit, position), RecordTst::getTypeB1WithDefault, expected);
     }

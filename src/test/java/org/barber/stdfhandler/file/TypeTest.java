@@ -10,9 +10,10 @@ import java.util.Optional;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
+import org.barber.stdfhandler.StdfTest;
 import org.junit.jupiter.api.BeforeEach;
 
-abstract class TypeTest {
+abstract class TypeTest extends StdfTest {
 
     FileBuilder fileBuilder;
     private FileHandler fileHandler;

@@ -1,5 +1,6 @@
 package org.barber.stdfhandler.records;
 
+import org.barber.stdfhandler.StdfTest;
 import org.barber.stdfhandler.file.FileBuilder;
 import org.barber.stdfhandler.file.FileImage;
 import org.barber.stdfhandler.file.FileHandler;
@@ -14,9 +15,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
 
-abstract class RecordTest {
-
-    static final char CHAR_EXPECTED = 'A';
+abstract class RecordTest extends StdfTest {
 
     protected FileHandler fileHandler;
 
