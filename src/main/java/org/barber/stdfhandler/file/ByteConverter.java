@@ -97,7 +97,7 @@ class ByteConverter {
         return bits.substring(bits.length() - (byteLength * 8));
     }
 
-    static String switchSign(long value, int byteLength) {
+    private static String switchSign(long value, int byteLength) {
         StringBuilder bits = new StringBuilder(signedToBinaryString(value, byteLength));
         String[] split = bits.toString().split("");
         bits = new StringBuilder("1");

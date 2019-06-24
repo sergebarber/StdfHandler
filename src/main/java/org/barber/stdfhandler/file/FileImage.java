@@ -128,6 +128,17 @@ public class FileImage {
         this.part = PartData.newInstance().setPir(pir);
     }
 
+    void addMpr(RecordMpr mpr) {
+        if (this.wafer != null) {
+            wafer.addMpr(mpr);
+            return;
+        }
+        if (this.part == null) {
+            this.part = PartData.newInstance();
+        }
+        this.part.setMpr(mpr);
+    }
+
     void addPrr(RecordPrr prr) {
         if (this.wafer != null) {
             this.wafer.addPrr(prr);

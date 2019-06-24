@@ -22,6 +22,7 @@ enum Records {
     WRR(RecordWrr::newInstance),
     PIR(RecordPir::newInstance),
     PTR(RecordPtr::newInstance),
+    MPR(RecordPmr::newInstance),
     PRR(RecordPrr::newInstance),
 
     TSR(RecordTsr::newInstance),

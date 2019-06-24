@@ -7,6 +7,7 @@ public class PartData {
 
     private RecordPir pir;
     private List<RecordPtr> ptrs = new ArrayList<>();
+    private RecordMpr mpr;
     private RecordPrr prr;
 
     private PartData(){}
@@ -21,6 +22,9 @@ public class PartData {
             records.add(pir);
         }
         records.addAll(ptrs);
+        if (mpr != null) {
+            records.add(mpr);
+        }
         if (prr != null) {
             records.add(prr);
         }
@@ -52,6 +56,14 @@ public class PartData {
     public PartData setPir(RecordPir pir) {
         this.pir = pir;
         return this;
+    }
+
+    public RecordMpr getMpr() {
+        return mpr;
+    }
+
+    public void setMpr(RecordMpr mpr) {
+        this.mpr = mpr;
     }
 
     public PartData setPrr() {
