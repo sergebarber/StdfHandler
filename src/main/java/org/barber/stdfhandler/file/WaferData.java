@@ -67,6 +67,13 @@ public class WaferData {
         this.part = PartData.newInstance().addPtr(ptr);
     }
 
+    public void addMpr(RecordMpr mpr) {
+        if (this.part == null) {
+            this.part = PartData.newInstance();
+        }
+        this.part.setMpr(mpr);
+    }
+
     public void addPrr(RecordPrr prr) {
         if (this.part == null) {
             this.part = PartData.newInstance();
