@@ -7,8 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.BiFunction;
 
-public class TypeArray<T extends Type, U> extends Type<List<T>> {
-
+public class TypeArray<T extends Type<U>, U> extends Type<List<T>> {
 
   private static final String ILLEGAL_SIZE_MESSAGE =
       "Invalid size %d for type N1x2Arr. Should be no more than %d";
@@ -52,5 +51,15 @@ public class TypeArray<T extends Type, U> extends Type<List<T>> {
     ByteArrayOutputStream bytes = new ByteArrayOutputStream();
     getActualValue().forEach(element -> bytes.writeBytes(element.toBytes(byteConverter)));
     return bytes.toByteArray();
+  }
+
+  void setValueFromRawType(List<U> values) {
+    List<T> value = new ArrayList<>(values.size());
+    for (int i = 0; i < values.size(); i++) {
+      T element = constructor.apply(getName() + "_" + i, null);
+      element.setValueFromUser(values.get(i));
+      value.add(element);
+    }
+    setValueFromUser(value);
   }
 }

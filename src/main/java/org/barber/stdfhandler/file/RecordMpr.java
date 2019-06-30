@@ -1,5 +1,6 @@
 package org.barber.stdfhandler.file;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -156,5 +157,131 @@ public class RecordMpr extends Record {
 
   public Optional<Float> getHiSpec() {
     return Optional.ofNullable(hiSpec.getValue());
+  }
+
+
+  public RecordMpr setTestNum(long value) {
+    testNum.setValueFromUser(value);
+    return this;
+  }
+
+  public RecordMpr setHeadNum(int value) {
+    headNum.setValueFromUser(value);
+    return this;
+  }
+
+  public RecordMpr setSiteNum(int value) {
+    siteNum.setValueFromUser(value);
+    return this;
+  }
+
+  public RecordMpr setTestFlg(String value) {
+    testFlg.setValueFromUser(value);
+    return this;
+  }
+
+  public RecordMpr setParmFlg(String value) {
+    parmFlg.setValueFromUser(value);
+    return this;
+  }
+
+  public RecordMpr setRtnStat(List<byte[]> value) {
+    rtnStat.setValueFromRawType(value);
+    return this;
+  }
+
+  public RecordMpr setRtnRslt(List<Float> value) {
+    rtnRslt.setValueFromRawType(value);
+    return this;
+  }
+
+  public RecordMpr setTestTxt(String value) {
+    testTxt.setValueFromUser(value);
+    return this;
+  }
+
+  public RecordMpr setAlarmId(String value) {
+    alarmId.setValueFromUser(value);
+    return this;
+  }
+
+  public RecordMpr setOptFlag(String value) {
+    optFlag.setValueFromUser(value);
+    return this;
+  }
+
+  public RecordMpr setResScal(byte value) {
+    resScal.setValueFromUser(value);
+    return this;
+  }
+
+  public RecordMpr setLlmScal(byte value) {
+    llmScal.setValueFromUser(value);
+    return this;
+  }
+
+  public RecordMpr setHlmScal(byte value) {
+    hlmScal.setValueFromUser(value);
+    return this;
+  }
+
+  public RecordMpr setLoLimit(float value) {
+    loLimit.setValueFromUser(value);
+    return this;
+  }
+
+  public RecordMpr setHiLimit(float value) {
+    hiLimit.setValueFromUser(value);
+    return this;
+  }
+
+  public RecordMpr setStartIn(float value) {
+    startIn.setValueFromUser(value);
+    return this;
+  }
+
+  public RecordMpr setIncrIn(float value) {
+    incrIn.setValueFromUser(value);
+    return this;
+  }
+
+  public RecordMpr setRtnIndx(List<Integer> value) {
+    rtnIndx.setValueFromRawType(value);
+    return this;
+  }
+
+  public RecordMpr setUnits(String value) {
+    units.setValueFromUser(value);
+    return this;
+  }
+
+  public RecordMpr setUnitsIn(String value) {
+    unitsIn.setValueFromUser(value);
+    return this;
+  }
+
+  public RecordMpr setcResmft(String value) {
+    cResmft.setValueFromUser(value);
+    return this;
+  }
+
+  public RecordMpr setcLlmfmt(String value) {
+    cLlmfmt.setValueFromUser(value);
+    return this;
+  }
+
+  public RecordMpr setcHlmfmt(String value) {
+    cHlmfmt.setValueFromUser(value);
+    return this;
+  }
+
+  public RecordMpr setLoSpec(float value) {
+    loSpec.setValueFromUser(value);
+    return this;
+  }
+
+  public RecordMpr setHiSpec(float value) {
+    hiSpec.setValueFromUser(value);
+    return this;
   }
 }
