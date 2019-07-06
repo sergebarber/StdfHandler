@@ -3,29 +3,22 @@ package org.barber.stdfhandler.file;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.function.Predicate;
 
 public class TypeBn extends Type<byte[]> {
 
-    static final int MAX_LENGTH = 255;
-    static final String ILLEGAL_LENGTH_MESSAGE =
+    public static final int MAX_LENGTH = 255;
+    public static final String ILLEGAL_LENGTH_MESSAGE =
             "Illegal length %d of the argument array. Should be no more then " + MAX_LENGTH;
 
-    private byte[] nullValue;
-
     TypeBn(String name, byte[] nullValue) {
-        super(name, nullValue, Type.TYPE_BN_DEFAULT_VALUE);
-        this.nullValue = nullValue;
+        super(name, nullValue, getDefaultValue());
     }
 
     @Override
     void setValueFromStream(ByteArrayInputStream stream, ByteConverter byteConverter) throws IOException {
         int length = stream.read();
         setValue(stream.readNBytes(length));
-    }
-
-    @Override
-    public byte[] getValue() {
-        return Arrays.equals(getActualValue(), nullValue) ? null : getActualValue();
     }
 
     @Override
@@ -48,5 +41,9 @@ public class TypeBn extends Type<byte[]> {
     @Override
     public String toString() {
         return Arrays.toString(getActualValue());
+    }
+
+    public static byte[] getDefaultValue() {
+        return new byte[0];
     }
 }

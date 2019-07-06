@@ -2,13 +2,19 @@ package org.barber.stdfhandler.file;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.util.function.Predicate;
 
-class TypeCn extends Type<String> {
+public class TypeCn extends Type<String> {
 
-    private static final int MAX_LENGTH = 255;
+    public static final int MAX_LENGTH = 255;
+    public static final String DEFAULT_VALUE = "";
+
+    TypeCn(String name) {
+        super(name, DEFAULT_VALUE);
+    }
 
     TypeCn(String name, String nullValue) {
-        super(name, nullValue, STRING_DEFAULT_VALUE);
+        super(name, nullValue, DEFAULT_VALUE);
     }
 
     @Override

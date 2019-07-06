@@ -1,10 +1,7 @@
 package org.barber.stdfhandler.file;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 public class RecordMpr extends Record {
 
@@ -12,51 +9,62 @@ public class RecordMpr extends Record {
   private static final int TYPE = 15;
   private static final int SUBTYPE = 15;
 
-  private final Type<Long> testNum = new TypeU4("TEST_NUM", null);
-  private final Type<Integer> headNum = new TypeU1("HEAD_NUM", null);
-  private final Type<Integer> siteNum = new TypeU1("SITE_NUM", null);
-  private final TypeB1 testFlg = new TypeB1("TEST_FLG", null);
-  private final TypeB1 parmFlg = new TypeB1("PARM_FLG", null);
-  private final Type<Integer> rtnIcnt = new TypeU2("RTN_ICNT", null);
-  private final Type<Integer> rsltCnt = new TypeU2("RSLT_CNT", null);
-  private final TypeArray<TypeN1x2, byte[]> rtnStat =
-      new TypeArray<>("RTN_STAT", null, TypeN1x2::new, rtnIcnt, TypeU2.MAX_VALUE);
-  private final TypeArray<TypeR4, Float> rtnRslt =
-      new TypeArray<>("RTN_RSLT", null, TypeR4::new, rsltCnt, TypeU2.MAX_VALUE);
-  private final Type<String> testTxt = new TypeCn("TEST_TXT", "");
-  private final Type<String> alarmId = new TypeCn("ALARM_ID", "");
-  private final TypeB1 optFlag = new TypeB1("OPT_FLAG", null);
-  private final Type<Byte> resScal = new TypeI1("RES_SCAL", null);
-  private final Type<Byte> llmScal = new TypeI1("LLM_SCAL", null);
-  private final Type<Byte> hlmScal = new TypeI1("HLM_SCAL", null);
-  private final Type<Float> loLimit = new TypeR4("LO_LIMIT", null);
-  private final Type<Float> hiLimit = new TypeR4("HI_LIMIT", null);
-  private final Type<Float> startIn = new TypeR4("START_IN", null);
-  private final Type<Float> incrIn = new TypeR4("INCR_IN", null);
-  private final TypeArray<TypeU2, Integer> rtnIndx =
-      new TypeArray<>("RTN_INDX", null, TypeU2::new, rtnIcnt, TypeU2.MAX_VALUE);
-  private final Type<String> units = new TypeCn("UNITS", "");
-  private final Type<String> unitsIn = new TypeCn("UNITS_IN", "");
-  private final Type<String> cResmft = new TypeCn("C_RESFMT", "");
-  private final Type<String> cLlmfmt = new TypeCn("C_LLMFMT", "");
-  private final Type<String> cHlmfmt = new TypeCn("C_HLMFMT", "");
-  private final Type<Float> loSpec = new TypeR4("LO_SPEC", null);
-  private final Type<Float> hiSpec = new TypeR4("HI_SPEC", null);
+  public static final int RES_SCAL_BIT_NUMBER = 0;
+  public static final int LLM_SCAL_BIT_NUMBER_1 = 4;
+  public static final int LLM_SCAL_BIT_NUMBER_2 = 6;
+  public static final int HLM_SCAL_BIT_NUMBER_1 = 5;
+  public static final int HLM_SCAL_BIT_NUMBER_2 = 7;
+  public static final int LO_LIMIT_BIT_NUMBER_1 = 4;
+  public static final int LO_LIMIT_BIT_NUMBER_2 = 6;
+  public static final int HI_LIMIT_BIT_NUMBER_1 = 5;
+  public static final int HI_LIMIT_BIT_NUMBER_2 = 7;
+  public static final int START_IN_BIT_NUMBER = 1;
+  public static final int INCR_IN_BIT_NUMBER = 1;
+  public static final int LO_SPEC_BIT_NUMBER = 2;
+  public static final int HI_SPEC_BIT_NUMBER = 3;
+
+
+  private final Type<Long> testNum = new TypeU4("TEST_NUM");
+  private final Type<Integer> headNum = new TypeU1("HEAD_NUM");
+  private final Type<Integer> siteNum = new TypeU1("SITE_NUM");
+  private final TypeB1 testFlg = new TypeB1("TEST_FLG");
+  private final TypeB1 parmFlg = new TypeB1("PARM_FLG");
+  private final Type<Integer> rtnIcnt = new TypeU2("RTN_ICNT");
+  private final Type<Integer> rsltCnt = new TypeU2("RSLT_CNT");
+  private final TypeArray<TypeN1, byte[]> rtnStat = new TypeArray<>("RTN_STAT", TypeN1::new, rtnIcnt, TypeU2.MAX_VALUE);
+  private final TypeArray<TypeR4, Float> rtnRslt = new TypeArray<>("RTN_RSLT", TypeR4::new, rsltCnt, TypeU2.MAX_VALUE);
+  private final Type<String> testTxt = new TypeCn("TEST_TXT", TypeCn.DEFAULT_VALUE);
+  private final Type<String> alarmId = new TypeCn("ALARM_ID", TypeCn.DEFAULT_VALUE);
+  private final TypeB1 optFlag = new TypeB1("OPT_FLAG");
+  private final Type<Byte> resScal = new TypeI1("RES_SCAL", checkFlag(optFlag, RES_SCAL_BIT_NUMBER));
+  private final Type<Byte> llmScal = new TypeI1("LLM_SCAL",
+          () -> checkFlag(optFlag, LLM_SCAL_BIT_NUMBER_1).get() || checkFlag(optFlag, LLM_SCAL_BIT_NUMBER_2).get());
+  private final Type<Byte> hlmScal = new TypeI1("HLM_SCAL",
+          () -> checkFlag(optFlag, HLM_SCAL_BIT_NUMBER_1).get() || checkFlag(optFlag, HLM_SCAL_BIT_NUMBER_2).get());
+  private final Type<Float> loLimit = new TypeR4("LO_LIMIT",
+          () -> checkFlag(optFlag, LO_LIMIT_BIT_NUMBER_1).get() || checkFlag(optFlag, LO_LIMIT_BIT_NUMBER_2).get());
+  private final Type<Float> hiLimit = new TypeR4("HI_LIMIT",
+          () -> checkFlag(optFlag, HI_LIMIT_BIT_NUMBER_1).get() || checkFlag(optFlag, HI_LIMIT_BIT_NUMBER_2).get());
+  private final Type<Float> startIn = new TypeR4("START_IN", checkFlag(optFlag, START_IN_BIT_NUMBER));
+  private final Type<Float> incrIn = new TypeR4("INCR_IN", checkFlag(optFlag, INCR_IN_BIT_NUMBER));
+  private final TypeArray<TypeU2, Integer> rtnIndx = new TypeArray<>("RTN_INDX", TypeU2::new, rtnIcnt, TypeU2.MAX_VALUE);
+  private final Type<String> units = new TypeCn("UNITS", TypeCn.DEFAULT_VALUE);
+  private final Type<String> unitsIn = new TypeCn("UNITS_IN", TypeCn.DEFAULT_VALUE);
+  private final Type<String> cResmft = new TypeCn("C_RESFMT", TypeCn.DEFAULT_VALUE);
+  private final Type<String> cLlmfmt = new TypeCn("C_LLMFMT", TypeCn.DEFAULT_VALUE);
+  private final Type<String> cHlmfmt = new TypeCn("C_HLMFMT", TypeCn.DEFAULT_VALUE);
+  private final Type<Float> loSpec = new TypeR4("LO_SPEC", checkFlag(optFlag, LO_SPEC_BIT_NUMBER));
+  private final Type<Float> hiSpec = new TypeR4("HI_SPEC", checkFlag(optFlag, HI_SPEC_BIT_NUMBER));
 
   private RecordMpr() {
     super(NAME, TYPE, SUBTYPE);
-    fields.addAll(Arrays.asList(testNum, headNum, siteNum, testFlg, parmFlg, rtnIcnt, rsltCnt, rtnStat, rtnRslt,
-        testTxt, alarmId, optFlag, resScal, llmScal, hlmScal, loLimit, hiLimit, startIn, incrIn, rtnIndx, units,
-        unitsIn, cResmft, cLlmfmt, cHlmfmt, loSpec, hiSpec));
+    addFields(testNum, headNum, siteNum, testFlg, parmFlg, rtnIcnt, rsltCnt, rtnStat, rtnRslt, testTxt, alarmId,
+        optFlag, resScal, llmScal, hlmScal, loLimit, hiLimit, startIn, incrIn, rtnIndx, units,
+        unitsIn, cResmft, cLlmfmt, cHlmfmt, loSpec, hiSpec);
   }
 
   public static RecordMpr newInstance() {
     return new RecordMpr();
-  }
-
-  @Override
-  protected void addToImage(FileImage image) {
-    image.addMpr(this);
   }
 
   public Optional<Long> getTestNum() {
@@ -71,20 +79,28 @@ public class RecordMpr extends Record {
     return Optional.ofNullable(siteNum.getValue());
   }
 
-  public Optional<String> getTestFlg() {
-    return Optional.ofNullable(testFlg.getValue());
+  public boolean getTestFlgBit(int position) {
+    return testFlg.getBitInPosition(position);
   }
 
-  public Optional<String> getParmFlg() {
-    return Optional.ofNullable(parmFlg.getValue());
+  public boolean getParmFlgBit(int position) {
+    return parmFlg.getBitInPosition(position);
+  }
+
+  public Optional<Integer> getRtnIcnt() {
+    return Optional.ofNullable(rtnIcnt.getValue());
+  }
+
+  public Optional<Integer> getRsltCnt() {
+    return Optional.ofNullable(rsltCnt.getValue());
   }
 
   public List<byte[]> getRtnStat() {
-    return rtnStat.getValue().stream().map(Type::getValue).collect(Collectors.toList());
+    return rtnStat.getBasicTypeList();
   }
 
   public List<Float> getRtnRslt() {
-    return rtnRslt.getValue().stream().map(Type::getValue).collect(Collectors.toList());
+    return rtnRslt.getBasicTypeList();
   }
 
   public Optional<String> getTestTxt() {
@@ -95,8 +111,8 @@ public class RecordMpr extends Record {
     return Optional.ofNullable(alarmId.getValue());
   }
 
-  public Optional<String> getOptFlag() {
-    return Optional.ofNullable(optFlag.getValue());
+  public boolean getOptFlgBit(int position) {
+    return optFlag.getBitInPosition(position);
   }
 
   public Optional<Byte> getResScal() {
@@ -128,7 +144,7 @@ public class RecordMpr extends Record {
   }
 
   public List<Integer> getRtnIndx() {
-    return rtnIndx.getValue().stream().map(Type::getValue).collect(Collectors.toList());
+    return rtnIndx.getBasicTypeList();
   }
 
   public Optional<String> getUnits() {
@@ -160,128 +176,129 @@ public class RecordMpr extends Record {
   }
 
 
-  public RecordMpr setTestNum(long value) {
-    testNum.setValueFromUser(value);
+  public RecordMpr setTestNum(long testNum) {
+    this.testNum.setValueFromUser(testNum);
     return this;
   }
 
-  public RecordMpr setHeadNum(int value) {
-    headNum.setValueFromUser(value);
+  public RecordMpr setHeadNum(int headNum) {
+    this.headNum.setValueFromUser(headNum);
     return this;
   }
 
-  public RecordMpr setSiteNum(int value) {
-    siteNum.setValueFromUser(value);
+  public RecordMpr setSiteNum(int siteNum) {
+    this.siteNum.setValueFromUser(siteNum);
     return this;
   }
 
-  public RecordMpr setTestFlg(String value) {
-    testFlg.setValueFromUser(value);
+  public RecordMpr setTestFlgBit(boolean flag, int position) {
+    this.testFlg.setBitInPosition(flag, position);
     return this;
   }
 
-  public RecordMpr setParmFlg(String value) {
-    parmFlg.setValueFromUser(value);
+  public RecordMpr setParmFlgBit(boolean flag, int position) {
+    this.parmFlg.setBitInPosition(flag, position);
     return this;
   }
 
-  public RecordMpr setRtnStat(List<byte[]> value) {
-    rtnStat.setValueFromRawType(value);
+  public RecordMpr setRtnStat(List<byte[]> rtnStat) {
+    this.rtnStat.setValueFromBasicTypeList(rtnStat);
     return this;
   }
 
-  public RecordMpr setRtnRslt(List<Float> value) {
-    rtnRslt.setValueFromRawType(value);
+  public RecordMpr setRtnRslt(List<Float> rtnRslt) {
+    this.rtnRslt.setValueFromBasicTypeList(rtnRslt);
     return this;
   }
 
-  public RecordMpr setTestTxt(String value) {
-    testTxt.setValueFromUser(value);
+  public RecordMpr setTestTxt(String testTxt) {
+    this.testTxt.setValueFromUser(testTxt);
     return this;
   }
 
-  public RecordMpr setAlarmId(String value) {
-    alarmId.setValueFromUser(value);
+  public RecordMpr setAlarmId(String alarmId) {
+    this.alarmId.setValueFromUser(alarmId);
     return this;
   }
 
-  public RecordMpr setOptFlag(String value) {
-    optFlag.setValueFromUser(value);
+  public RecordMpr setOptFlgBit(boolean flag, int position) {
+    optFlag.setBitInPosition(flag, position);
     return this;
   }
 
-  public RecordMpr setResScal(byte value) {
-    resScal.setValueFromUser(value);
+  public RecordMpr setResScal(byte resScal) {
+    this.resScal.setValueFromUser(resScal);
+    this.optFlag.setBitInPosition(true, RES_SCAL_BIT_NUMBER);
     return this;
   }
 
-  public RecordMpr setLlmScal(byte value) {
-    llmScal.setValueFromUser(value);
+  public RecordMpr setLlmScalAndLoLimit(byte llmScal, float loLimit) {
+    this.llmScal.setValueFromUser(llmScal);
+    this.optFlag.setBitInPosition(true, LLM_SCAL_BIT_NUMBER_1);
+    this.optFlag.setBitInPosition(true, LLM_SCAL_BIT_NUMBER_2);
+    this.loLimit.setValueFromUser(loLimit);
+    this.optFlag.setBitInPosition(true, LO_LIMIT_BIT_NUMBER_1);
+    this.optFlag.setBitInPosition(true, LO_LIMIT_BIT_NUMBER_2);
     return this;
   }
 
-  public RecordMpr setHlmScal(byte value) {
-    hlmScal.setValueFromUser(value);
+  public RecordMpr setHlmScalAndHiLimit(byte hlmScal, float hiLimit) {
+    this.hlmScal.setValueFromUser(hlmScal);
+    this.optFlag.setBitInPosition(true, HLM_SCAL_BIT_NUMBER_1);
+    this.optFlag.setBitInPosition(true, HLM_SCAL_BIT_NUMBER_2);
+    this.hiLimit.setValueFromUser(hiLimit);
+    this.optFlag.setBitInPosition(true, HI_LIMIT_BIT_NUMBER_1);
+    this.optFlag.setBitInPosition(true, HI_LIMIT_BIT_NUMBER_2);
     return this;
   }
 
-  public RecordMpr setLoLimit(float value) {
-    loLimit.setValueFromUser(value);
+  public RecordMpr setStartInAndIncrIn(float startIn, float incrIn) {
+    this.startIn.setValueFromUser(startIn);
+    this.optFlag.setBitInPosition(true, START_IN_BIT_NUMBER);
+    this.incrIn.setValueFromUser(incrIn);
+    this.optFlag.setBitInPosition(true, INCR_IN_BIT_NUMBER);
     return this;
   }
 
-  public RecordMpr setHiLimit(float value) {
-    hiLimit.setValueFromUser(value);
+  public RecordMpr setRtnIndx(List<Integer> rtnIndx) {
+    this.rtnIndx.setValueFromBasicTypeList(rtnIndx);
     return this;
   }
 
-  public RecordMpr setStartIn(float value) {
-    startIn.setValueFromUser(value);
+  public RecordMpr setUnits(String units) {
+    this.units.setValueFromUser(units);
     return this;
   }
 
-  public RecordMpr setIncrIn(float value) {
-    incrIn.setValueFromUser(value);
+  public RecordMpr setUnitsIn(String unitsIn) {
+    this.unitsIn.setValueFromUser(unitsIn);
     return this;
   }
 
-  public RecordMpr setRtnIndx(List<Integer> value) {
-    rtnIndx.setValueFromRawType(value);
+  public RecordMpr setcResmft(String cResmft) {
+    this.cResmft.setValueFromUser(cResmft);
     return this;
   }
 
-  public RecordMpr setUnits(String value) {
-    units.setValueFromUser(value);
+  public RecordMpr setcLlmfmt(String cLlmfmt) {
+    this.cLlmfmt.setValueFromUser(cLlmfmt);
     return this;
   }
 
-  public RecordMpr setUnitsIn(String value) {
-    unitsIn.setValueFromUser(value);
+  public RecordMpr setcHlmfmt(String cHlmfmt) {
+    this.cHlmfmt.setValueFromUser(cHlmfmt);
     return this;
   }
 
-  public RecordMpr setcResmft(String value) {
-    cResmft.setValueFromUser(value);
+  public RecordMpr setLoSpec(float loSpec) {
+    this.loSpec.setValueFromUser(loSpec);
+    this.optFlag.setBitInPosition(true, LO_SPEC_BIT_NUMBER);
     return this;
   }
 
-  public RecordMpr setcLlmfmt(String value) {
-    cLlmfmt.setValueFromUser(value);
-    return this;
-  }
-
-  public RecordMpr setcHlmfmt(String value) {
-    cHlmfmt.setValueFromUser(value);
-    return this;
-  }
-
-  public RecordMpr setLoSpec(float value) {
-    loSpec.setValueFromUser(value);
-    return this;
-  }
-
-  public RecordMpr setHiSpec(float value) {
-    hiSpec.setValueFromUser(value);
+  public RecordMpr setHiSpec(float hiSpec) {
+    this.hiSpec.setValueFromUser(hiSpec);
+    this.optFlag.setBitInPosition(true, HI_SPEC_BIT_NUMBER);
     return this;
   }
 }

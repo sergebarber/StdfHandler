@@ -8,26 +8,21 @@ public class RecordPcr extends Record {
     private static final int TYPE = 1;
     private static final int SUBTYPE = 30;
 
-    private final Type<Integer> headNum = new TypeU1("HEAD_NUM", null);
-    private final Type<Integer> siteNum = new TypeU1("SITE_NUM", null);
-    private final Type<Long> partCnt = new TypeU4("PART_CNT", null);
-    private final Type<Long> rtstCnt = new TypeU4("RTST_CNT", U4_MAX_NULL_VALUE);
-    private final Type<Long> abrtCnt = new TypeU4("ABRT_CNT", U4_MAX_NULL_VALUE);
-    private final Type<Long> goodCnt = new TypeU4("GOOD_CNT", U4_MAX_NULL_VALUE);
-    private final Type<Long> funcCnt = new TypeU4("FUNC_CNT", U4_MAX_NULL_VALUE);
+    private final Type<Integer> headNum = new TypeU1("HEAD_NUM");
+    private final Type<Integer> siteNum = new TypeU1("SITE_NUM");
+    private final Type<Long> partCnt = new TypeU4("PART_CNT");
+    private final Type<Long> rtstCnt = new TypeU4("RTST_CNT", TypeU4.MAX_VALUE);
+    private final Type<Long> abrtCnt = new TypeU4("ABRT_CNT", TypeU4.MAX_VALUE);
+    private final Type<Long> goodCnt = new TypeU4("GOOD_CNT", TypeU4.MAX_VALUE);
+    private final Type<Long> funcCnt = new TypeU4("FUNC_CNT", TypeU4.MAX_VALUE);
 
     private RecordPcr() {
         super(NAME, TYPE, SUBTYPE);
-        fields.addAll(asList(headNum, siteNum, partCnt, rtstCnt, abrtCnt, goodCnt, funcCnt));
+        addFields(headNum, siteNum, partCnt, rtstCnt, abrtCnt, goodCnt, funcCnt);
     }
 
     public static RecordPcr newInstance() {
         return new RecordPcr();
-    }
-
-    @Override
-    protected void addToImage(FileImage image) {
-        image.addPcr(this);
     }
 
     public Optional<Integer> getHeadNum() {
@@ -58,38 +53,38 @@ public class RecordPcr extends Record {
         return Optional.ofNullable(funcCnt.getValue());
     }
 
-    public RecordPcr setHeadNum(int value) {
-        headNum.setValueFromUser(value);
+    public RecordPcr setHeadNum(int headNum) {
+        this.headNum.setValueFromUser(headNum);
         return this;
     }
 
-    public RecordPcr setSiteNum(int value) {
-        siteNum.setValueFromUser(value);
+    public RecordPcr setSiteNum(int siteNum) {
+        this.siteNum.setValueFromUser(siteNum);
         return this;
     }
 
-    public RecordPcr setPartCnt(long value) {
-        partCnt.setValueFromUser(value);
+    public RecordPcr setPartCnt(long partCnt) {
+        this.partCnt.setValueFromUser(partCnt);
         return this;
     }
 
-    public RecordPcr setRtstCnt(long value) {
-        rtstCnt.setValueFromUser(value);
+    public RecordPcr setRtstCnt(long rtstCnt) {
+        this.rtstCnt.setValueFromUser(rtstCnt);
         return this;
     }
 
-    public RecordPcr setAbrtCnt(long value) {
-        abrtCnt.setValueFromUser(value);
+    public RecordPcr setAbrtCnt(long abrtCnt) {
+        this.abrtCnt.setValueFromUser(abrtCnt);
         return this;
     }
 
-    public RecordPcr setGoodCnt(long value) {
-        goodCnt.setValueFromUser(value);
+    public RecordPcr setGoodCnt(long goodCnt) {
+        this.goodCnt.setValueFromUser(goodCnt);
         return this;
     }
 
-    public RecordPcr setFuncCnt(long value) {
-        funcCnt.setValueFromUser(value);
+    public RecordPcr setFuncCnt(long funcCnt) {
+        this.funcCnt.setValueFromUser(funcCnt);
         return this;
     }
 }

@@ -3,16 +3,11 @@ package org.barber.stdfhandler.file;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
+import java.util.function.Predicate;
+import java.util.function.Supplier;
 
 public abstract class Record {
-
-    static final int HEADER_LENGTH = 4;
-
-    public static final int U2_MAX_NULL_VALUE = 65535;
-    public static final long U4_MAX_NULL_VALUE = 4_294_967_295L;
 
     private static final String RECORD_DELIMITER = "_".repeat(30) + "\n";
     private static final String FIELD_FORMAT = "%s%-12s %s%s";
@@ -20,11 +15,16 @@ public abstract class Record {
     private static final String NEW_LINE = "\n";
     private static final String TAB = " ".repeat(3);
 
+    public static final String ARRAYS_UNEQUAL_SIZES_MESSAGE
+            = "Illegal list arguments sizes: all list should be of equal size";
+
+    private static final EnumSet<Records> records = EnumSet.allOf(Records.class);
+
     private final String name;
     private final int type;
     private final int subtype;
 
-    List<Type> fields = new ArrayList<>();
+    private List<Type> fields = new ArrayList<>();
 
     Record(String name, int type, int subtype) {
         this.name = name;
@@ -40,13 +40,14 @@ public abstract class Record {
         return subtype;
     }
 
-    protected abstract void addToImage(FileImage image);
+    void addFields(Type... fields) {
+        this.fields.addAll(Arrays.asList(fields));
+    }
 
-    void fill(ByteArrayInputStream bytes, ByteConverter byteConverter, FileImage fileImage) throws IOException {
+    void fill(ByteArrayInputStream bytes, ByteConverter byteConverter) throws IOException {
         for (Type field : fields) {
             field.setValueFromStream(bytes, byteConverter);
         }
-        addToImage(fileImage);
     }
 
     ByteArrayOutputStream toBytes(ByteConverter byteConverter) {
@@ -72,10 +73,6 @@ public abstract class Record {
         };
     }
 
-    List<Type> asList(Type ... fields) {
-        return Arrays.asList(fields);
-    }
-
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder(recordAsString(name));
@@ -88,6 +85,62 @@ public abstract class Record {
     }
 
     private static String fieldAsString(String name, String value) {
-        return String.format(FIELD_FORMAT , TAB, name + DELIMITER, value, NEW_LINE );
+        return String.format(FIELD_FORMAT, TAB, name + DELIMITER, value, NEW_LINE);
+    }
+
+    static Supplier<Boolean> checkFlag(TypeB1 flagField, int position) {
+        return () -> !flagField.getBitInPosition(position);
+    }
+
+    static Record getRecord(int type, int subtype) {
+
+        Records enumInstance = records.stream()
+                .filter(record -> record.getRecord().getType() == type)
+                .filter(record -> record.getRecord().getSubtype() == subtype)
+                .findFirst().orElseThrow(() -> new IllegalStateException(
+                        String.format("Unknown combination of record group %d and record type %d", type, subtype)));
+
+        return enumInstance.getRecord();
+    }
+
+    private enum Records {
+
+        FAR(RecordFar::newInstance),
+        ATR(RecordAtr::newInstance),
+        //    VUR(RecordVur::newInstance),
+        MIR(RecordMir::newInstance),
+        //    SDR(RecordSdr::newInstance),
+//    RDR(RecordRdr::newInstance),
+        PCR(RecordPcr::newInstance),
+        HBR(RecordHbr::newInstance),
+        //    SBR(RecordSbr::newInstance),
+        PMR(RecordPmr::newInstance),
+        PGR(RecordPgr::newInstance),
+        PLR(RecordPlr::newInstance),
+        //    WIR(RecordWir::newInstance),
+//    WCR(RecordWcr::newInstance),
+//    WRR(RecordWrr::newInstance),
+        PIR(RecordPir::newInstance),
+        //    PTR(RecordPtr::newInstance),
+//    FTR(RecordFtr::newInstance),
+        MPR(RecordMpr::newInstance),
+        BPS(RecordBps::newInstance),
+        EPS(RecordEps::newInstance),
+        FTR(RecordFtr::newInstance),
+        PRR(RecordPrr::newInstance),
+        //
+//    TSR(RecordTsr::newInstance),
+        MRR(RecordMrr::newInstance);
+//    TST(RecordTst::newInstance);
+
+        private Supplier<Record> supplier;
+
+        Records(Supplier<Record> supplier) {
+            this.supplier = supplier;
+        }
+
+        Record getRecord() {
+            return supplier.get();
+        }
     }
 }

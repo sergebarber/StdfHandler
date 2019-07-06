@@ -1,64 +1,73 @@
 package org.barber.stdfhandler.file;
 
 import java.io.ByteArrayInputStream;
-import java.util.regex.Pattern;
+import java.util.Arrays;
 
-public class TypeB1 extends Type<String> {
+public class TypeB1 extends Type<boolean[]> {
 
-    public static final int LENGTH = 8;
+    private static final int LENGTH = 8;
     private static final int BYTE_LENGTH = 1;
-
-    private static final Pattern BIT_PATTERN = Pattern.compile("[01]+");
+    private static final String TRUE_BIT_VALUE = "0";
+    private static final String FALSE_BIT_VALUE = "1";
 
     public static final int MIN_POSITION = 0;
     public static final int MAX_POSITION = 7;
 
-    public static final String ILLEGAL_LENGTH_MESSAGE =
-            "Illegal argument length %s for type StdfB1. Should be exactly " + LENGTH + " characters long";
-    public static final String ILLEGAL_VALUE_MESSAGE =
-            "Illegal argument %s for type StdfB1. Should be a binary string";
+//    public static final boolean[] DEFAULT_VALUE = new boolean[8];
+
+    private static final String ILLEGAL_LENGTH_MESSAGE =
+        "Illegal value length %d for type StdfB1. The max length is " + LENGTH;
+
     public static final String ILLEGAL_POSITION_MESSAGE =
             "Illegal position argument %d for type StdfB1. Should be between " + MIN_POSITION + " and " + MAX_POSITION;
 
-    TypeB1(String name, String nullValue) {
-        super(name, nullValue, TYPE_B1_DEFAULT_VALUE);
+    TypeB1(String name) {
+        super(name, new boolean[8]);
     }
 
     @Override
     void setValueFromStream(ByteArrayInputStream stream, ByteConverter byteConverter) {
-        String value = ByteConverter.signedToBinaryString(stream.read(), BYTE_LENGTH);
+        String bitString = ByteConverter.signedToBinaryString(stream.read(), BYTE_LENGTH);
+        boolean[] value = new boolean[LENGTH];
+        for (int i = 0; i < LENGTH; i++) {
+            value[i] = bitString.substring(i, i + 1).equals(TRUE_BIT_VALUE);
+        }
         setValue(value);
     }
 
     @Override
-    void setValueFromUser(String value) {
-        if (value.length() != LENGTH) {
-            throw new IllegalArgumentException(String.format(ILLEGAL_LENGTH_MESSAGE, value));
-        }
-        if (!BIT_PATTERN.matcher(value).matches()) {
-            throw new IllegalArgumentException(String.format(ILLEGAL_VALUE_MESSAGE, value));
+    void setValueFromUser(boolean[] value) {
+        if (value.length != LENGTH) {
+            throw new IllegalArgumentException(String.format(ILLEGAL_LENGTH_MESSAGE, value.length));
         }
         setValue(value);
     }
 
     @Override
     byte[] toBytes(ByteConverter byteConverter) {
-        return new byte[]{(byte)Integer.parseInt(getActualValue(), 2)};
+        StringBuilder bitString = new StringBuilder();
+        for (boolean bit : getActualValue()) {
+            bitString.append(bit ? TRUE_BIT_VALUE : FALSE_BIT_VALUE);
+        }
+        return new byte[]{(byte)Integer.parseInt(bitString.toString(), 2)};
     }
 
     boolean getBitInPosition(int position) {
         if (position < MIN_POSITION || position > MAX_POSITION) {
             throw new IllegalArgumentException(String.format(ILLEGAL_POSITION_MESSAGE, position));
         }
-        return getActualValue().substring(position, position + 1).equals("0");
+        return getActualValue()[position];
     }
 
     void setBitInPosition(boolean value, int position) {
         if (position < MIN_POSITION || position > MAX_POSITION) {
             throw new IllegalArgumentException(String.format(ILLEGAL_POSITION_MESSAGE, position));
         }
-        String actualValue = getActualValue();
-        int intValue = value ? 0 : 1;
-        setValueFromUser(actualValue.substring(0, position) + intValue + actualValue.substring(position + 1));
+        getActualValue()[position] = value;
+    }
+
+    @Override
+    public String toString() {
+        return Arrays.toString(getActualValue());
     }
 }

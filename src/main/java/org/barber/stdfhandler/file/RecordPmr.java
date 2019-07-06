@@ -8,26 +8,21 @@ public class RecordPmr extends Record {
   private static final int TYPE = 1;
   private static final int SUBTYPE = 60;
 
-  private final Type<Integer> pmrIndx = new TypeU2("PMR_INDX", null);
-  private final Type<Integer> chanTyp = new TypeU2("CHAN_TYP", 0);
-  private final Type<String> chanNam = new TypeCn("CHAN_NAM", "");
-  private final Type<String> phyNam = new TypeCn("PHY_NAM", "");
-  private final Type<String> logNam = new TypeCn("LOG_NAM", "");
+  private final Type<Integer> pmrIndx = new TypeU2("PMR_INDX");
+  private final Type<Integer> chanTyp = new TypeU2("CHAN_TYP", TypeU2.DEFAULT_VALUE);
+  private final Type<String> chanNam = new TypeCn("CHAN_NAM", TypeCn.DEFAULT_VALUE);
+  private final Type<String> phyNam = new TypeCn("PHY_NAM", TypeCn.DEFAULT_VALUE);
+  private final Type<String> logNam = new TypeCn("LOG_NAM", TypeCn.DEFAULT_VALUE);
   private final Type<Integer> headNum = new TypeU1("HEAD_NUM", 1);
   private final Type<Integer> siteNum = new TypeU1("SITE_NUM", 1);
 
   private RecordPmr() {
     super(NAME, TYPE, SUBTYPE);
-    fields.addAll(asList(pmrIndx, chanTyp, chanNam, phyNam, logNam, headNum, siteNum));
+    addFields(pmrIndx, chanTyp, chanNam, phyNam, logNam, headNum, siteNum);
   }
 
   public static RecordPmr newInstance() {
     return new RecordPmr();
-  }
-
-  @Override
-  protected void addToImage(FileImage image) {
-    image.addPmr(this);
   }
 
   public Optional<Integer> getPmrIndx() {

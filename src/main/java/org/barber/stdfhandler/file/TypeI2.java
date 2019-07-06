@@ -2,18 +2,26 @@ package org.barber.stdfhandler.file;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.util.function.Predicate;
+import java.util.function.Supplier;
 
 public class TypeI2 extends Type<Integer> {
 
     public static final int MAX_VALUE = 32767;
     public static final int MIN_VALUE = -32768;
+    public static final int DEFAULT_VALUE = 0;
+
     public static final String ILLEGAL_VALUE_MESSAGE =
             "Illegal argument size %d for type StdfI2. Should be " + MIN_VALUE + " <= size <= " + MAX_VALUE;
 
     private static final int BYTE_LENGTH = 2;
 
-    TypeI2(String name, Integer nullValue) {
-        super(name, nullValue, INT_DEFAULT_VALUE);
+    TypeI2(String name, int nullValue) {
+        super(name, nullValue, DEFAULT_VALUE);
+    }
+
+    TypeI2(String name, Supplier<Boolean> isNull) {
+        super(name, isNull, DEFAULT_VALUE);
     }
 
     @Override

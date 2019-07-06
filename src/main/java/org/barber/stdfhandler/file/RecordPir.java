@@ -1,6 +1,5 @@
 package org.barber.stdfhandler.file;
 
-import java.util.Arrays;
 import java.util.Optional;
 
 public class RecordPir extends Record{
@@ -9,21 +8,16 @@ public class RecordPir extends Record{
     private static final int TYPE = 5;
     private static final int SUBTYPE = 10;
 
-    private final Type<Integer> headNum = new TypeU1("HEAD_NUM", null);
-    private final Type<Integer> siteNum = new TypeU1("SITE_NUM", null);
+    private final Type<Integer> headNum = new TypeU1("HEAD_NUM");
+    private final Type<Integer> siteNum = new TypeU1("SITE_NUM");
 
     private RecordPir() {
         super(NAME, TYPE, SUBTYPE);
-        fields.addAll(Arrays.asList(headNum, siteNum));
+        addFields(headNum, siteNum);
     }
 
     public static RecordPir newInstance() {
         return new RecordPir();
-    }
-
-    @Override
-    protected void addToImage(FileImage image) {
-        image.addPir(this);
     }
 
     public Optional<Integer> getHeadNum() {

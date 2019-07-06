@@ -1,19 +1,19 @@
 package org.barber.stdfhandler.file;
 
 import java.io.ByteArrayInputStream;
+import java.util.Arrays;
 
-class TypeN1x2 extends Type<byte[]> {
-
-  private static final byte[] DEFAULT_VALUE = {0, 0};
+public class TypeN1 extends Type<byte[]> {
 
   private static final int MIN_VALUE = 0;
   private static final int MAX_VALUE = 15;
+  private static final byte[] DEFAULT_VALUE = {0, 0};
+
   private static final String INVALID_ARGUMENT_MESSAGE =
       "Invalid values [%d, %d] for type N1. Each byte should be " + MIN_VALUE + " <= b <= " + MAX_VALUE;
 
-
-  TypeN1x2(String name, byte[] nullValue) {
-    super(name, nullValue, DEFAULT_VALUE);
+  TypeN1(String name) {
+    super(name, DEFAULT_VALUE);
   }
 
   @Override
@@ -36,5 +36,10 @@ class TypeN1x2 extends Type<byte[]> {
     byte[] pair = getActualValue();
     int combined = (pair[1] << 4) + pair[0];
     return byteConverter.unsignedIntegerToBytes(combined, ByteConverter.L1BYTE_BINARY_STRING_FORMAT);
+  }
+
+  @Override
+  public String toString() {
+    return Arrays.toString(getActualValue());
   }
 }

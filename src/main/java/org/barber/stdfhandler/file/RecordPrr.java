@@ -9,32 +9,26 @@ public class RecordPrr extends Record {
     private static final int TYPE = 5;
     private static final int SUBTYPE = 20;
 
-    private final Type<Integer> headNum = new TypeU1("HEAD_NUM", null);
-    private final Type<Integer> siteNum = new TypeU1("SITE_NUM", null);
-    private final TypeB1 partFlg = new TypeB1("PART_FLG", null);
-    private final Type<Integer> numTest = new TypeU2("NUM_TEST", null);
-    private final Type<Integer> hardBin = new TypeU2("HARD_BIN", null);
-    private final Type<Integer> softBin = new TypeU2("SOFT_BIN", null);
+    private final Type<Integer> headNum = new TypeU1("HEAD_NUM");
+    private final Type<Integer> siteNum = new TypeU1("SITE_NUM");
+    private final TypeB1 partFlg = new TypeB1("PART_FLG");
+    private final Type<Integer> numTest = new TypeU2("NUM_TEST");
+    private final Type<Integer> hardBin = new TypeU2("HARD_BIN");
+    private final Type<Integer> softBin = new TypeU2("SOFT_BIN");
     private final Type<Integer> xCoord = new TypeI2("X_COORD", TypeI2.MIN_VALUE);
     private final Type<Integer> yCoord = new TypeI2("Y_COORD", TypeI2.MIN_VALUE);
-    private final Type<Long> testT = new TypeU4("TEST_T", 0L);
-    private final Type<String> partId = new TypeCn("PART_ID", "");
-    private final Type<String> partTxt = new TypeCn("PART_TXT", "");
-    private final Type<byte[]> partFix = new TypeBn("PART_FIX", new byte[0]);
+    private final Type<Long> testT = new TypeU4("TEST_T", TypeU4.DEFAULT_VALUE);
+    private final Type<String> partId = new TypeCn("PART_ID", TypeCn.DEFAULT_VALUE);
+    private final Type<String> partTxt = new TypeCn("PART_TXT", TypeCn.DEFAULT_VALUE);
+    private final Type<byte[]> partFix = new TypeBn("PART_FIX", TypeBn.getDefaultValue());
 
     private RecordPrr() {
         super(NAME, TYPE, SUBTYPE);
-        fields.addAll(Arrays.asList(headNum, siteNum, partFlg, numTest, hardBin, softBin, xCoord, yCoord, testT,
-            partId, partTxt, partFix));
+        addFields(headNum, siteNum, partFlg, numTest, hardBin, softBin, xCoord, yCoord, testT, partId, partTxt, partFix);
     }
 
     public static RecordPrr newInstance() {
         return new RecordPrr();
-    }
-
-    @Override
-    protected void addToImage(FileImage image) {
-        image.addPrr(this);
     }
 
     public Optional<Integer> getHeadNum() {
@@ -43,10 +37,6 @@ public class RecordPrr extends Record {
 
     public Optional<Integer> getSiteNum() {
         return Optional.ofNullable(siteNum.getValue());
-    }
-
-    public Optional<String> getPartFlg() {
-        return Optional.ofNullable(partFlg.getValue());
     }
 
     public boolean getPartFlgBit(int position) {
@@ -97,11 +87,6 @@ public class RecordPrr extends Record {
 
     public RecordPrr setSiteNum(int value) {
         siteNum.setValueFromUser(value);
-        return this;
-    }
-
-    public RecordPrr setPartFlg(String value) {
-        partFlg.setValueFromUser(value);
         return this;
     }
 

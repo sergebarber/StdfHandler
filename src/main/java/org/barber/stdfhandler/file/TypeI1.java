@@ -2,13 +2,19 @@ package org.barber.stdfhandler.file;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.util.function.Supplier;
 
-class TypeI1 extends Type<Byte> {
+public class TypeI1 extends Type<Byte> {
 
     private static final int BYTE_LENGTH = 1;
+    public static final byte DEFAULT_VALUE = 0;
 
-    TypeI1(String name, Byte nullValue) {
-        super(name, nullValue, BYTE_DEFAULT_VALUE);
+    TypeI1(String name) {
+        super(name, DEFAULT_VALUE);
+    }
+
+    TypeI1(String name, Supplier<Boolean> isNull) {
+        super(name, isNull, DEFAULT_VALUE);
     }
 
     @Override

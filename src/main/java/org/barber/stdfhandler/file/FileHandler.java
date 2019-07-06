@@ -4,6 +4,11 @@ package org.barber.stdfhandler.file;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.function.Consumer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class FileHandler {
 
@@ -11,36 +16,33 @@ public class FileHandler {
     private static final int HEADER_RECORD_TYPE_BYTES = 1;
     private static final int HEADER_RECORD_SUBTYPE_BYTES = 1;
 
+    private Logger logger = Logger.getLogger("StdfHandler");
+
     private ByteConverter byteConverter;
+    private List<Record> records = new LinkedList<>();
 
     private FileHandler(ByteConverter byteConverter) {
         this.byteConverter = byteConverter;
     }
 
     public static FileHandler newInstance() {
-        return new FileHandler(new ByteConverter(IntegerConverter.LITTLE_ENDIAN, FloatingPointConverter.IEEE754));
+        return new FileHandler(new ByteConverter(IntegerConverter.LITTLE_ENDIAN, FloatingPointConverter.IEEE754b32));
     }
 
     public static FileHandler newInstance(IntegerConverter integerParser, FloatingPointConverter floatingPointConverter) {
         return new FileHandler(new ByteConverter(integerParser, floatingPointConverter));
     }
 
-    public FileImage read(InputStream inputStream) throws IOException {
-        FileImage file = new FileImage();
-
+    public List<Record> readAsRecordList(InputStream inputStream) throws IOException {
         try {
-            while (readRecord(inputStream, file)) ;
+            while (readRecord(inputStream, records::add)) ;
         } catch (IllegalStateException e) {
-            System.out.println(e.getMessage());
+            logger.log(Level.WARNING, e.getMessage(), e);
         }
-        return file;
+        return records;
     }
 
-    public FileBuilder getBuilder() {
-        return new FileBuilder(byteConverter);
-    }
-
-    private boolean readRecord(InputStream inputStream, FileImage file) throws IOException {
+    private boolean readRecord(InputStream inputStream, Consumer<Record> recordHandler) throws IOException {
 
         if (inputStream.available() == 0) {
             return false;
@@ -53,8 +55,13 @@ public class FileHandler {
         int subtype = byteConverter.bytesToUnsignedInt(new ByteArrayInputStream(inputStream.readNBytes(
                 HEADER_RECORD_SUBTYPE_BYTES)), HEADER_RECORD_SUBTYPE_BYTES);
 
-        Record record = Records.getRecord(type, subtype);
-        record.fill(new ByteArrayInputStream(inputStream.readNBytes(length)), byteConverter, file);
+        Record record = Record.getRecord(type, subtype);
+        record.fill(new ByteArrayInputStream(inputStream.readNBytes(length)), byteConverter);
+        recordHandler.accept(record);
         return true;
+    }
+
+    public FileBuilder getBuilder() {
+        return new FileBuilder(byteConverter);
     }
 }

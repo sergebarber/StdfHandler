@@ -1,6 +1,7 @@
 package org.barber.stdfhandler.file;
 
 import java.time.Instant;
+import java.util.Objects;
 import java.util.Optional;
 
 public class RecordMir extends Record {
@@ -9,60 +10,55 @@ public class RecordMir extends Record {
     private static final byte TYPE = 1;
     private static final byte SUBTYPE = 10;
 
-    private final Type<Instant> setupT = new TypeTime("SETUP_T", null);
-    private final Type<Instant> startT = new TypeTime("START_T", null);
-    private final Type<Integer> statNum = new TypeU1("STAT_NUM", null);
-    private final Type<Character> modeCod = new TypeC1("MODE_COD", ' ');
-    private final Type<Character> rtstCod = new TypeC1("RTST_COD", ' ');
-    private final Type<Character> protCod = new TypeC1("PROT_COD", ' ');
-    private final Type<Integer> burnTim = new TypeU2("BURN_TIM", U2_MAX_NULL_VALUE);
-    private final Type<Character> cmodCod = new TypeC1("CMOD_COD", ' ');
-    private final Type<String> lotId = new TypeCn("LOT_ID", null);
-    private final Type<String> partTyp = new TypeCn("PART_TYP", null);
-    private final Type<String> nodeNam = new TypeCn("NODE_NAM", null);
-    private final Type<String> tstrTyp = new TypeCn("TSTR_TYP", null);
-    private final Type<String> jobNam = new TypeCn("JOB_NAM", null);
-    private final Type<String> jobRev = new TypeCn("JOB_REV", "");
-    private final Type<String> sblotId = new TypeCn("SBLOT_ID", "");
-    private final Type<String> operNam = new TypeCn("OPER_NAM", "");
-    private final Type<String> execTyp = new TypeCn("EXEC_TYP", "");
-    private final Type<String> execVer = new TypeCn("EXEC_VER", "");
-    private final Type<String> testCod = new TypeCn("TEST_COD", "");
-    private final Type<String> tstTemp = new TypeCn("TST_TEMP", "");
-    private final Type<String> userTxt = new TypeCn("USER_TXT", "");
-    private final Type<String> auxFile = new TypeCn("AUX_FILE", "");
-    private final Type<String> pkgTyp = new TypeCn("PKG_TYP", "");
-    private final Type<String> famlyId = new TypeCn("FAMLY_ID", "");
-    private final Type<String> dateCod = new TypeCn("DATE_COD", "");
-    private final Type<String> facilId = new TypeCn("FACIL_ID", "");
-    private final Type<String> floorId = new TypeCn("FLOOR_ID", "");
-    private final Type<String> procId = new TypeCn("PROC_ID", "");
-    private final Type<String> operFrq = new TypeCn("OPER_FRQ", "");
-    private final Type<String> specNam = new TypeCn("SPEC_NAM", "");
-    private final Type<String> specVer = new TypeCn("SPEC_VER", "");
-    private final Type<String> flowId = new TypeCn("FLOW_ID", "");
-    private final Type<String> setupId = new TypeCn("SETUP_ID", "");
-    private final Type<String> dsgnRev = new TypeCn("DSGN_REV", "");
-    private final Type<String> engId = new TypeCn("ENG_ID", "");
-    private final Type<String> romCod = new TypeCn("ROM_COD", "");
-    private final Type<String> serlNum = new TypeCn("SERL_NUM", "");
-    private final Type<String> suprNam = new TypeCn("SUPR_NAM", "");
+    private final Type<Instant> setupT = new TypeTime("SETUP_T");
+    private final Type<Instant> startT = new TypeTime("START_T");
+    private final Type<Integer> statNum = new TypeU1("STAT_NUM");
+    private final Type<Character> modeCod = new TypeC1("MODE_COD", TypeC1.DEFAULT_VALUE);
+    private final Type<Character> rtstCod = new TypeC1("RTST_COD", TypeC1.DEFAULT_VALUE);
+    private final Type<Character> protCod = new TypeC1("PROT_COD", TypeC1.DEFAULT_VALUE);
+    private final Type<Integer> burnTim = new TypeU2("BURN_TIM", TypeU2.MAX_VALUE);
+    private final Type<Character> cmodCod = new TypeC1("CMOD_COD", TypeC1.DEFAULT_VALUE);
+    private final Type<String> lotId = new TypeCn("LOT_ID");
+    private final Type<String> partTyp = new TypeCn("PART_TYP");
+    private final Type<String> nodeNam = new TypeCn("NODE_NAM");
+    private final Type<String> tstrTyp = new TypeCn("TSTR_TYP");
+    private final Type<String> jobNam = new TypeCn("JOB_NAM");
+    private final Type<String> jobRev = new TypeCn("JOB_REV", TypeCn.DEFAULT_VALUE);
+    private final Type<String> sblotId = new TypeCn("SBLOT_ID", TypeCn.DEFAULT_VALUE);
+    private final Type<String> operNam = new TypeCn("OPER_NAM", TypeCn.DEFAULT_VALUE);
+    private final Type<String> execTyp = new TypeCn("EXEC_TYP", TypeCn.DEFAULT_VALUE);
+    private final Type<String> execVer = new TypeCn("EXEC_VER", TypeCn.DEFAULT_VALUE);
+    private final Type<String> testCod = new TypeCn("TEST_COD", TypeCn.DEFAULT_VALUE);
+    private final Type<String> tstTemp = new TypeCn("TST_TEMP", TypeCn.DEFAULT_VALUE);
+    private final Type<String> userTxt = new TypeCn("USER_TXT", TypeCn.DEFAULT_VALUE);
+    private final Type<String> auxFile = new TypeCn("AUX_FILE", TypeCn.DEFAULT_VALUE);
+    private final Type<String> pkgTyp = new TypeCn("PKG_TYP", TypeCn.DEFAULT_VALUE);
+    private final Type<String> famlyId = new TypeCn("FAMLY_ID", TypeCn.DEFAULT_VALUE);
+    private final Type<String> dateCod = new TypeCn("DATE_COD", TypeCn.DEFAULT_VALUE);
+    private final Type<String> facilId = new TypeCn("FACIL_ID", TypeCn.DEFAULT_VALUE);
+    private final Type<String> floorId = new TypeCn("FLOOR_ID", TypeCn.DEFAULT_VALUE);
+    private final Type<String> procId = new TypeCn("PROC_ID", TypeCn.DEFAULT_VALUE);
+    private final Type<String> operFrq = new TypeCn("OPER_FRQ", TypeCn.DEFAULT_VALUE);
+    private final Type<String> specNam = new TypeCn("SPEC_NAM", TypeCn.DEFAULT_VALUE);
+    private final Type<String> specVer = new TypeCn("SPEC_VER", TypeCn.DEFAULT_VALUE);
+    private final Type<String> flowId = new TypeCn("FLOW_ID", TypeCn.DEFAULT_VALUE);
+    private final Type<String> setupId = new TypeCn("SETUP_ID", TypeCn.DEFAULT_VALUE);
+    private final Type<String> dsgnRev = new TypeCn("DSGN_REV", TypeCn.DEFAULT_VALUE);
+    private final Type<String> engId = new TypeCn("ENG_ID", TypeCn.DEFAULT_VALUE);
+    private final Type<String> romCod = new TypeCn("ROM_COD", TypeCn.DEFAULT_VALUE);
+    private final Type<String> serlNum = new TypeCn("SERL_NUM", TypeCn.DEFAULT_VALUE);
+    private final Type<String> suprNam = new TypeCn("SUPR_NAM", TypeCn.DEFAULT_VALUE);
 
     private RecordMir() {
         super(NAME, TYPE, SUBTYPE);
-        fields.addAll(asList(setupT, startT, statNum, modeCod, rtstCod, protCod, burnTim, cmodCod, lotId, partTyp,
+        addFields(setupT, startT, statNum, modeCod, rtstCod, protCod, burnTim, cmodCod, lotId, partTyp,
                 nodeNam, tstrTyp, jobNam, jobRev, sblotId, operNam, execTyp, execVer, testCod, tstTemp, userTxt,
                 auxFile, pkgTyp, famlyId, dateCod, facilId, floorId, procId, operFrq, specNam, specVer, flowId,
-                setupId, dsgnRev, engId, romCod, serlNum, suprNam));
+                setupId, dsgnRev, engId, romCod, serlNum, suprNam);
     }
 
     public static RecordMir newInstance() {
         return new RecordMir();
-    }
-
-    @Override
-    protected void addToImage(FileImage image) {
-        image.setMir(this);
     }
 
     public Optional<Instant> getSetupT() {
@@ -217,193 +213,193 @@ public class RecordMir extends Record {
         return Optional.ofNullable(suprNam.getValue());
     }
 
-    public RecordMir setSetupT(Instant value) {
-        setupT.setValueFromUser(value);
+    public RecordMir setSetupT(Instant setupT) {
+        this.setupT.setValueFromUser(setupT);
         return this;
     }
 
-    public RecordMir setStartT(Instant value) {
-        startT.setValueFromUser(value);
+    public RecordMir setStartT(Instant startT) {
+        this.startT.setValueFromUser(startT);
         return this;
     }
 
-    public RecordMir setStatNum(Integer value) {
-        statNum.setValueFromUser(value);
+    public RecordMir setStatNum(Integer statNum) {
+        this.statNum.setValueFromUser(statNum);
         return this;
     }
 
-    public RecordMir setModeCod(char value) {
-        modeCod.setValueFromUser(value);
+    public RecordMir setModeCod(char modeCod) {
+        this.modeCod.setValueFromUser(modeCod);
         return this;
     }
 
-    public RecordMir setRtstCod(char value) {
-        rtstCod.setValueFromUser(value);
+    public RecordMir setRtstCod(char rtstCod) {
+        this.rtstCod.setValueFromUser(rtstCod);
         return this;
     }
 
-    public RecordMir setProtCod(char value) {
-        protCod.setValueFromUser(value);
+    public RecordMir setProtCod(char protCod) {
+        this.protCod.setValueFromUser(protCod);
         return this;
     }
 
-    public RecordMir setBurnTim(Integer value) {
-        burnTim.setValueFromUser(value);
+    public RecordMir setBurnTim(int burnTim) {
+        this.burnTim.setValueFromUser(burnTim);
         return this;
     }
 
-    public RecordMir setCmodCod(char value) {
-        cmodCod.setValueFromUser(value);
+    public RecordMir setCmodCod(char cmodCod) {
+        this.cmodCod.setValueFromUser(cmodCod);
         return this;
     }
 
-    public RecordMir setLotId(String value) {
-        lotId.setValueFromUser(value);
+    public RecordMir setLotId(String lotId) {
+        this.lotId.setValueFromUser(lotId);
         return this;
     }
 
-    public RecordMir setPartTyp(String value) {
-        partTyp.setValueFromUser(value);
+    public RecordMir setPartTyp(String partTyp) {
+        this.partTyp.setValueFromUser(partTyp);
         return this;
     }
 
-    public RecordMir setNodeNam(String value) {
-        nodeNam.setValueFromUser(value);
+    public RecordMir setNodeNam(String nodeNam) {
+        this.nodeNam.setValueFromUser(nodeNam);
         return this;
     }
 
-    public RecordMir setTstrTyp(String value) {
-        tstrTyp.setValueFromUser(value);
+    public RecordMir setTstrTyp(String tstrTyp) {
+        this.tstrTyp.setValueFromUser(tstrTyp);
         return this;
     }
 
-    public RecordMir setJobNam(String value) {
-        jobNam.setValueFromUser(value);
+    public RecordMir setJobNam(String jobNam) {
+        this.jobNam.setValueFromUser(jobNam);
         return this;
     }
 
-    public RecordMir setJobRev(String value) {
-        jobRev.setValueFromUser(value);
+    public RecordMir setJobRev(String jobRev) {
+        this.jobRev.setValueFromUser(jobRev);
         return this;
     }
 
-    public RecordMir setSblotId(String value) {
-        sblotId.setValueFromUser(value);
+    public RecordMir setSblotId(String sblotId) {
+        this.sblotId.setValueFromUser(sblotId);
         return this;
     }
 
-    public RecordMir setOperNam(String value) {
-        operNam.setValueFromUser(value);
+    public RecordMir setOperNam(String operNam) {
+        this.operNam.setValueFromUser(operNam);
         return this;
     }
 
-    public RecordMir setExecTyp(String value) {
-        execTyp.setValueFromUser(value);
+    public RecordMir setExecTyp(String execTyp) {
+        this.execTyp.setValueFromUser(execTyp);
         return this;
     }
 
-    public RecordMir setExecVer(String value) {
-        execVer.setValueFromUser(value);
+    public RecordMir setExecVer(String execVer) {
+        this.execVer.setValueFromUser(execVer);
         return this;
     }
 
-    public RecordMir setTestCod(String value) {
-        testCod.setValueFromUser(value);
+    public RecordMir setTestCod(String testCod) {
+        this.testCod.setValueFromUser(testCod);
         return this;
     }
 
-    public RecordMir setTstTemp(String value) {
-        tstTemp.setValueFromUser(value);
+    public RecordMir setTstTemp(String tstTemp) {
+        this.tstTemp.setValueFromUser(tstTemp);
         return this;
     }
 
-    public RecordMir setUserTxt(String value) {
-        userTxt.setValueFromUser(value);
+    public RecordMir setUserTxt(String userTxt) {
+        this.userTxt.setValueFromUser(userTxt);
         return this;
     }
 
-    public RecordMir setAuxFile(String value) {
-        auxFile.setValueFromUser(value);
+    public RecordMir setAuxFile(String auxFile) {
+        this.auxFile.setValueFromUser(auxFile);
         return this;
     }
 
-    public RecordMir setPkgTyp(String value) {
-        pkgTyp.setValueFromUser(value);
+    public RecordMir setPkgTyp(String pkgTyp) {
+        this.pkgTyp.setValueFromUser(pkgTyp);
         return this;
     }
 
-    public RecordMir setFamlyId(String value) {
-        famlyId.setValueFromUser(value);
+    public RecordMir setFamlyId(String famlyId) {
+        this.famlyId.setValueFromUser(famlyId);
         return this;
     }
 
-    public RecordMir setDateCod(String value) {
-        dateCod.setValueFromUser(value);
+    public RecordMir setDateCod(String dateCod) {
+        this.dateCod.setValueFromUser(dateCod);
         return this;
     }
 
-    public RecordMir setFacilId(String value) {
-        facilId.setValueFromUser(value);
+    public RecordMir setFacilId(String facilId) {
+        this.facilId.setValueFromUser(facilId);
         return this;
     }
 
-    public RecordMir setFloorId(String value) {
-        floorId.setValueFromUser(value);
+    public RecordMir setFloorId(String floorId) {
+        this.floorId.setValueFromUser(floorId);
         return this;
     }
 
-    public RecordMir setProcId(String value) {
-        procId.setValueFromUser(value);
+    public RecordMir setProcId(String procId) {
+        this.procId.setValueFromUser(procId);
         return this;
     }
 
-    public RecordMir setOperFrq(String value) {
-        operFrq.setValueFromUser(value);
+    public RecordMir setOperFrq(String operFrq) {
+        this.operFrq.setValueFromUser(operFrq);
         return this;
     }
 
-    public RecordMir setSpecNam(String value) {
-        specNam.setValueFromUser(value);
+    public RecordMir setSpecNam(String specNam) {
+        this.specNam.setValueFromUser(specNam);
         return this;
     }
 
-    public RecordMir setSpecVer(String value) {
-        specVer.setValueFromUser(value);
+    public RecordMir setSpecVer(String specVer) {
+        this.specVer.setValueFromUser(specVer);
         return this;
     }
 
-    public RecordMir setFlowId(String value) {
-        flowId.setValueFromUser(value);
+    public RecordMir setFlowId(String flowId) {
+        this.flowId.setValueFromUser(flowId);
         return this;
     }
 
-    public RecordMir setSetupId(String value) {
-        setupId.setValueFromUser(value);
+    public RecordMir setSetupId(String setupId) {
+        this.setupId.setValueFromUser(setupId);
         return this;
     }
 
-    public RecordMir setDsgnRev(String value) {
-        dsgnRev.setValueFromUser(value);
+    public RecordMir setDsgnRev(String dsgnRev) {
+        this.dsgnRev.setValueFromUser(dsgnRev);
         return this;
     }
 
-    public RecordMir setEngId(String value) {
-        engId.setValueFromUser(value);
+    public RecordMir setEngId(String engId) {
+        this.engId.setValueFromUser(engId);
         return this;
     }
 
-    public RecordMir setRomCod(String value) {
-        romCod.setValueFromUser(value);
+    public RecordMir setRomCod(String romCod) {
+        this.romCod.setValueFromUser(romCod);
         return this;
     }
 
-    public RecordMir setSerlNum(String value) {
-        serlNum.setValueFromUser(value);
+    public RecordMir setSerlNum(String serlNum) {
+        this.serlNum.setValueFromUser(serlNum);
         return this;
     }
 
-    public RecordMir setSuprNam(String value) {
-        suprNam.setValueFromUser(value);
+    public RecordMir setSuprNam(String suprNam) {
+        this.suprNam.setValueFromUser(suprNam);
         return this;
     }
 }

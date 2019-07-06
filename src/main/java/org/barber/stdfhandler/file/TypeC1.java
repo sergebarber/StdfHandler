@@ -6,14 +6,15 @@ import java.io.IOException;
 public class TypeC1 extends Type<Character> {
 
   public static final int MAX_VALUE = 255;
-  public static final int MIN_VALUE = 0;
+  public static final char DEFAULT_VALUE = ' ';
+
   public static final String ILLEGAL_VALUE_MESSAGE =
-      "Illegal argument %s for type StdfC1. Integer value should be " + MIN_VALUE + " <= %d <= " + MAX_VALUE;
+      "Illegal argument %s for type StdfC1. Integer value should be less than " + MAX_VALUE;
 
   private static final int BYTE_LENGTH = 1;
 
-  TypeC1(String name, Character nullValue) {
-    super(name, nullValue, CHAR_DEFAULT_VALUE);
+  TypeC1(String name, char nullValue) {
+    super(name, nullValue, DEFAULT_VALUE);
   }
 
   @Override
@@ -25,8 +26,8 @@ public class TypeC1 extends Type<Character> {
   @Override
   void setValueFromUser(Character value) {
     int intValue = (int) value;
-    if (intValue < MIN_VALUE || intValue > MAX_VALUE) {
-      throw new IllegalArgumentException(String.format(ILLEGAL_VALUE_MESSAGE, value, intValue));
+    if (intValue > MAX_VALUE) {
+      throw new IllegalArgumentException(String.format(ILLEGAL_VALUE_MESSAGE, value));
     }
     setValue(value);
   }

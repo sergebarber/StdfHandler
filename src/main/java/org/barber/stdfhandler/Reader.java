@@ -10,10 +10,6 @@ import java.io.InputStream;
 public class Reader {
 
     public static void main(String[] args) throws IOException {
-        InputStream inputStream = new FileInputStream("test.std");
-        FileHandler reader = FileHandler.newInstance();
-        FileImage image = reader.read(inputStream);
-        System.out.println(image);
 
     }
 }

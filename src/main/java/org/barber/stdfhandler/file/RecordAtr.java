@@ -1,6 +1,7 @@
 package org.barber.stdfhandler.file;
 
 import java.time.Instant;
+import java.util.Objects;
 import java.util.Optional;
 
 public class RecordAtr extends Record {
@@ -9,17 +10,12 @@ public class RecordAtr extends Record {
     private static final byte TYPE = 0;
     private static final byte SUBTYPE = 20;
 
-    private final Type<Instant> modTim = new TypeTime("MOD_TIM", null);
-    private final Type<String> cmdLine = new TypeCn("CMD_LINE", null);
+    private final Type<Instant> modTim = new TypeTime("MOD_TIM");
+    private final Type<String> cmdLine = new TypeCn("CMD_LINE");
 
     private RecordAtr() {
         super(NAME, TYPE, SUBTYPE);
-        fields.addAll(asList(modTim, cmdLine));
-    }
-
-    @Override
-    protected void addToImage(FileImage image) {
-        image.addAtr(this);
+        addFields(modTim, cmdLine);
     }
 
     public static RecordAtr newInstance() {
@@ -34,13 +30,13 @@ public class RecordAtr extends Record {
         return Optional.ofNullable(cmdLine.getValue());
     }
 
-    public RecordAtr setModTim(Instant value) {
-        modTim.setValueFromUser(value);
+    public RecordAtr setModTim(Instant modTim) {
+        this.modTim.setValueFromUser(modTim);
         return this;
     }
 
-    public RecordAtr setCmdLine(String value) {
-        cmdLine.setValueFromUser(value);
+    public RecordAtr setCmdLine(String cmdLine) {
+        this.cmdLine.setValueFromUser(cmdLine);
         return this;
     }
 }

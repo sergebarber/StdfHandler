@@ -9,23 +9,18 @@ public class RecordMrr extends Record {
     private static final int TYPE = 1;
     private static final int SUBTYPE = 20;
 
-    private final Type<Instant> finishT = new TypeTime("FINISH_T", null);
-    private final Type<Character> dispCod = new TypeC1("DISP_COD", ' ');
-    private final Type<String> usrDesc = new TypeCn("USR_DESC", "");
-    private final Type<String> excDesc = new TypeCn("EXC_DESC", "");
+    private final Type<Instant> finishT = new TypeTime("FINISH_T");
+    private final Type<Character> dispCod = new TypeC1("DISP_COD", TypeC1.DEFAULT_VALUE);
+    private final Type<String> usrDesc = new TypeCn("USR_DESC", TypeCn.DEFAULT_VALUE);
+    private final Type<String> excDesc = new TypeCn("EXC_DESC", TypeCn.DEFAULT_VALUE);
 
     private RecordMrr() {
         super(NAME, TYPE, SUBTYPE);
-        fields.addAll(asList(finishT, dispCod, usrDesc, excDesc));
+        addFields(finishT, dispCod, usrDesc, excDesc);
     }
 
     public static RecordMrr newInstance() {
         return new RecordMrr();
-    }
-
-    @Override
-    protected void addToImage(FileImage image) {
-        image.setMrr(this);
     }
 
     public Optional<Instant> getFinishT() {
@@ -44,23 +39,23 @@ public class RecordMrr extends Record {
         return Optional.ofNullable(excDesc.getValue());
     }
 
-    public RecordMrr setFinishT(Instant value) {
-        finishT.setValueFromUser(value);
+    public RecordMrr setFinishT(Instant finishT) {
+        this.finishT.setValueFromUser(finishT);
         return this;
     }
 
-    public RecordMrr setDispCod(char value) {
-        dispCod.setValueFromUser(value);
+    public RecordMrr setDispCod(char dispCod) {
+        this.dispCod.setValueFromUser(dispCod);
         return this;
     }
 
-    public RecordMrr setUsrDesc(String value) {
-        usrDesc.setValueFromUser(value);
+    public RecordMrr setUsrDesc(String usrDesc) {
+        this.usrDesc.setValueFromUser(usrDesc);
         return this;
     }
 
-    public RecordMrr setExcDesc(String value) {
-        excDesc.setValueFromUser(value);
+    public RecordMrr setExcDesc(String excDesc) {
+        this.excDesc.setValueFromUser(excDesc);
         return this;
     }
 }

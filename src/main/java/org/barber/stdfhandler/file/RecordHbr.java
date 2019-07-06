@@ -8,26 +8,20 @@ public class RecordHbr extends Record {
     private static final int TYPE = 1;
     private static final int SUBTYPE = 40;
 
-    private final Type<Integer> headNum = new TypeU1("HEAD_NUM", null);
-    private final Type<Integer> siteNum = new TypeU1("SITE_NUM", null);
-    private final Type<Integer> hbinNum = new TypeU2("HBIN_NUM", null);
-    private final Type<Long> hbinCnt = new TypeU4("HBIN_CNT", null);
-    private final Type<Character> hbinPf = new TypeC1("HBIN_PF", ' ');
-    private final Type<String> hbinNam = new TypeCn("HBIN_NAM", "");
+    private final Type<Integer> headNum = new TypeU1("HEAD_NUM");
+    private final Type<Integer> siteNum = new TypeU1("SITE_NUM");
+    private final Type<Integer> hbinNum = new TypeU2("HBIN_NUM");
+    private final Type<Long> hbinCnt = new TypeU4("HBIN_CNT");
+    private final Type<Character> hbinPf = new TypeC1("HBIN_PF", TypeC1.DEFAULT_VALUE);
+    private final Type<String> hbinNam = new TypeCn("HBIN_NAM", TypeCn.DEFAULT_VALUE);
 
     private RecordHbr() {
         super(NAME, TYPE, SUBTYPE);
-        fields.addAll(asList(headNum, siteNum, hbinNum, hbinCnt, hbinPf, hbinNam));
+        addFields(headNum, siteNum, hbinNum, hbinCnt, hbinPf, hbinNam);
     }
 
     public static RecordHbr newInstance() {
         return new RecordHbr();
-    }
-
-
-    @Override
-    protected void addToImage(FileImage image) {
-        image.addHbr(this);
     }
 
     public Optional<Integer> getHeadNum() {
@@ -54,33 +48,33 @@ public class RecordHbr extends Record {
         return Optional.ofNullable(hbinNam.getValue());
     }
 
-    public RecordHbr setHeadNum(Integer value) {
-        headNum.setValueFromUser(value);
+    public RecordHbr setHeadNum(int headNum) {
+        this.headNum.setValueFromUser(headNum);
         return this;
     }
 
-    public RecordHbr setSiteNum(Integer value) {
-        siteNum.setValueFromUser(value);
+    public RecordHbr setSiteNum(int siteNum) {
+        this.siteNum.setValueFromUser(siteNum);
         return this;
     }
 
-    public RecordHbr setHbinNum(Integer value) {
-        hbinNum.setValueFromUser(value);
+    public RecordHbr setHbinNum(int hbinNum) {
+        this.hbinNum.setValueFromUser(hbinNum);
         return this;
     }
 
-    public RecordHbr setHbinCnt(Long value) {
-        hbinCnt.setValueFromUser(value);
+    public RecordHbr setHbinCnt(long hbinCnt) {
+        this.hbinCnt.setValueFromUser(hbinCnt);
         return this;
     }
 
-    public RecordHbr setHbinPf(char value) {
-        hbinPf.setValueFromUser(value);
+    public RecordHbr setHbinPf(char hbinPf) {
+        this.hbinPf.setValueFromUser(hbinPf);
         return this;
     }
 
-    public RecordHbr setHbinNam(String value) {
-        hbinNam.setValueFromUser(value);
+    public RecordHbr setHbinNam(String hbinNam) {
+        this.hbinNam.setValueFromUser(hbinNam);
         return this;
     }
 }

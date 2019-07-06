@@ -2,18 +2,30 @@ package org.barber.stdfhandler.file;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.util.function.Predicate;
+import java.util.function.Supplier;
 
 public class TypeU4 extends Type<Long> {
 
     public static final long MAX_VALUE = 4_294_967_295L;
-    public static final int MIN_VALUE = 0;
+    public static final long MIN_VALUE = 0;
+    public static final long DEFAULT_VALUE = 0L;
+
     public static final String ILLEGAL_VALUE_MESSAGE =
             "Illegal argument size %d for type StdfU4. Should be " + MIN_VALUE + " <= size <= " + MAX_VALUE;
 
     private static final int BYTE_LENGTH = 4;
 
-    TypeU4(String name, Long nullValue) {
-        super(name, nullValue, LONG_DEFAULT_VALUE);
+    TypeU4(String name) {
+        super(name, DEFAULT_VALUE);
+    }
+
+    TypeU4(String name, long nullValue) {
+        super(name, nullValue, DEFAULT_VALUE);
+    }
+
+    TypeU4(String name, Supplier<Boolean> isNull) {
+        super(name, isNull, DEFAULT_VALUE);
     }
 
     @Override
