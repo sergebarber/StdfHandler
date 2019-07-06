@@ -1,33 +1,36 @@
 package org.barber.stdfhandler.file;
 
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.util.function.Predicate;
 
-class TypeCn extends TypeString {
+public class TypeCn extends Type<String> {
 
-    static final int MAX_LENGTH = 255;
-    static final String NULL_VALUE = "";
+    public static final int MAX_LENGTH = 255;
+    public static final String DEFAULT_VALUE = "";
+
+    TypeCn(String name) {
+        super(name, DEFAULT_VALUE);
+    }
+
+    TypeCn(String name, String nullValue) {
+        super(name, nullValue, DEFAULT_VALUE);
+    }
 
     @Override
-    void setValue(ByteArrayInputStream stream) {
+    void setValueFromStream(ByteArrayInputStream stream, ByteConverter byteConverter) throws IOException {
         int length = stream.read();
-        this.value = byteStreamToString(stream, length);
+        setValue(byteConverter.bytesToString(stream, length));
     }
 
     @Override
-    void setValue(Object value) {
-        String actualValue = TYPE.cast(value);
-        this.value = actualValue.length() > MAX_LENGTH ? actualValue.substring(0, MAX_LENGTH) : actualValue;
+    void setValueFromUser(String value) {
+        value = value.length() > MAX_LENGTH ? value.substring(0, MAX_LENGTH) : value;
+        setValue(value);
     }
 
     @Override
-    byte[] toBytes() {
-        String value = this.value == null ? NULL_VALUE : this.value;
-        int length = value.length();
-
-        byte[] res = new byte[length + 1];
-        res[0] = toBytes(length, U1_BINARY_STRING_FORMAT)[0];
-        System.arraycopy(value.getBytes(), 0, res, 1, length);
-
-        return res;
+    byte[] toBytes(ByteConverter byteConverter) {
+        return byteConverter.stringToBytes(getActualValue(), true);
     }
 }

@@ -1,34 +1,42 @@
 package org.barber.stdfhandler.file;
 
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 
-class TypeU1 extends TypeInt {
+public class TypeU1 extends Type<Integer> {
 
-    private static final int MIN_VALUE = 0;
-    private static final int MAX_VALUE = 255;
-    private static final String ILLEGAL_VALUE_MESSAGE =
-            "Illegal argument size %d for type StdfU1. Should be %d <= size <= %d";
+    public static final int MIN_VALUE = 0;
+    public static final int MAX_VALUE = 255;
+    public static final int DEFAULT_VALUE = 0;
+
+    public static final String ILLEGAL_VALUE_MESSAGE =
+            "Illegal argument size %d for type StdfU1. Should be " + MIN_VALUE + " <= size <= " + MAX_VALUE;
 
     private static final int BYTE_LENGTH = 1;
-    private static final int NULL_VALUE = 0;
 
-    @Override
-    void setValue(ByteArrayInputStream stream) {
-        this.value = (int) byteStreamToNumber(stream, BYTE_LENGTH);
+    TypeU1(String name) {
+        super(name, DEFAULT_VALUE);
+    }
+
+    TypeU1(String name, int nullValue) {
+        super(name, nullValue, DEFAULT_VALUE);
     }
 
     @Override
-    void setValue(Object value) {
-        int actualValue = TYPE.cast(value);
-        if (actualValue < MIN_VALUE || actualValue > MAX_VALUE) {
-            throw new IllegalArgumentException(String.format(ILLEGAL_VALUE_MESSAGE, actualValue, MIN_VALUE, MAX_VALUE));
+    void setValueFromStream(ByteArrayInputStream stream, ByteConverter byteConverter) throws IOException {
+        setValue(byteConverter.bytesToUnsignedInt(stream, BYTE_LENGTH));
+    }
+
+    @Override
+    void setValueFromUser(Integer value) {
+        if (value < MIN_VALUE || value > MAX_VALUE) {
+            throw new IllegalArgumentException(String.format(ILLEGAL_VALUE_MESSAGE, value));
         }
-        this.value = actualValue;
+        setValue(value);
     }
 
     @Override
-    byte[] toBytes() {
-        int value = this.value == null ? NULL_VALUE : this.value;
-        return toBytes(value, U1_BINARY_STRING_FORMAT);
+    byte[] toBytes(ByteConverter byteConverter) {
+        return byteConverter.unsignedIntegerToBytes(getActualValue(), ByteConverter.L1BYTE_BINARY_STRING_FORMAT);
     }
 }

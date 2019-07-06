@@ -1,47 +1,44 @@
 package org.barber.stdfhandler.file;
 
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.time.Instant;
+import java.util.function.Predicate;
 
-class TypeTime extends Type<Instant> {
+public class TypeTime extends Type<Instant> {
 
-    private static final long MAX_VALUE = 4_294_967_295L;
-    private static final long MIN_VALUE = 0;
-    private static final String ILLEGAL_VALUE_MESSAGE =
-            "Illegal amount of seconds %d for type StdfTime. Should be %d <= seconds <= %d";
+    public static final long MAX_VALUE = 4_294_967_295L;
+    public static final long MIN_VALUE = 0;
+    public static final Instant DEFAULT_VALUE = Instant.ofEpochSecond(0L);
+
+    public static final String ILLEGAL_VALUE_MESSAGE =
+            "Illegal amount of seconds %d for type StdfTime. Should be "+ MIN_VALUE + " <= seconds <= " + MAX_VALUE;
 
     private static final int BYTE_LENGTH = 4;
-    private static final int NULL_VALUE = 0;
 
-    static final Class<Instant> TYPE = Instant.class;
-
-    static Instant cast(Object value) {
-        return TYPE.cast(value);
+    TypeTime(String name) {
+        super(name, DEFAULT_VALUE);
     }
 
     @Override
-    void setValue(ByteArrayInputStream stream) {
-        this.value = Instant.ofEpochSecond(byteStreamToNumber(stream, BYTE_LENGTH));
+    void setValueFromStream(ByteArrayInputStream stream, ByteConverter byteConverter) throws IOException {
+        Instant value = Instant.ofEpochSecond(byteConverter.bytesToUnsignedLong(stream, BYTE_LENGTH));
+        setValue(value);
     }
 
     @Override
-    void setValue(Object value) {
-        Instant actualValue = TYPE.cast(value);
-        long epochSecond = actualValue.getEpochSecond();
+    void setValueFromUser(Instant value) {
+        long epochSecond = value.getEpochSecond();
         if (epochSecond < MIN_VALUE || epochSecond > MAX_VALUE) {
-            throw new IllegalArgumentException(String.format(ILLEGAL_VALUE_MESSAGE, epochSecond, MIN_VALUE, MAX_VALUE));
+            throw new IllegalArgumentException(String.format(ILLEGAL_VALUE_MESSAGE, epochSecond));
         }
-        this.value = Instant.ofEpochSecond(epochSecond);
+        value = Instant.ofEpochSecond(epochSecond);
+        setValue(value);
     }
 
     @Override
-    byte[] toBytes() {
-        long value = this.value == null ? NULL_VALUE : this.value.getEpochSecond();
-        return toBytes(value, U4_BINARY_STRING_FORMAT);
-    }
-
-    @Override
-    String asString() {
-        return value.toString();
+    byte[] toBytes(ByteConverter byteConverter) {
+        return byteConverter.unsignedIntegerToBytes(getActualValue().getEpochSecond(),
+                ByteConverter.L4BYTES_BINARY_STRING_FORMAT);
     }
 }
